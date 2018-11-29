@@ -1,5 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+
+import { IService } from '../core.types';
+
+export interface IUserInterface extends IService {}
 
 @Injectable()
-export class UserService {}
+export class UserService implements IUserInterface {}
