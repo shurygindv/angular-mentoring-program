@@ -1,16 +1,16 @@
 import { Provider } from '@angular/core';
 
-import { ApiService } from './api.service';
-import { UserService } from './user.service';
-import { CourseService } from './course.service';
+import { IService } from '@app/core/core.types';
 
-import { IService } from '../core.types';
+import { ApiService } from './api.service';
+import { UserService, AbstractUserService } from './user';
+import { CourseService, AbstractCourseService } from './course';
 
 type IAngularService = IService & Provider;
 
 export const services: IAngularService[] = [
     ApiService,
 
-    UserService,
-    CourseService
+    { provide: AbstractUserService, useClass: UserService },
+    { provide: AbstractCourseService, useClass: CourseService },
 ];

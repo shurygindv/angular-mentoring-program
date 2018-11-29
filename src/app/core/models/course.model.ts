@@ -1,5 +1,5 @@
 
-interface ICourse {
+export interface ICourse {
     Id: number;
     Title: string;
     CreationDate: string;

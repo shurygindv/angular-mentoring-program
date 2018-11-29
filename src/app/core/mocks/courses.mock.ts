@@ -1,6 +1,6 @@
-import { Course } from './../models';
+import { ICourse } from '../models/course.model';
 
-export const mockCourses: Course[] = [
+export const mockCourses: ICourse[] = [
     {
         'Id': 0,
         'Title': 'How to become better than you thought possible',

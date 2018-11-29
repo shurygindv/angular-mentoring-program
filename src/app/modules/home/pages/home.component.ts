@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Course } from '../../../core/models';
-import { CourseService } from '../../../core/services/course.service';
+import { ICourse } from '../../../core/models/course.model';
+import { AbstractCourseService } from '../../../core/services/course/abstract-course.service';
 
 @Component({
   selector: 'app-home',
@@ -9,14 +9,14 @@ import { CourseService } from '../../../core/services/course.service';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  private courseService: CourseService;
-  private courses: Course[];
+  private courseService: AbstractCourseService;
+  private courses: ICourse[];
 
-  constructor(courseService: CourseService) {
+  constructor(courseService: AbstractCourseService) {
     this.courseService = courseService;
   }
 
-  private updateCourses(courses: Course[]): void {
+  private updateCourses(courses: ICourse[]): void {
     this.courses = courses;
   }
 
