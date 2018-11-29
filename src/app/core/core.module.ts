@@ -8,7 +8,7 @@ import {services} from './services';
   imports: [
     CommonModule
   ],
-  providers: [
+  providers: [ 
     ...services,
   ]
 })

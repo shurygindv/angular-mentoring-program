@@ -10,6 +10,8 @@ import { BreadCrumbsComponent } from './components/bread-crumbs/bread-crumbs.com
 import { SearchComponent } from './components/search/search.component';
 import { FormComponent } from './components/form/form.component';
 import { ButtonComponent } from './components/button/button.component';
+import { CardsComponent } from './components/cards/cards.component';
+import { CardItemComponent } from './components/cards/card-item/card-item.component';
 
 // TODO: make component module
 
@@ -24,12 +26,15 @@ import { ButtonComponent } from './components/button/button.component';
     SearchComponent,
     FormComponent,
     ButtonComponent,
+    CardsComponent,
+    CardItemComponent,
   ],
   exports: [
     LayoutComponent,
     TitleComponent,
     TextComponent,
     IconComponent,
+    CardsComponent,
   ]
 })
 export class SharedModule {}
