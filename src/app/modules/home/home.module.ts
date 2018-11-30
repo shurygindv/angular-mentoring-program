@@ -9,7 +9,6 @@ import { HomeComponent } from './pages/home.component';
 import { BodyComponent } from './components/body/body.component';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
-import { CoursesComponent } from './components/courses/courses.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +16,6 @@ import { CoursesComponent } from './components/courses/courses.component';
     HeaderComponent,
     BodyComponent,
     FooterComponent,
-    CoursesComponent
   ],
   imports: [CommonModule, SharedModule, HomeRoutingModule],
   providers: []

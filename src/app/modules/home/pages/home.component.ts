@@ -19,13 +19,9 @@ export class HomeComponent implements OnInit {
     this.courseService = courseService;
   }
 
-  private updateCourses(courses: ICourse[]): void {
-    this.courses = courses;
-  }
-
   private fetchCourses(): void {
     this.courseService.fetchCourses()
-      .subscribe(this.updateCourses);
+      .subscribe(courses => this.courses = courses);
   }
 
   public ngOnInit(): void {

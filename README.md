@@ -1,1 +1,12 @@
 # angular-mentoring-program
+
+# NOT USED MODULES YET
+
+APP-TITLE
+APP-ICON
+APP-TEXT
+APP-BUTTON
+APP-BREADCRUMBS
+APP-FORM
+
+
