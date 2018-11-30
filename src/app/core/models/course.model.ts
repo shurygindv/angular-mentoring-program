@@ -1,5 +1,5 @@
 
-export interface ICourse {
+export interface ICourseModelApi {
     Id: number;
     Title: string;
     CreationDate: string;
@@ -7,10 +7,38 @@ export interface ICourse {
     Description: string;
 }
 
-export default class Course implements ICourse {
+export interface ICourse {
+    id: number;
+    title: string;
+    creationDate: string;
+    duration: number;
+    description: string;
+}
+
+export class Course implements ICourse {
+    public id: number;
+    public title: string;
+    public creationDate: string;
+    public duration: number;
+    public description: string;
+}
+
+export class CourseModelApi implements ICourseModelApi {
+    public static mapToCourses (models: ICourseModelApi[]): ICourse[] {
+
+        return models.map((model: ICourseModelApi) => ({
+             id: model.Id,
+             title: model.Title,
+             creationDate: model.CreationDate,
+             duration: model.Duration,
+             description: model.Description,
+        }));
+    }
+    // tslint:disable:variable-name
     public Id: number;
     public Title: string;
     public CreationDate: string;
     public Duration: number;
     public Description: string;
+    // tslint:enable:variable-name
 }

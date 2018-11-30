@@ -1,0 +1,25 @@
+<ul>
+    <li *ngFor="let course of items">
+      <section>
+        <header>
+          <p>{{course.title}}</p>
+          <p>
+            <span>{{course.duration}}</span>
+            <span>{{course.creationDate}}</span>
+          </p>
+        </header>
+  
+        <footer>
+          <p>
+            {{course.description}}
+          </p>
+        </footer>
+      </section>
+  
+      <section>
+        <button>Add</button>
+        <button>Edit</button>
+      </section>
+    </li>
+  </ul>
+  

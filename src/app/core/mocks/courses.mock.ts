@@ -1,6 +1,6 @@
-import { ICourse } from '../models/course.model';
+import { ICourseModelApi } from '../models/';
 
-export const mockCourses: ICourse[] = [
+export const mockCourses: ICourseModelApi[] = [
     {
         'Id': 0,
         'Title': 'How to become better than you thought possible',

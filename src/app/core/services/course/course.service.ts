@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 
-import { ICourse } from '@app/core/models/course.model';
+import { ICourse, ICourseModelApi , CourseModelApi } from '@app/core/models/course.model';
 import { mockCourses } from '@app/core/mocks/courses.mock';
 
 import { AbstractCourseService } from './abstract-course.service';
@@ -10,7 +10,13 @@ import { AbstractCourseService } from './abstract-course.service';
     providedIn: 'root',
   })
 export class CourseService implements AbstractCourseService {
+    private mapToCourses (apiModels: ICourseModelApi[]): ICourse[]  {
+        return CourseModelApi.mapToCourses(apiModels);
+    }
+
     public fetchCourses (): Observable<ICourse[]> {
-        return of(mockCourses);
+        const mapped: ICourse[] = this.mapToCourses(mockCourses);
+
+        return of(mapped);
     }
 }

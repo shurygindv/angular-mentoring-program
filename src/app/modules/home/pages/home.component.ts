@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 
-import { ICourse } from '../../../core/models/course.model';
-import { AbstractCourseService } from '../../../core/services/course/abstract-course.service';
+import { ICourse } from '@app/core/models/course.model';
+import { AbstractCourseService } from '@app/core/services/course/abstract-course.service';
+
+// TODO: make for card own data model, without dependecies front model
 
 @Component({
   selector: 'app-home',
@@ -10,7 +12,8 @@ import { AbstractCourseService } from '../../../core/services/course/abstract-co
 })
 export class HomeComponent implements OnInit {
   private courseService: AbstractCourseService;
-  private courses: ICourse[];
+
+  public courses: ICourse[];
 
   constructor(courseService: AbstractCourseService) {
     this.courseService = courseService;
@@ -20,13 +23,12 @@ export class HomeComponent implements OnInit {
     this.courses = courses;
   }
 
-  public ngOnInit(): void {
-    this.fetchCourses();
-  }
-
-  public fetchCourses(): void {
+  private fetchCourses(): void {
     this.courseService.fetchCourses()
       .subscribe(this.updateCourses);
   }
 
+  public ngOnInit(): void {
+    this.fetchCourses();
+  }
 }
