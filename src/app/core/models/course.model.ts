@@ -2,7 +2,7 @@
 export interface ICourseModelApi {
     Id: number;
     Title: string;
-    CreationDate: string;
+    CreationDate: string | Date;
     Duration: number;
     Description: string;
 }
@@ -10,7 +10,7 @@ export interface ICourseModelApi {
 export interface ICourse {
     id: number;
     title: string;
-    creationDate: string;
+    creationDate: string | Date;
     duration: number;
     description: string;
 }
@@ -18,7 +18,7 @@ export interface ICourse {
 export class Course implements ICourse {
     public id: number;
     public title: string;
-    public creationDate: string;
+    public creationDate: string| Date;
     public duration: number;
     public description: string;
 }
@@ -37,7 +37,7 @@ export class CourseModelApi implements ICourseModelApi {
     // tslint:disable:variable-name
     public Id: number;
     public Title: string;
-    public CreationDate: string;
+    public CreationDate: string | Date;
     public Duration: number;
     public Description: string;
     // tslint:enable:variable-name

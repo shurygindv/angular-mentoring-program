@@ -1,5 +1,6 @@
-import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
+
+import { Observable } from 'rxjs';
 
 import { IService } from '../../core.types';
 import { ICourse } from '../../models/course.model';
