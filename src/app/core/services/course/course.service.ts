@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 
-import { ICourse, ICourseModelApi , CourseModelApi } from '@app/core/models/course.model';
-import { mockCourses } from '@app/core/mocks/courses.mock';
+import { ICourse, ICourseModelApi , CourseModelApi } from '../../models/course.model';
+import { mockCourses } from '../../mocks/courses.mock';
 
 import { AbstractCourseService } from './abstract-course.service';
 

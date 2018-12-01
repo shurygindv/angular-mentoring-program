@@ -1,6 +1,6 @@
 import { Provider } from '@angular/core';
 
-import { IService } from '@app/core/core.types';
+import { IService } from '../core.types';
 
 import { ApiService } from './api.service';
 import { UserService, AbstractUserService } from './user';
