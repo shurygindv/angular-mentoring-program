@@ -1,0 +1,27 @@
+<app-layout>
+  <app-header></app-header>
+
+  <app-body>
+    <app-card-list>
+      <app-card-list-item *ngFor="let course of courses">
+        <section>
+          <header>
+            <p>{{ course.title }}</p>
+            <p>
+              <span>{{ course.duration }}</span>
+              <span>{{ course.creationDate }}</span>
+            </p>
+          </header>
+
+          <footer>
+            <p>{{ course.description }}</p>
+          </footer>
+        </section>
+
+        <section><button>Add</button> <button>Edit</button></section>
+      </app-card-list-item>
+    </app-card-list>
+  </app-body>
+
+  <app-footer></app-footer>
+</app-layout>
