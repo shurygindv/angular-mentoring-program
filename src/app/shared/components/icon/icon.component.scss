@@ -1,0 +1,44 @@
+$block: 'icon';
+
+@mixin getNotebookIcon () {
+    width: 32px;
+    height: 32px;
+    background-image: url('./../../../../assets/icons/notebook.svg');
+}
+
+.#{$block} {
+    &:before {
+        content: '';
+        display: inline-block;
+        background-repeat: no-repeat;
+    }
+
+    &-logo {
+        &:before  {
+            @include getNotebookIcon();
+        }
+    }
+
+    &-notebook {
+        &:before  {
+            @include getNotebookIcon();
+        }
+    }
+
+    &-glass {
+        &:before {
+            width: 16px;
+            height: 16px;
+            background-image: url('./../../../../assets/icons/glass.svg');
+        }
+    }
+
+    &-user-placeholder {
+        &:before {
+            width: 32px;
+            height: 32px;
+            background-image: url('./../../../../assets/icons/user-placeholder.png');
+            border-radius: 50%;
+        }
+    }
+}

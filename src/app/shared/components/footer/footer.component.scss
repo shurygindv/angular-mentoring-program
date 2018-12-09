@@ -1,0 +1,10 @@
+$block: 'footer';
+
+.#{$block} {
+    display: flex;
+    padding: 25px 20px;
+
+    &--simple {
+        background: white;
+    }
+}

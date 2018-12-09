@@ -1,0 +1,36 @@
+<section class="card-container">
+  <ul class="course-list">
+    <li class="course-list__item course-list__item--whited" *ngFor="let course of items">
+      <section class="course-list__item__preview">
+        <div class="course-list-image">
+          ((IMAGE_STUB))
+        </div>
+      </section>
+
+      <section class="course-list__item__content">
+        <app-text [bold]="true" [uppercased]="true">
+          {{course.title}}
+        </app-text>
+        <app-text>
+          {{course.description}}
+        </app-text>
+        <app-text>
+          {{course.creationDate}}
+        </app-text>
+        <app-text>
+          {{course.duration}}
+        </app-text>
+      </section>
+
+      <section class="course-list__item__controls">
+          <app-button [view]="'lime'">Edit</app-button>
+          <app-button [view]="'lime'">Remove</app-button>
+      </section>
+    </li>
+  </ul>
+
+  <section class="card-container-options">
+    <app-button [view]="'lime'" [size]="'md'">More...</app-button>
+  </section>
+
+</section>

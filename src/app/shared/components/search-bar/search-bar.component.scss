@@ -1,0 +1,25 @@
+$block: 'search-bar';
+
+.#{$block} {
+    display: flex;
+    align-items:center;
+    padding: 10px 20px;
+
+    &--default {
+        border-bottom: 1px solid rgba(0,0,0,0.3);
+        background: white;
+    }
+
+
+    &-input {
+        padding: 0 10px;
+        border: 0;
+        height: 40px;
+        flex-grow: 5;
+    }
+
+    &-control {
+        flex-grow: 0.5;
+        text-align: center;
+    }
+}

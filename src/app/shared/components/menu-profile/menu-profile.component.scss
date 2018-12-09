@@ -1,0 +1,48 @@
+$block: 'menu-profile';
+
+.#{$block} {
+    display: flex;
+    align-items: center;
+    min-width: 160px;
+    justify-content: space-between;
+
+    &-nav {
+        position: relative;
+        cursor: pointer;
+        &__logo {
+            border-radius: 50%;
+        }
+
+        &:hover .#{$block}-list {
+            opacity: 1;
+        }
+    }
+
+    &-list {
+        position: absolute;
+
+        left: 0;
+
+        &--anim {
+            opacity: 0;
+            will-change: opacity;
+            transition: opacity 0.5s;
+        }
+
+        &--pretty {
+            background: rgba(0,0,0,0.4);
+        }
+
+        &__item {
+            padding: 3px 10px;
+
+            &:hover {
+                background: white;
+            }
+        }
+    }
+   
+    &__control {
+
+    }
+}

@@ -1,0 +1,9 @@
+$block: 'container';
+
+.#{$block} {
+    
+
+    &--grayed {
+        background: rgba(0,0,0,0.05);
+    }
+}

@@ -1,0 +1,41 @@
+$block: 'text';
+
+$color-white: white; //todo: constants
+
+.#{$block} {
+    display: inline-flex;
+
+    &-padded {
+        &--xs {
+            padding: 0 10px;
+        }
+
+        &-sm {
+
+        }
+    }
+
+    &--white {
+        color: $color-white;
+    }
+
+    &--center {
+        text-align: center;
+    }
+
+    &--right {
+        text-align: right;
+    }
+
+    &--left {
+        text-align: left;
+    }
+
+    &--uppercased {
+        text-transform: uppercase;
+    }
+
+    &--bold {
+        font-weight: bold;
+    }
+}

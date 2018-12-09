@@ -1,0 +1,46 @@
+$block: 'course-list';
+
+
+.card-container-options {
+    display: flex;
+    justify-content: center;
+}
+
+.#{$block} {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+
+
+    &__item {
+        display: flex;
+        flex-flow: nowrap column;
+        width: 300px;
+        height: 300px;
+        margin: 10px;
+        
+        &--whited {
+            background: white;
+            border-radius: 5px;
+        }
+
+        &__preview {
+            flex-grow: 1;
+            min-height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        &__content {
+            flex-grow: 1;
+            padding: 5px 10px;
+        }
+
+        &__controls {
+            display: flex;
+            justify-content: center;
+            flex-grow: 0.5;
+        }
+    }
+}

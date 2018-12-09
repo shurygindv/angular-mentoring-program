@@ -1,0 +1,15 @@
+$block: 'bread-crumbs';
+
+.#{$block} {
+    padding: 10px 0;
+
+    &__item {
+        padding: 0 10px;
+
+        &:after {
+            content: '/';
+            font-weight: bold;
+            display: inline-block;
+        }
+    }
+}
