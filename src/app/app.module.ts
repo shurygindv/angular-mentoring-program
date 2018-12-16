@@ -7,17 +7,8 @@ import {SharedModule} from './shared/shared.module';
 import {CoreModule} from './core/core.module';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-  ],
-  imports: [
-    BrowserModule,
-
-    SharedModule,
-    CoreModule,
-
-    AppRoutingModule,
-  ],
+  declarations: [AppComponent],
+  imports: [BrowserModule, SharedModule, CoreModule, AppRoutingModule],
   providers: [],
   bootstrap: [AppComponent],
 })

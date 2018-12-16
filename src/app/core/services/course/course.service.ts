@@ -5,14 +5,11 @@ import {CourseService as ICourseService} from './course-service.interface';
 import {Course} from '../../models/course.interface';
 import {mockCourses} from '../../mocks/course.mock';
 
-
-
 @Injectable({
-    providedIn: 'root',
+  providedIn: 'root',
 })
-export class CourseService implements ICourseService  {
-
-    public fetchCourses(): Observable<Course[]> {
-        return of(mockCourses);
-    }
+export class CourseService implements ICourseService {
+  public fetchCourses(): Observable<Course[]> {
+    return of(mockCourses);
+  }
 }

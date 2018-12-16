@@ -9,20 +9,18 @@ type Sizes = 'xs' | 'sm' | 'md' | 'lg';
   styleUrls: ['./text.component.scss'],
 })
 export class TextComponent {
-  @Input() padded: Sizes;
-  @Input() color: Colors;
+  @Input() public padded: Sizes;
+  @Input() public color: Colors;
 
-  @Input() uppercased: boolean;
-  @Input() bold: boolean;
+  @Input() public uppercased: boolean;
+  @Input() public bold: boolean;
 
-  @Input() left: boolean;
-  @Input() center: boolean;
-  @Input() right: boolean;
+  @Input() public left: boolean;
+  @Input() public center: boolean;
+  @Input() public right: boolean;
 
-  getClasses() {
+  public getClasses() {
     return {
-      'text': true,
-
       [`text-padded--${this.padded}`]: this.padded,
       [`text--${this.color}`]: this.color,
 

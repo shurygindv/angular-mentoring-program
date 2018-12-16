@@ -22,12 +22,9 @@ import {BreadCrumbsComponent} from './components/bread-crumbs/bread-crumbs.compo
     ButtonComponent,
     TextComponent,
     MenuProfileComponent,
-    BreadCrumbsComponent
+    BreadCrumbsComponent,
   ],
-  imports: [
-    CommonModule,
-    ReactiveFormsModule
-  ],
+  imports: [CommonModule, ReactiveFormsModule],
   exports: [
     HeaderComponent,
     BodyComponent,
@@ -36,6 +33,6 @@ import {BreadCrumbsComponent} from './components/bread-crumbs/bread-crumbs.compo
     TextComponent,
     BreadCrumbsComponent,
     ButtonComponent,
-  ]
+  ],
 })
 export class SharedModule {}

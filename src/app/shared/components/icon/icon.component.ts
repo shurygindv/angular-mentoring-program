@@ -3,17 +3,15 @@ import {Component, Input} from '@angular/core';
 @Component({
   selector: 'app-icon',
   templateUrl: './icon.component.html',
-  styleUrls: ['./icon.component.scss']
+  styleUrls: ['./icon.component.scss'],
 })
 export class IconComponent {
-  @Input() size: string;
-  @Input() name: any;
-  @Input() className: string;
+  @Input() public size: string;
+  @Input() public name: any;
+  @Input() public className: string;
 
-  getClasses() {
+  public getClasses() {
     return {
-      icon: true,
-
       [`icon-${this.name}`]: this.name,
       [this.className]: this.className,
     };

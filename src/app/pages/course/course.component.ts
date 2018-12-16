@@ -7,11 +7,11 @@ import {Course} from '../../core/models/course.interface';
 @Component({
   selector: 'app-course',
   templateUrl: './course.component.html',
-  styleUrls: ['./course.component.scss']
+  styleUrls: ['./course.component.scss'],
 })
 export class CourseComponent implements OnInit, OnDestroy {
-  @Output() routes: string[] = ['Courses'];
-  @Output() courses: Course[];
+  @Output() public routes: string[] = ['Courses'];
+  @Output() public courses: Course[];
 
   private courseService: CourseService;
   private coursesFetchSubscription: Subscription;
@@ -22,13 +22,12 @@ export class CourseComponent implements OnInit, OnDestroy {
     this.updateCourses = this.updateCourses.bind(this);
   }
 
-  private updateCourses (courses: Course[]) {
+  private updateCourses(courses: Course[]) {
     this.courses = courses;
   }
 
   private fetchCourses(): Subscription {
-    return this.courseService.fetchCourses()
-      .subscribe(this.updateCourses);
+    return this.courseService.fetchCourses().subscribe(this.updateCourses);
   }
 
   public ngOnInit(): void {
@@ -38,5 +37,4 @@ export class CourseComponent implements OnInit, OnDestroy {
   public ngOnDestroy(): void {
     this.coursesFetchSubscription.unsubscribe();
   }
-
 }

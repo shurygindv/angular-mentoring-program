@@ -1,6 +1,6 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { MenuProfileComponent } from './menu-profile.component';
+import {MenuProfileComponent} from './menu-profile.component';
 
 describe('MenuProfileComponent', () => {
   let component: MenuProfileComponent;
@@ -8,9 +8,8 @@ describe('MenuProfileComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MenuProfileComponent ]
-    })
-    .compileComponents();
+      declarations: [MenuProfileComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
