@@ -1,6 +1,8 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
+import {IconComponent} from './../icon/icon.component';
 import {MenuProfileComponent} from './menu-profile.component';
+import {ButtonComponent} from '../button/button.component';
 
 describe('MenuProfileComponent', () => {
   let component: MenuProfileComponent;
@@ -8,7 +10,7 @@ describe('MenuProfileComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [MenuProfileComponent],
+      declarations: [MenuProfileComponent, IconComponent, ButtonComponent],
     }).compileComponents();
   }));
 
@@ -20,5 +22,13 @@ describe('MenuProfileComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should render self', () => {
+    const elem = fixture.debugElement.nativeElement.querySelector(
+      '.menu-profile',
+    );
+
+    expect(elem).toBeTruthy();
   });
 });

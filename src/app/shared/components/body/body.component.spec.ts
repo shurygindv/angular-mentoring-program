@@ -21,4 +21,10 @@ describe('BodyComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should have <main> tag', () => {
+    const compiled = fixture.debugElement.nativeElement;
+
+    expect(compiled.querySelector('main')).toBeTruthy();
+  });
 });

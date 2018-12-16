@@ -46,4 +46,8 @@ $block: 'btn';
             padding: 10px 15px;
         }
     }
+
+    &--uppercased {
+        text-transform: uppercase;
+    }
 }

@@ -1,11 +1,13 @@
 import {TestBed, async} from '@angular/core/testing';
 import {RouterTestingModule} from '@angular/router/testing';
+
 import {AppComponent} from './app.component';
+import {SharedModule} from './shared/shared.module';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [RouterTestingModule],
+      imports: [RouterTestingModule, SharedModule],
       declarations: [AppComponent],
     }).compileComponents();
   }));
@@ -22,12 +24,30 @@ describe('AppComponent', () => {
     expect(app.title).toEqual('angular-mentoring-program');
   });
 
-  it('should render title in a h1 tag', () => {
+  it(`should render <app-header></app-header>`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
+
     const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('h1').textContent).toContain(
-      'Welcome to angular-mentoring-program!',
-    );
+
+    expect(compiled.querySelector('app-header')).toBeTruthy();
+  });
+
+  it(`should render <router-outlet></router-outlet>`, () => {
+    const fixture = TestBed.createComponent(AppComponent);
+    fixture.detectChanges();
+
+    const compiled = fixture.debugElement.nativeElement;
+
+    expect(compiled.querySelector('router-outlet')).toBeTruthy();
+  });
+
+  it(`should render <app-footer></app-footer>`, () => {
+    const fixture = TestBed.createComponent(AppComponent);
+    fixture.detectChanges();
+
+    const compiled = fixture.debugElement.nativeElement;
+
+    expect(compiled.querySelector('app-footer')).toBeTruthy();
   });
 });

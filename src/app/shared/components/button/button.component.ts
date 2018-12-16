@@ -15,10 +15,10 @@ export class ButtonComponent {
   @Input() public size: Sizes;
   // flags
   @Input() public uppercased: boolean;
-  @Input() public disabled: boolean;
+  @Input() public disabled: boolean; // not used yet
   @Input() public full: boolean;
   // handlers
-  @Output() public click = new EventEmitter<null>(); //TODO: type if need
+  @Output() public click = new EventEmitter<null>(); // TODO: type if need
 
   public handleClick() {
     console.log('click');

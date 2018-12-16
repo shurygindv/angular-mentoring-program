@@ -18,7 +18,6 @@ export class CourseComponent implements OnInit, OnDestroy {
 
   constructor(courseService: CourseService) {
     this.courseService = courseService;
-
     this.updateCourses = this.updateCourses.bind(this);
   }
 
@@ -26,7 +25,7 @@ export class CourseComponent implements OnInit, OnDestroy {
     this.courses = courses;
   }
 
-  private fetchCourses(): Subscription {
+  public fetchCourses(): Subscription {
     return this.courseService.fetchCourses().subscribe(this.updateCourses);
   }
 
@@ -35,6 +34,8 @@ export class CourseComponent implements OnInit, OnDestroy {
   }
 
   public ngOnDestroy(): void {
-    this.coursesFetchSubscription.unsubscribe();
+    if (this.coursesFetchSubscription) {
+      this.coursesFetchSubscription.unsubscribe();
+    }
   }
 }
