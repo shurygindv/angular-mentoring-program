@@ -12,7 +12,7 @@ describe('AppComponent', () => {
     }).compileComponents();
   }));
 
-  it('should create the app', () => {
+  it('should create component the app', () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.debugElement.componentInstance;
     expect(app).toBeTruthy();
@@ -30,7 +30,7 @@ describe('AppComponent', () => {
 
     const compiled = fixture.debugElement.nativeElement;
 
-    expect(compiled.querySelector('app-header')).toBeTruthy();
+    expect(compiled.querySelector('app-header')).toBeDefined();
   });
 
   it(`should render <router-outlet></router-outlet>`, () => {
@@ -39,7 +39,7 @@ describe('AppComponent', () => {
 
     const compiled = fixture.debugElement.nativeElement;
 
-    expect(compiled.querySelector('router-outlet')).toBeTruthy();
+    expect(compiled.querySelector('router-outlet')).toBeDefined();
   });
 
   it(`should render <app-footer></app-footer>`, () => {
@@ -48,6 +48,6 @@ describe('AppComponent', () => {
 
     const compiled = fixture.debugElement.nativeElement;
 
-    expect(compiled.querySelector('app-footer')).toBeTruthy();
+    expect(compiled.querySelector('app-footer')).toBeDefined();
   });
 });

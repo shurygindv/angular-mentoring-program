@@ -25,7 +25,7 @@ describe('ButtonComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('should create component', () => {
     expect(component).toBeTruthy();
   });
 
@@ -64,7 +64,9 @@ describe('ButtonComponent', () => {
   });
 
   it('should feel good as child', () => {
-    const testFixture = TestBed.createComponent(HostButtonComponent);
+    const testFixture: ComponentFixture<
+      HostButtonComponent
+    > = TestBed.createComponent(HostButtonComponent);
     const testComponent = testFixture.componentInstance;
 
     testComponent.underTestComponent.type = 'submit';

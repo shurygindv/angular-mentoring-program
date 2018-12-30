@@ -20,12 +20,12 @@ describe('MenuProfileComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('should create component', () => {
     expect(component).toBeTruthy();
   });
 
   it('should render self', () => {
-    const elem = fixture.debugElement.nativeElement.querySelector(
+    const elem: Element = fixture.debugElement.nativeElement.querySelector(
       '.menu-profile',
     );
 

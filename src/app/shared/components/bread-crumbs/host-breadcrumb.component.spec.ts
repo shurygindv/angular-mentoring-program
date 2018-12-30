@@ -2,7 +2,6 @@ import {ViewChild, Component} from '@angular/core';
 
 import {BreadCrumbsComponent} from './bread-crumbs.component';
 
-
 @Component({
   selector: `app-host-breadcrumb`,
   template: `

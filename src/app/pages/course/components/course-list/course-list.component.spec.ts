@@ -41,7 +41,7 @@ describe('CourseListComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('should create component component', () => {
     expect(component).toBeTruthy();
   });
 
@@ -70,7 +70,9 @@ describe('CourseListComponent', () => {
   });
 
   it('should feel right as child of something container', () => {
-    const testFixture = TestBed.createComponent(HostCourseListComponent);
+    const testFixture: ComponentFixture<
+      HostCourseListComponent
+    > = TestBed.createComponent(HostCourseListComponent);
 
     const testComponent = testFixture.componentInstance;
     const compiled = testFixture.debugElement.nativeElement;

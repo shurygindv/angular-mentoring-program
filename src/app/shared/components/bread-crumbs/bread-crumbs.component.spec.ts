@@ -19,7 +19,7 @@ describe('BreadCrumbsComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('should create component', () => {
     expect(component).toBeTruthy();
   });
 
@@ -39,7 +39,9 @@ describe('BreadCrumbsComponent', () => {
   });
 
   it('should work pretty as child through host', () => {
-    const testFixture = TestBed.createComponent(HostBreadcrumbComponent);
+    const testFixture: ComponentFixture<
+      HostBreadcrumbComponent
+    > = TestBed.createComponent(HostBreadcrumbComponent);
 
     const testComponent = testFixture.componentInstance;
     const compiled = testFixture.debugElement.nativeElement;

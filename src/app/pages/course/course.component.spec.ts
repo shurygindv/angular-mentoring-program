@@ -1,10 +1,8 @@
-import { CoreModule } from './../../core/core.module';
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {CourseComponent} from './course.component';
 import {SharedModule} from '../../shared/shared.module';
 import {CourseListComponent} from './components/course-list/course-list.component';
-import { CourseService } from '../../core/services/course/course.service';
 
 describe('CourseComponent', () => {
   let component: CourseComponent;
@@ -17,7 +15,6 @@ describe('CourseComponent', () => {
     TestBed.configureTestingModule({
       imports: [SharedModule],
       declarations: [CourseComponent, CourseListComponent],
-    //  providers: [CourseService]
     });
   }));
 
@@ -27,11 +24,11 @@ describe('CourseComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('should create component', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should have course lis1t', () => {
+  it('should have course list', () => {
     expect(findElem('app-course-list')).toBeTruthy();
   });
 

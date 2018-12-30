@@ -33,7 +33,7 @@ describe('HeaderComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('should create component', () => {
     expect(component).toBeTruthy();
   });
 
@@ -46,10 +46,12 @@ describe('HeaderComponent', () => {
   });
 
   it('should feel right as child', () => {
-    const testFixture = TestBed.createComponent(HostHeaderComponent);
+    const testFixture: ComponentFixture<
+      HostHeaderComponent
+    > = TestBed.createComponent(HostHeaderComponent);
     testFixture.detectChanges();
 
-    const hostContainsHeader = !!testFixture.debugElement.nativeElement.querySelector(
+    const hostContainsHeader: boolean = !!testFixture.debugElement.nativeElement.querySelector(
       'header',
     );
 
