@@ -1,30 +1,27 @@
 <section class="card-container">
   <ul class="course-list">
-    <ng-container *ngFor="let course of items">
-      <li 
-      class="course-list__item"    
-      [ngClass]="getCourseClasses(course)"  
-      [appDateStatus]="course.creationDate"
+    <ng-container *ngFor="let course of (items | orderByCourse: searchBy : 'title')">
+      <li
+        class="course-list__item"
+        [ngClass]="getCourseClasses(course)"
+        [appDateStatus]="course.creationDate"
       >
-        <section class="course-list__item__preview"
-        >
+        <section class="course-list__item__preview">
           <div class="course-list-image">((IMAGE_STUB))</div>
         </section>
 
         <section class="course-list__item__content">
-          <app-content-box  [align]="'vertical'">
-              <app-text [bold]="true" [uppercased]="true">
-                  {{ course.title }}
-                </app-text>
+          <app-content-box [align]="'vertical'">
+            <app-text [bold]="true">
+              {{ course.title | uppercase }}
+            </app-text>
 
-              <app-icon [name]="'favorite'" *ngIf="course.topRated"></app-icon>
+            <app-icon [name]="'favorite'" *ngIf="course.topRated"></app-icon>
           </app-content-box>
-     
 
-
-          <app-text> {{ course.description }} </app-text>
-          <app-text> {{ course.creationDate }} </app-text>
-          <app-text> {{ course.duration }} </app-text>
+          <p> {{ course.description }} </p>
+          <p> {{ course.creationDate | date: 'fullDate' }} </p>
+          <p> {{ course.duration | durationNormalizer }} </p>
         </section>
 
         <section class="course-list__item__controls">

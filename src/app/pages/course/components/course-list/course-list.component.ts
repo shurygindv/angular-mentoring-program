@@ -9,6 +9,7 @@ import {Course} from '../../../../core/models/course.interface';
 })
 export class CourseListComponent {
   @Input() public items: Course[];
+  @Input() public searchBy: string;
 
   public getCourseClasses(course: Course) {
     const isFavorite = course.topRated;

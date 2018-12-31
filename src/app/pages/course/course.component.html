@@ -1,10 +1,10 @@
 <app-body>
-  <app-search-bar></app-search-bar>
+  <app-search-bar (inputChanges)="updateSearch($event)"></app-search-bar>
 
   <app-bread-crumbs [items]="routes"></app-bread-crumbs>
 
   <ng-container>
-    <app-course-list [items]="courses" *ngIf="courses.length"></app-course-list>
+    <app-course-list [items]="courses" [searchBy]="searchBy" *ngIf="courses.length"></app-course-list>
     <app-content-box
       [align]="'both'"
       [size]="'md'"

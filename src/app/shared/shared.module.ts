@@ -14,11 +14,13 @@ import {BreadCrumbsComponent} from './components/bread-crumbs/bread-crumbs.compo
 import {ContentBoxComponent} from './components/content-box/content-box.component';
 
 import {DateStatusDirective} from './date-status.directive';
+import {DurationNormalizerPipe} from './duration-normalizer.pipe';
 
 @NgModule({
   declarations: [
     // directives
     DateStatusDirective,
+    DurationNormalizerPipe,
     // components
     HeaderComponent,
     BodyComponent,
@@ -44,6 +46,7 @@ import {DateStatusDirective} from './date-status.directive';
     ContentBoxComponent,
 
     DateStatusDirective,
+    DurationNormalizerPipe,
   ],
 })
 export class SharedModule {}

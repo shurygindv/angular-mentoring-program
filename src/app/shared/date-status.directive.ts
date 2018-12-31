@@ -20,7 +20,6 @@ export class DateStatusDirective {
   }
 
   private setActive(isActive: boolean) {
-    console.log(isActive);
     this.isActive = isActive;
   }
 

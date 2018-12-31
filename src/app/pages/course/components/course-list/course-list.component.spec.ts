@@ -3,10 +3,12 @@ import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {HostCourseListComponent} from './host-course-list.component.spec';
 import {CourseListComponent} from './course-list.component';
 import {SharedModule} from '../../../../shared/shared.module';
+import {OrderByCoursePipe} from '../../order-by-course.pipe';
 
 const testMockedCourses = [
   {
     id: 0,
+    topRated: false,
     title: 'How to become better than you thought possible',
     creationDate: '2018-10-21T13:28:06.419Z',
     duration: 60,
@@ -14,6 +16,7 @@ const testMockedCourses = [
   },
   {
     id: 0,
+    topRated: false,
     title: 'How to become better than you thought possible',
     creationDate: '2018-10-21T13:28:06.419Z',
     duration: 60,
@@ -31,7 +34,11 @@ describe('CourseListComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [SharedModule],
-      declarations: [CourseListComponent, HostCourseListComponent],
+      declarations: [
+        CourseListComponent,
+        HostCourseListComponent,
+        OrderByCoursePipe,
+      ],
     }).compileComponents();
   }));
 

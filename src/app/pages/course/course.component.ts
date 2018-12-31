@@ -13,6 +13,8 @@ export class CourseComponent implements OnInit, OnDestroy {
   @Output() public routes: string[] = ['Courses'];
   @Output() public courses: Course[];
 
+  @Output() public searchBy: string;
+
   private courseService: CourseService;
   private coursesFetchSubscription: Subscription;
 
@@ -37,5 +39,9 @@ export class CourseComponent implements OnInit, OnDestroy {
     if (this.coursesFetchSubscription) {
       this.coursesFetchSubscription.unsubscribe();
     }
+  }
+
+  public updateSearch(value: string) {
+    this.searchBy = value;
   }
 }

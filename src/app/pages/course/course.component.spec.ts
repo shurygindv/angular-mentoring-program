@@ -3,6 +3,7 @@ import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {CourseComponent} from './course.component';
 import {SharedModule} from '../../shared/shared.module';
 import {CourseListComponent} from './components/course-list/course-list.component';
+import {OrderByCoursePipe} from './order-by-course.pipe';
 
 describe('CourseComponent', () => {
   let component: CourseComponent;
@@ -14,7 +15,7 @@ describe('CourseComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [SharedModule],
-      declarations: [CourseComponent, CourseListComponent],
+      declarations: [CourseComponent, CourseListComponent, OrderByCoursePipe],
     });
   }));
 
@@ -48,6 +49,7 @@ describe('CourseComponent', () => {
     component.courses = [
       {
         id: 0,
+        topRated: false,
         title: 'How to become better than you thought possible',
         creationDate: '2018-10-21T13:28:06.419Z',
         duration: 60,
@@ -55,6 +57,7 @@ describe('CourseComponent', () => {
       },
       {
         id: 0,
+        topRated: false,
         title: 'How to become better than you thought possible',
         creationDate: '2018-10-21T13:28:06.419Z',
         duration: 60,

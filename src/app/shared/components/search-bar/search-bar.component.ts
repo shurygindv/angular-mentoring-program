@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, Output, EventEmitter} from '@angular/core';
 import {FormGroup, FormControl} from '@angular/forms';
 
 @Component({
@@ -11,7 +11,17 @@ export class SearchBarComponent {
     search: new FormControl(),
   });
 
+  @Output() public inputChanges = new EventEmitter();
+
+  private get form(): FormGroup {
+    return this.searchForm;
+  }
+
+  private get searchValue(): string {
+    return this.form.value.search;
+  }
+
   public submitSearchValue() {
-    console.log(this.searchForm.value);
+    this.inputChanges.emit(this.searchValue);
   }
 }
