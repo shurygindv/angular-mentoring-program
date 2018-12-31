@@ -33,6 +33,15 @@ $block: 'icon';
         }
     }
 
+    &-favorite {
+        &:before {
+            width: 32px;
+            height: 32px;
+            background-image: url('./../../../../assets/icons/favorite.svg');
+        }
+    }
+
+
     &-user-placeholder {
         &:before {
             width: 32px;

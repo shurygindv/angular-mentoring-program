@@ -11,9 +11,15 @@ import {ButtonComponent} from './components/button/button.component';
 import {TextComponent} from './components/text/text.component';
 import {MenuProfileComponent} from './components/menu-profile/menu-profile.component';
 import {BreadCrumbsComponent} from './components/bread-crumbs/bread-crumbs.component';
+import {ContentBoxComponent} from './components/content-box/content-box.component';
+
+import {DateStatusDirective} from './date-status.directive';
 
 @NgModule({
   declarations: [
+    // directives
+    DateStatusDirective,
+    // components
     HeaderComponent,
     BodyComponent,
     FooterComponent,
@@ -23,6 +29,7 @@ import {BreadCrumbsComponent} from './components/bread-crumbs/bread-crumbs.compo
     TextComponent,
     MenuProfileComponent,
     BreadCrumbsComponent,
+    ContentBoxComponent,
   ],
   imports: [CommonModule, ReactiveFormsModule],
   exports: [
@@ -32,7 +39,11 @@ import {BreadCrumbsComponent} from './components/bread-crumbs/bread-crumbs.compo
     SearchBarComponent,
     TextComponent,
     BreadCrumbsComponent,
+    IconComponent,
     ButtonComponent,
+    ContentBoxComponent,
+
+    DateStatusDirective,
   ],
 })
 export class SharedModule {}

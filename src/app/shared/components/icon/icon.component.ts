@@ -7,7 +7,7 @@ import {Component, Input} from '@angular/core';
 })
 export class IconComponent {
   @Input() public size: string; // not used yet
-  @Input() public name: any;
+  @Input() public name: string;
   @Input() public className: string; // not used yet
 
   public getClasses() {

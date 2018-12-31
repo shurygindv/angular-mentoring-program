@@ -9,4 +9,13 @@ import {Course} from '../../../../core/models/course.interface';
 })
 export class CourseListComponent {
   @Input() public items: Course[];
+
+  public getCourseClasses(course: Course) {
+    const isFavorite = course.topRated;
+
+    return {
+      'course-list__item--whited': !isFavorite,
+      'course-list__item--favorite': isFavorite,
+    };
+  }
 }

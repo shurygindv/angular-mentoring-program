@@ -42,5 +42,9 @@ $block: 'course-list';
             justify-content: center;
             flex-grow: 0.5;
         }
+
+        &--favorite {
+            background: pink;
+        }
     }
 }

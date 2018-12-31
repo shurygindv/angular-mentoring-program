@@ -3,13 +3,15 @@ import {Course} from '../models/course.interface';
 export const mockCourses: Course[] = [
   {
     id: 0,
+    topRated: true,
     title: 'How to become better than you thought possible',
-    creationDate: '2018-10-21T13:28:06.419Z',
+    creationDate: '2018-12-25T13:28:06.419Z',
     duration: 60,
     description: '',
   },
   {
     id: 1,
+    topRated: true,
     title: 'Reason Ocaml. Get started',
     creationDate: '2012-10-21T13:28:06.419Z',
     duration: 120,
@@ -17,6 +19,7 @@ export const mockCourses: Course[] = [
   },
   {
     id: 2,
+    topRated: false,
     title: 'How to live own life and not regret about that in old age',
     creationDate: '2011-10-21T13:28:06.419Z',
     duration: 60,
@@ -24,6 +27,7 @@ export const mockCourses: Course[] = [
   },
   {
     id: 3,
+    topRated: false,
     title: 'Must have soft skills',
     creationDate: '2018-10-21T13:28:06.419Z',
     duration: 60,
@@ -31,6 +35,7 @@ export const mockCourses: Course[] = [
   },
   {
     id: 4,
+    topRated: false,
     title: 'How to stop worry and begin to live',
     creationDate: '2018-10-21T13:28:06.419Z',
     duration: 41,
@@ -38,6 +43,7 @@ export const mockCourses: Course[] = [
   },
   {
     id: 5,
+    topRated: false,
     title: 'Red or Blue pill?',
     creationDate: '2018-10-21T13:28:06.419Z',
     duration: 60,
@@ -45,6 +51,7 @@ export const mockCourses: Course[] = [
   },
   {
     id: 6,
+    topRated: false,
     title: 'Why do you should know about FP ways',
     creationDate: '2018-10-21T13:28:06.419Z',
     duration: 37,
@@ -52,6 +59,7 @@ export const mockCourses: Course[] = [
   },
   {
     id: 7,
+    topRated: true,
     title: "It's 7 id",
     creationDate: '2018-10-21T13:28:06.419Z',
     duration: 60,
@@ -59,6 +67,7 @@ export const mockCourses: Course[] = [
   },
   {
     id: 8,
+    topRated: false,
     title: "It's 8 id",
     creationDate: '2018-10-21T13:28:06.419Z',
     duration: 25,
@@ -66,6 +75,7 @@ export const mockCourses: Course[] = [
   },
   {
     id: 9,
+    topRated: false,
     title: "It's 9 id",
     creationDate: '2018-10-21T13:28:06.419Z',
     duration: 17,

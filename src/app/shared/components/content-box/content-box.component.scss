@@ -1,0 +1,31 @@
+
+.content-box {
+    display: flex;
+
+    &-align {
+        &--vertical {
+            align-items: center;
+        }
+
+        &--horizontal {
+            justify-content: center;   
+        }
+
+        &--both {
+            justify-content: center;
+            align-items: center;
+        }
+    }
+
+    &-size {
+        &--md {
+            padding: 10px 15px;
+        }
+    }
+
+    &-border {
+        &--silver {
+            border: 2px solid silver;
+        }
+    }
+}
