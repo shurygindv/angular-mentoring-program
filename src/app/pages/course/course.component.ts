@@ -41,7 +41,7 @@ export class CourseComponent implements OnInit, OnDestroy {
     }
   }
 
-  public updateSearch(value: string) {
+  public updateSearch(value: string): void {
     this.searchBy = value;
   }
 }

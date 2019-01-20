@@ -1,6 +1,6 @@
 import {DurationNormalizerPipe} from './duration-normalizer.pipe';
 
-describe('DurationNormalizerPipe Test', () => {
+describe('[Pipe] Testing: DurationNormalizerPipe', () => {
   const pipe = new DurationNormalizerPipe();
 
   it('transforms "60" to "1h"', () => {

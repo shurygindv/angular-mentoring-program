@@ -19,13 +19,13 @@ export class DateStatusDirective {
     return original > now;
   }
 
-  private setActive(isActive: boolean) {
+  private setActive(isActive: boolean): void {
     this.isActive = isActive;
   }
 
   @Input() set appDateStatus(creationDate: string) {
-    const original = Number(new Date(creationDate));
-    const now = Date.now();
+    const original: number = Number(new Date(creationDate));
+    const now: number = Date.now();
 
     this.setActive(
       this.isUpToDate(original, now) || this.isNextDate(original, now),
@@ -33,10 +33,11 @@ export class DateStatusDirective {
   }
 }
 
-function get14Days() {
-  const ONE_SECOND = 1000;
+function get14Days(): number {
+  const ONE_SECOND = 1000; // when type :number, tslint says about error "type number trivially inferred from a number"
   const ONE_MINUTE = ONE_SECOND * 60;
-  const ONE_HOURS = ONE_MINUTE * 60;
+  const ONE_HOUR = ONE_MINUTE * 60;
+  const ONE_DAY = ONE_HOUR * 24;
 
-  return ONE_HOURS * 24 * 14;
+  return ONE_DAY * 14;
 }
