@@ -80,12 +80,12 @@ describe('ButtonComponent', () => {
   });
 
   it('should handle clicks', () => {
-    spyOn(component, 'handleClick');
+    spyOn(component, 'onClick');
 
     findElem('button').click();
 
     fixture.whenStable().then(() => {
-      expect(component.handleClick).toHaveBeenCalled();
+      expect(component.onClick).toHaveBeenCalled();
     });
   });
 });

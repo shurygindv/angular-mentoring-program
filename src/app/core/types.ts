@@ -1,7 +1,7 @@
 // TODO: adaptate for rxjs
 export interface ICrud<T> {
   create(item: T): T;
-  getById(id: string): T; // read
-  update(id: string, item: T);
-  delete(id: string): void;
+  getById(id: number): T; // read
+  update(id: number, item: T);
+  delete(id: number): void;
 }

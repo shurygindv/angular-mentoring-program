@@ -17,10 +17,14 @@ export interface DialogData {
   styleUrls: ['./dialog-confirmation.component.scss'],
 })
 export class DialogConfirmationComponent {
+  private dialogRef: MatDialogRef<DialogConfirmationComponent>;
+
   constructor(
-    public dialogRef: MatDialogRef<DialogConfirmationComponent>,
+    dialogRef: MatDialogRef<DialogConfirmationComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
-  ) {}
+  ) {
+    this.dialogRef = dialogRef;
+  }
 
   public onConfirm(): void {
     if (this.data.onConfirm) {

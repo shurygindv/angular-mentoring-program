@@ -7,7 +7,11 @@ import {AuthService} from '../../../core/services/auth/auth.service';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent {
-  constructor(private readonly authService: AuthService) {}
+  private authService: AuthService;
+
+  constructor(authService: AuthService) {
+    this.authService = authService;
+  }
 
   public showProfile() {
     return this.authService.isAuthenticated();

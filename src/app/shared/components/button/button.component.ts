@@ -20,7 +20,7 @@ export class ButtonComponent {
   // handlers
   @Output() public click = new EventEmitter<null>(); // TODO: type if need
 
-  public handleClick($event: Event) {
+  public onClick($event: Event) {
     event.stopPropagation(); // TODO: fix this
     this.click.emit(null);
   }

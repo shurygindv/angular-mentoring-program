@@ -14,12 +14,16 @@ import {AuthService} from '../../core/services/auth/auth.service';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent {
+  private authService: AuthService;
+
   public loginForm = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [Validators.required]),
   });
 
-  constructor(private readonly authService: AuthService) {}
+  constructor(authService: AuthService) {
+    this.authService = authService;
+  }
 
   get emailField(): AbstractControl {
     return this.loginForm.controls.email;

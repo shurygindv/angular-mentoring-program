@@ -24,21 +24,25 @@ export class CourseComponent implements OnInit, OnDestroy {
   constructor(courseService: CourseService, dialog: MatDialog) {
     this.courseService = courseService;
     this.matDialog = dialog;
-
-    this.updateCourses = this.updateCourses.bind(this);
-    this.deleteCourse = this.deleteCourse.bind(this);
   }
 
-  private updateCourses(courses: Course[]) {
+  private updateCourses = (courses: Course[]) => {
     this.courses = courses;
   }
 
-  public fetchCourses(): Subscription {
-    return this.courseService.fetchCourses().subscribe(this.updateCourses);
+  private subscribeToCourses() {
+    this.coursesFetchSubscription = this.courseService.courses.subscribe(
+      this.updateCourses,
+    );
+  }
+
+  public fetchCourses() {
+    this.courseService.fetchCourses();
   }
 
   public ngOnInit(): void {
-    this.coursesFetchSubscription = this.fetchCourses();
+    this.subscribeToCourses();
+    this.fetchCourses();
   }
 
   public ngOnDestroy(): void {
@@ -55,19 +59,18 @@ export class CourseComponent implements OnInit, OnDestroy {
     console.log(course);
   }
 
-  public deleteCourse(id: string) {
+  public deleteCourse = (id: number) => {
     this.courseService.delete(id);
   }
 
-  public showConfirmationDialogAboutRemove(course: Course) {
-    console.log(course);
+  public showRemovingDialog(course: Course) {
     this.matDialog.open(DialogConfirmationComponent, {
       data: {
         title: 'Do you really want to delete this course?',
         description: '',
 
         onCancel: () => console.log('cancel'),
-        onConfirm: () => this.deleteCourse(course.id as any),
+        onConfirm: () => this.deleteCourse(course.id),
       },
     });
   }

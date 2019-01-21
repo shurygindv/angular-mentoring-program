@@ -1,45 +1,63 @@
-import * as R from 'ramda';
 import {Injectable} from '@angular/core';
-import {Observable, of} from 'rxjs';
+import {Observable, BehaviorSubject} from 'rxjs';
 
-import {CourseService as ICourseService} from './course-service.interface';
 import {Course} from '../../models/course.interface';
 import {mockCourses} from '../../mocks/course.mock';
 import {ICrud} from '../../types';
 
-const toString = (key: number) => `_${key}`;
-
 @Injectable({
   providedIn: 'root',
 })
-export class CourseService implements ICourseService, ICrud<Course> {
-  private id: number;
-  private store: Map<string, Course> = new Map(
-    R.map((item: Course) => R.pair(toString(item.id), item), mockCourses),
-  );
+export class CourseService implements ICrud<Course> {
+  private _courses: BehaviorSubject<Course[]>;
+  private currentId: number;
+  private store: Course[];
+
+  constructor() {
+    this._courses = new BehaviorSubject([]);
+    this.store = mockCourses;
+  }
+
+  get courses(): Observable<Course[]> {
+    return this._courses.asObservable();
+  }
+
+  private upToDateCourses(courses: Course[]) {
+    this.store = [...courses];
+    this._courses.next(Array.from(this.store));
+  }
 
   public create(course: Course): Course {
-    this.id++;
+    this.currentId++;
 
-    this.store.set(toString(this.id), course);
+    const item = {id: this.currentId, ...course};
 
-    return course;
+    this.upToDateCourses([...this.store, item]);
+
+    return item;
   }
 
-  public getById(id: string): Course {
-    return {...this.store.get(id)};
+  public getById(id: number): Course {
+    const course = this.store.find((item: Course) => item.id === id);
+
+    return {...course};
   }
 
-  public update(id: string, course: Course) {
-    this.store.set(id, course);
+  public update(id: number, course: Course) {
+    const index = this.store.findIndex((item: Course) => item.id === id);
+
+    this.upToDateCourses([
+      ...this.store.slice(0, index - 1),
+      course,
+      ...this.store.slice(index + 1),
+    ]);
   }
 
-  public delete(id: string): void {
-    console.log(`DELETE BY ID: ${id}`);
-    this.store.delete(id);
+  public delete(id: number): void {
+    this.upToDateCourses(this.store.filter((item: Course) => item.id !== id));
   }
 
-  public fetchCourses(): Observable<Course[]> {
-    return of(Array.from(this.store.values()));
+  public fetchCourses(): void {
+    this._courses.next(Array.from(this.store.values()));
   }
 }

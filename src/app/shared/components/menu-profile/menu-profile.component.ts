@@ -9,6 +9,6 @@ export class MenuProfileComponent {
   @Output() public logout = new EventEmitter<null>();
 
   public logoutUser() {
-    this.logout.emit(null);
+    this.logout.emit();
   }
 }

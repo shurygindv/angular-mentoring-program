@@ -1,11 +1,7 @@
 <app-body>
 
   <form class="login-form" [formGroup]="loginForm" (ngSubmit)="submitForm()">
-      <div>
-          <p>User: d@d.ru</p>
-          Password: <strong>123</strong>
-      </div>
-      
+  
     <mat-form-field class="login-form__control">
       <input matInput placeholder="Enter your email" formControlName="email" required>
       <mat-error *ngIf="loginForm.controls.email.invalid">{{getEmailErrorMsg()}}</mat-error>
