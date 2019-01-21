@@ -60,7 +60,7 @@ export const mockCourses: Course[] = [
   {
     id: 7,
     topRated: true,
-    title: "It's 7 id",
+    title: 'It\'s 7 id',
     creationDate: '2018-10-21T13:28:06.419Z',
     duration: 60,
     description: '',
@@ -68,7 +68,7 @@ export const mockCourses: Course[] = [
   {
     id: 8,
     topRated: false,
-    title: "It's 8 id",
+    title: 'It\'s 8 id',
     creationDate: '2018-10-21T13:28:06.419Z',
     duration: 25,
     description: '',
@@ -76,7 +76,7 @@ export const mockCourses: Course[] = [
   {
     id: 9,
     topRated: false,
-    title: "It's 9 id",
+    title: 'It\'s 9 id',
     creationDate: '2018-10-21T13:28:06.419Z',
     duration: 17,
     description: '',

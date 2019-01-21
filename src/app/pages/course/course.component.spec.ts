@@ -4,6 +4,7 @@ import {CourseComponent} from './course.component';
 import {SharedModule} from '../../shared/shared.module';
 import {CourseListComponent} from './components/course-list/course-list.component';
 import {OrderByCoursePipe} from './order-by-course.pipe';
+import {MaterialUiModule} from '../../shared/material-ui.module';
 
 describe('CourseComponent', () => {
   let component: CourseComponent;
@@ -14,7 +15,7 @@ describe('CourseComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [SharedModule],
+      imports: [SharedModule, MaterialUiModule],
       declarations: [CourseComponent, CourseListComponent, OrderByCoursePipe],
     });
   }));

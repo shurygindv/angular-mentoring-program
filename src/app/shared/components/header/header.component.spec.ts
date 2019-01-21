@@ -6,6 +6,8 @@ import {ButtonComponent} from '../button/button.component';
 import {TextComponent} from '../text/text.component';
 import {IconComponent} from '../icon/icon.component';
 import {MenuProfileComponent} from '../menu-profile/menu-profile.component';
+import {CoreModule} from '../../../core/core.module';
+import {AppRoutingModule} from '../../../app-routing.module';
 
 describe('HeaderComponent', () => {
   let component: HeaderComponent;
@@ -16,6 +18,7 @@ describe('HeaderComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [CoreModule, AppRoutingModule],
       declarations: [
         HostHeaderComponent,
         HeaderComponent,
@@ -41,8 +44,12 @@ describe('HeaderComponent', () => {
     expect(findElem('header')).toBeTruthy();
   });
 
-  it('should render <profile> element', () => {
-    expect(findElem('app-menu-profile')).toBeTruthy();
+  it('should render <profile> element when Auth flag', () => {
+    const element = findElem('app-menu-profile');
+
+    if (!component.showProfile()) {
+      expect(element).toBeFalsy();
+    }
   });
 
   it('should feel right as child', () => {

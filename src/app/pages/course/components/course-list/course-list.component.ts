@@ -23,11 +23,11 @@ export class CourseListComponent {
     };
   }
 
-  public handleClickOnRemove (item: Course) {
+  public handleClickOnRemove(item: Course) {
     this.remove.emit(item);
   }
 
-  public handleClickOnEdit (item: Course) {
+  public handleClickOnEdit(item: Course) {
     this.edit.emit(item);
   }
 }
