@@ -47,6 +47,7 @@ import {DurationNormalizerPipe} from './duration-normalizer.pipe';
 
     DateStatusDirective,
     DurationNormalizerPipe,
+    ReactiveFormsModule,
   ],
 })
 export class SharedModule {}

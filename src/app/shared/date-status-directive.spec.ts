@@ -39,24 +39,19 @@ describe('[Directive] Testing: DateStatusDirective', () => {
 
     fixture.detectChanges();
 
-    const classes = [
-      element.classes['box'],
-      element.classes['box--green'],
-    ];
+    const classes = [element.classes['box'], element.classes['box--green']];
 
     expect(classes.every(R.identity)).toBeTruthy();
   });
 
   it('should set inactive classes when next date', () => {
-    const element: DebugElement = fixture.debugElement.query(By.css('#inactive'));
+    const element: DebugElement = fixture.debugElement.query(
+      By.css('#inactive'),
+    );
 
     fixture.detectChanges();
 
-    const classes = [
-      element.classes['box'],
-      element.classes['box--violet'],
-    ];
-
+    const classes = [element.classes['box'], element.classes['box--violet']];
 
     expect(classes.every(R.identity)).toBeTruthy();
   });

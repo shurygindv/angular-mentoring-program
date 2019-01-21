@@ -25,8 +25,8 @@
         </section>
 
         <section class="course-list__item__controls">
-          <app-button [view]="'lime'">Edit</app-button>
-          <app-button [view]="'lime'">Remove</app-button>
+          <app-button [view]="'lime'" (click)="handleClickOnEdit($event)">Edit</app-button>
+          <app-button [view]="'lime'" (click)="handleClickOnRemove(course)">Remove</app-button>
         </section>
       </li>
     </ng-container>

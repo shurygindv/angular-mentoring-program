@@ -21,7 +21,6 @@ export class ButtonComponent {
   @Output() public click = new EventEmitter<null>(); // TODO: type if need
 
   public handleClick() {
-    console.log('click');
     this.click.emit(null);
   }
 

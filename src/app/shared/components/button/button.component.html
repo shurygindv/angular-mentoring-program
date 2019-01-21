@@ -1,3 +1,3 @@
-<button class="btn" [type]="type" [ngClass]="getClasses()" (click)="handleClick()">
+<button class="btn" [type]="type" [ngClass]="getClasses()" (click)="handleClick($event)">
   <ng-content></ng-content>
 </button>

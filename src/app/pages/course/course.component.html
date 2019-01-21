@@ -4,7 +4,15 @@
   <app-bread-crumbs [items]="routes"></app-bread-crumbs>
 
   <ng-container>
-    <app-course-list [items]="courses" [searchBy]="searchBy" *ngIf="courses.length"></app-course-list>
+    <app-course-list 
+    [items]="courses" 
+    [searchBy]="searchBy" 
+    *ngIf="courses.length"
+
+
+    (remove)="showConfirmationDialogAboutRemove($event)"
+    (edit)="showEditingDialog($event)"
+    ></app-course-list>
     <app-content-box
       [align]="'both'"
       [size]="'md'"
