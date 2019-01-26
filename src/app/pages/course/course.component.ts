@@ -1,10 +1,11 @@
 import {Component, Output, OnInit, OnDestroy} from '@angular/core';
-import {MatDialog} from '@angular/material/dialog';
+
 import {Subscription} from 'rxjs';
 
 import {Course} from '../../core/models/course.interface';
 import {CourseService} from './../../core/services/course/course.service';
-import {DialogConfirmationComponent} from '../../shared/components/dialog-confirmation/dialog-confirmation.component';
+import {DialogConfirmationComponent} from '../../shared/components/dialogs/confirm/dialog-confirmation.component';
+import {DialogService} from '../../core/services/dialog/dialog.service';
 
 @Component({
   selector: 'app-course',
@@ -17,18 +18,18 @@ export class CourseComponent implements OnInit, OnDestroy {
 
   @Output() public searchBy: string;
 
-  private matDialog: MatDialog;
   private courseService: CourseService;
+  private dialogService: DialogService;
   private coursesFetchSubscription: Subscription;
 
-  constructor(courseService: CourseService, dialog: MatDialog) {
+  constructor(courseService: CourseService, dialogService: DialogService) {
     this.courseService = courseService;
-    this.matDialog = dialog;
+    this.dialogService = dialogService;
   }
 
   private updateCourses = (courses: Course[]) => {
     this.courses = courses;
-  }
+  };
 
   private subscribeToCourses() {
     this.coursesFetchSubscription = this.courseService.courses.subscribe(
@@ -61,17 +62,12 @@ export class CourseComponent implements OnInit, OnDestroy {
 
   public deleteCourse = (id: number) => {
     this.courseService.delete(id);
-  }
+  };
 
   public showRemovingDialog(course: Course) {
-    this.matDialog.open(DialogConfirmationComponent, {
-      data: {
-        title: 'Do you really want to delete this course?',
-        description: '',
-
-        onCancel: () => console.log('cancel'),
-        onConfirm: () => this.deleteCourse(course.id),
-      },
+    this.dialogService.showConfirmation({
+      title: 'Do you really want to delete this course?',
+      onConfirm: () => this.deleteCourse(course.id),
     });
   }
 }

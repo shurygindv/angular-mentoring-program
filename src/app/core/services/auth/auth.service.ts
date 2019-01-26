@@ -15,7 +15,7 @@ export class AuthService {
   private userLogin: string;
 
   private router: Router;
-  private session?: UserPayload;
+  private session: UserPayload;
   private storage: Storage<UserPayload>;
 
   constructor(router: Router) {
@@ -25,18 +25,18 @@ export class AuthService {
     this.session = null;
   }
 
-  private save(email: string, password: string) {
+  private save(email: string, password: string): void {
     this.storage.set(email, {
       email,
       password,
     });
   }
 
-  private setHomeUrl() {
+  private setHomeUrl(): void {
     this.router.navigateByUrl('/courses');
   }
 
-  private setLoginUrl() {
+  private setLoginUrl(): void {
     this.router.navigateByUrl('/login');
   }
 
@@ -50,7 +50,7 @@ export class AuthService {
   private isAuth(email: string, password: string): boolean {
     const user = this.getUserInfo(email || this.userLogin);
 
-    return Boolean(user && user.password === password);
+    return !!(user && user.password === password);
   }
 
   public login(email: string, password: string): void {

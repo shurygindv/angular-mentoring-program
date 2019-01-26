@@ -1,15 +1,7 @@
 import {Component, Inject} from '@angular/core';
 import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 
-export interface DialogData {
-  title: string;
-  description: string;
-
-  onConfirm(): void;
-  onCancel(): void;
-}
-
-// TODO: dialog service with different modes
+import {ConfirmationDialogData} from '../../../../core/services/dialog/dialog.interface';
 
 @Component({
   selector: 'app-dialog-confirmation',
@@ -18,25 +10,27 @@ export interface DialogData {
 })
 export class DialogConfirmationComponent {
   private dialogRef: MatDialogRef<DialogConfirmationComponent>;
+  private dialogData: ConfirmationDialogData;
 
   constructor(
     dialogRef: MatDialogRef<DialogConfirmationComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData,
+    @Inject(MAT_DIALOG_DATA) data: ConfirmationDialogData,
   ) {
     this.dialogRef = dialogRef;
+    this.dialogData = data;
   }
 
   public onConfirm(): void {
-    if (this.data.onConfirm) {
-      this.data.onConfirm();
+    if (this.dialogData.onConfirm) {
+      this.dialogData.onConfirm();
     }
 
     this.dialogRef.close();
   }
 
   public onCancel() {
-    if (this.data.onCancel) {
-      this.data.onCancel();
+    if (this.dialogData.onCancel) {
+      this.dialogData.onCancel();
     }
 
     this.dialogRef.close();

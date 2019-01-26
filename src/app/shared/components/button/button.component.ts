@@ -20,11 +20,6 @@ export class ButtonComponent {
   // handlers
   @Output() public click = new EventEmitter<null>(); // TODO: type if need
 
-  public onClick($event: Event) {
-    event.stopPropagation(); // TODO: fix this
-    this.click.emit(null);
-  }
-
   public getClasses() {
     return {
       'btn--full': this.full,

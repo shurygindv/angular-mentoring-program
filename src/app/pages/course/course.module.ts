@@ -7,9 +7,15 @@ import {SharedModule} from '../../shared/shared.module';
 import {CourseListComponent} from './components/course-list/course-list.component';
 import {OrderByCoursePipe} from './order-by-course.pipe';
 import {MaterialUiModule} from '../../shared/material-ui.module';
+import {DialogAddCourseComponent} from './dialogs/add/dialog-add-course.component';
 
 @NgModule({
-  declarations: [CourseComponent, CourseListComponent, OrderByCoursePipe],
+  declarations: [
+    CourseComponent,
+    CourseListComponent,
+    DialogAddCourseComponent,
+    OrderByCoursePipe,
+  ],
   imports: [CommonModule, MaterialUiModule, SharedModule, CourseRoutingModule],
 })
 export class CourseModule {}

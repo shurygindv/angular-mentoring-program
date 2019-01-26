@@ -9,7 +9,7 @@ import {
   MatRippleModule,
 } from '@angular/material';
 
-import {DialogConfirmationComponent} from './components/dialog-confirmation/dialog-confirmation.component';
+import {DialogConfirmationComponent} from './components/dialogs/confirm/dialog-confirmation.component';
 
 @NgModule({
   declarations: [MatButton, DialogConfirmationComponent],

@@ -3,28 +3,27 @@ import {Observable, BehaviorSubject} from 'rxjs';
 
 import {Course} from '../../models/course.interface';
 import {mockCourses} from '../../mocks/course.mock';
-import {ICrud} from '../../types';
 
 @Injectable({
   providedIn: 'root',
 })
-export class CourseService implements ICrud<Course> {
-  private _courses: BehaviorSubject<Course[]>;
+export class CourseService {
+  private coursesBF: BehaviorSubject<Course[]>;
   private currentId: number;
   private store: Course[];
 
   constructor() {
-    this._courses = new BehaviorSubject([]);
+    this.coursesBF = new BehaviorSubject([]);
     this.store = mockCourses;
   }
 
   get courses(): Observable<Course[]> {
-    return this._courses.asObservable();
+    return this.coursesBF.asObservable();
   }
 
-  private upToDateCourses(courses: Course[]) {
+  private upToDateCourses(courses: Course[]): void {
     this.store = [...courses];
-    this._courses.next(Array.from(this.store));
+    this.coursesBF.next(Array.from(this.store));
   }
 
   public create(course: Course): Course {
@@ -43,7 +42,7 @@ export class CourseService implements ICrud<Course> {
     return {...course};
   }
 
-  public update(id: number, course: Course) {
+  public update(id: number, course: Course): void {
     const index = this.store.findIndex((item: Course) => item.id === id);
 
     this.upToDateCourses([
@@ -58,6 +57,6 @@ export class CourseService implements ICrud<Course> {
   }
 
   public fetchCourses(): void {
-    this._courses.next(Array.from(this.store.values()));
+    this.coursesBF.next(Array.from(this.store.values()));
   }
 }
