@@ -1,4 +1,4 @@
-import {Component, Inject} from '@angular/core';
+import {Component, Inject, ChangeDetectionStrategy, Input} from '@angular/core';
 import {
   FormGroup,
   FormControl,
@@ -9,7 +9,8 @@ import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 
 import {ConfirmationDialogData} from '../../../../core/services/dialog/dialog.interface';
 import {Omit} from '../../../../utils/types';
-import { Course } from '../../../../core/models/course.interface';
+import {Course} from '../../../../core/models/course.interface';
+import { DurationNormalizerPipe } from 'src/app/shared/duration-normalizer.pipe';
 
 export class CourseSharedData {
   constructor(
@@ -48,11 +49,11 @@ export class CourseSharedData {
       data.duration,
       data.creationDate,
       data.authors,
-      data.topRated
+      data.topRated,
     );
   }
 
-  public static toCourse (data: CourseSharedData): Course {
+  public static toCourse(data: CourseSharedData): Course {
     return {
       title: data.title,
       topRated: data.topRated,
@@ -87,6 +88,8 @@ const createFormControl = <T>(value: T) => new FormControl(value);
   selector: 'app-course-edit-dialog',
   templateUrl: './course-edit-dialog.component.html',
   styleUrls: ['./course-edit-dialog.component.scss'],
+
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CourseEditDialogComponent {
   private dialogRef: MatDialogRef<CourseEditDialogComponent>;
@@ -110,6 +113,17 @@ export class CourseEditDialogComponent {
 
   get formControls() {
     return this.courseGroupForm.controls;
+  }
+
+  @Input()
+  get durationPlaceholder() {
+    const value = this.formControls.duration.value;
+
+    if (value) {
+      return `Duration ~ ${DurationNormalizerPipe.init(value)}`;
+    }
+
+    return 'Duration';
   }
 
   private closeDialog() {
@@ -145,6 +159,8 @@ export class CourseEditDialogComponent {
   }
 
   public onFormSubmit($event: Event) {
+    $event.preventDefault(); // TODO: implement pipe on preventDefault
+
     if (this.courseGroupForm.invalid) {
       console.log('Error: form is invalid');
       return;

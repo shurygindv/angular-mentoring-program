@@ -8,7 +8,7 @@ import {Component, EventEmitter, Output} from '@angular/core';
 export class MenuProfileComponent {
   @Output() public logout = new EventEmitter<null>();
 
-  public logoutUser() {
+  public logoutUser($event: Event) {
     this.logout.emit();
   }
 }

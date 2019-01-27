@@ -24,7 +24,7 @@ export class DialogConfirmationComponent {
     return this.dialogData;
   }
 
-  public onConfirm(): void {
+  public onConfirm($event: Event): void {
     if (this.dialogData.onSubmit) {
       this.dialogData.onSubmit();
     }
@@ -32,7 +32,7 @@ export class DialogConfirmationComponent {
     this.dialogRef.close();
   }
 
-  public onCancel() {
+  public onCancel($event: Event) {
     if (this.dialogData.onCancel) {
       this.dialogData.onCancel();
     }
