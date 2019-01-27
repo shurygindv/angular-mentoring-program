@@ -4,6 +4,22 @@ import {Subscription} from 'rxjs';
 import {Course} from '../../core/models/course.interface';
 import {CourseService} from './../../core/services/course/course.service';
 import {DialogService} from '../../core/services/dialog/dialog.service';
+import {
+  ICourseEditDialogData,
+  CourseSharedData,
+} from './dialogs/edit/course-edit-dialog.component';
+import {Omit} from '../../utils/types';
+import {CourseEditDialogComponent} from './dialogs/edit/course-edit-dialog.component';
+
+const mapCourseToDialogData = (
+  course: Course,
+): Omit<ICourseEditDialogData, 'onSubmit'> => ({
+  title: course.title,
+  topRated: course.topRated,
+  duration: course.duration,
+  description: course.description,
+  creationDate: course.creationDate,
+});
 
 @Component({
   selector: 'app-course',
@@ -35,6 +51,14 @@ export class CourseComponent implements OnInit, OnDestroy {
     );
   }
 
+  private updateCourseById(id: number, course: Course) {
+    this.courseService.update(id, course);
+  }
+
+  private handleEditingSubmit(id: number, dialogData: CourseSharedData) {
+    this.updateCourseById(id, CourseSharedData.toCourse(dialogData));
+  }
+
   public fetchCourses() {
     this.courseService.fetchCourses();
   }
@@ -55,7 +79,10 @@ export class CourseComponent implements OnInit, OnDestroy {
   }
 
   public showEditingDialog(course: Course) {
-    console.log(course);
+    this.dialogService.openMatDialog(CourseEditDialogComponent, {
+      ...mapCourseToDialogData(course),
+      onSubmit: this.handleEditingSubmit.bind(this, course.id),
+    });
   }
 
   public deleteCourse = (id: number) => {

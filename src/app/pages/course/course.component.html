@@ -4,6 +4,16 @@
   <app-bread-crumbs [items]="routes"></app-bread-crumbs>
 
   <ng-container>
+
+    <app-content-box>
+        <app-text [bold]="true">
+            <span>Count: </span>
+            <span *ngIf="courses.length">
+                {{courses.length}}
+            </span>
+        </app-text>
+    </app-content-box>
+
     <app-course-list 
     [items]="courses" 
     [searchBy]="searchBy" 

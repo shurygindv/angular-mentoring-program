@@ -4,6 +4,9 @@ import {Observable, BehaviorSubject} from 'rxjs';
 import {Course} from '../../models/course.interface';
 import {mockCourses} from '../../mocks/course.mock';
 
+
+const INITIAL_ID = 100;
+
 @Injectable({
   providedIn: 'root',
 })
@@ -15,6 +18,7 @@ export class CourseService {
   constructor() {
     this.coursesBF = new BehaviorSubject([]);
     this.store = mockCourses;
+    this.currentId = INITIAL_ID;
   }
 
   get courses(): Observable<Course[]> {
@@ -30,7 +34,6 @@ export class CourseService {
     this.currentId++;
 
     const item = {id: this.currentId, ...course};
-
     this.upToDateCourses([...this.store, item]);
 
     return item;
@@ -45,11 +48,13 @@ export class CourseService {
   public update(id: number, course: Course): void {
     const index = this.store.findIndex((item: Course) => item.id === id);
 
-    this.upToDateCourses([
-      ...this.store.slice(0, index - 1),
-      course,
-      ...this.store.slice(index + 1),
-    ]);
+    if (index === -1) {
+      return;
+    }
+
+    this.store[index] = {id, ...course};
+
+    this.upToDateCourses(this.store);
   }
 
   public delete(id: number): void {

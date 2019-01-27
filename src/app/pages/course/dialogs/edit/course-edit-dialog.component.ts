@@ -1,13 +1,87 @@
 import {Component, Inject} from '@angular/core';
-import { FormGroup, FormControl, Validators, AbstractControl } from '@angular/forms';
+import {
+  FormGroup,
+  FormControl,
+  Validators,
+  AbstractControl,
+} from '@angular/forms';
 import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
-import { ConfirmationDialogData } from '../../../../core/services/dialog/dialog.interface';
 
-export interface CourseEditDialogData extends ConfirmationDialogData {
+import {ConfirmationDialogData} from '../../../../core/services/dialog/dialog.interface';
+import {Omit} from '../../../../utils/types';
+import { Course } from '../../../../core/models/course.interface';
 
+export class CourseSharedData {
+  constructor(
+    title: string,
+    description: string,
+    duration: number,
+    creationDate: string | Date,
+    authors: string[],
+    topRated: boolean,
+  ) {
+    this.title = title;
+    this.description = description;
+    this.duration = duration;
+    this.creationDate = creationDate;
+    this.authors = authors;
+    this.topRated = topRated;
+  }
+  // temp data, static
+  public title: string;
+  public description: string;
+  public duration: number;
+  public creationDate: string | Date;
+  public authors: string[];
+  public topRated: boolean;
+
+  public static map(
+    data?: Omit<ICourseEditDialogData, 'onSubmit'>,
+  ): CourseSharedData {
+    if (!data) {
+      return CourseSharedData.stub();
+    }
+
+    return new CourseSharedData(
+      data.title,
+      data.description,
+      data.duration,
+      data.creationDate,
+      data.authors,
+      data.topRated
+    );
+  }
+
+  public static toCourse (data: CourseSharedData): Course {
+    return {
+      title: data.title,
+      topRated: data.topRated,
+      duration: data.duration,
+      description: data.description,
+      creationDate: data.creationDate,
+    };
+  }
+
+  public static stub() {
+    return new CourseSharedData('', '', 0, Date.now().toString(), [], false);
+  }
 }
 
-// TODO: dialog service with different modes
+// params which dialog will accept from outer area (edit/create)
+export interface ICourseEditDialogData
+  extends ConfirmationDialogData<CourseSharedData> {
+  authors?: [];
+  title?: string;
+  topRated?: boolean;
+  duration?: number;
+  description?: string;
+  creationDate?: string | Date;
+}
+
+const createStrictFormControl = <T>(value: T) =>
+  new FormControl(value, [Validators.required]);
+
+const createFormControl = <T>(value: T) => new FormControl(value);
 
 @Component({
   selector: 'app-course-edit-dialog',
@@ -16,25 +90,50 @@ export interface CourseEditDialogData extends ConfirmationDialogData {
 })
 export class CourseEditDialogComponent {
   private dialogRef: MatDialogRef<CourseEditDialogComponent>;
-  private dialogData: CourseEditDialogData;
+  private dialogData: ICourseEditDialogData;
 
-  public courseGroupForm = new FormGroup({
-    title: new FormControl('', [Validators.required]),
-    date: new FormControl('', [Validators.required]),
-    duration: new FormControl('', [Validators.required]),
-    description: new FormControl('', [Validators.required]),
-  });
+  public courseGroupForm: FormGroup;
 
   constructor(
     dialogRef: MatDialogRef<CourseEditDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) data: CourseEditDialogData,
+    @Inject(MAT_DIALOG_DATA) data: ICourseEditDialogData,
   ) {
     this.dialogRef = dialogRef;
     this.dialogData = data;
+
+    this.courseGroupForm = this.initFormGroup(CourseSharedData.map(data));
   }
 
-  get formControls () {
+  get data(): ICourseEditDialogData {
+    return this.dialogData;
+  }
+
+  get formControls() {
     return this.courseGroupForm.controls;
+  }
+
+  private closeDialog() {
+    this.dialogRef.close();
+  }
+
+  private initFormGroup(courseProps: CourseSharedData) {
+    return new FormGroup({
+      title: createStrictFormControl(courseProps.title),
+      date: createStrictFormControl(courseProps.creationDate),
+      duration: createStrictFormControl(courseProps.duration),
+      topRated: createFormControl(courseProps.topRated),
+      description: createStrictFormControl(courseProps.description),
+    });
+  }
+
+  private getDoneCourse(): Omit<ICourseEditDialogData, 'onSubmit'> {
+    return {
+      title: this.formControls.title.value,
+      topRated: this.formControls.topRated.value,
+      creationDate: this.formControls.date.value,
+      duration: this.formControls.duration.value,
+      description: this.formControls.description.value,
+    };
   }
 
   public getCommonErrorMsg(control: AbstractControl) {
@@ -51,11 +150,13 @@ export class CourseEditDialogComponent {
       return;
     }
 
+    if (this.courseGroupForm.untouched) {
+      this.closeDialog();
+      return;
+    }
 
+    this.dialogData.onSubmit(CourseSharedData.map(this.getDoneCourse()));
 
-  }
-
-  public onCancel ($event: Event) {
-
+    this.closeDialog();
   }
 }

@@ -3,7 +3,7 @@ export interface DialogData {
   description?: string;
 }
 
-export interface ConfirmationDialogData extends DialogData {
+export interface ConfirmationDialogData<T = {}> extends DialogData {
   onCancel?(): void;
-  onSubmit(): void;
+  onSubmit(payload?: T): void;
 }

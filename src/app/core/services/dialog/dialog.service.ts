@@ -15,13 +15,12 @@ export class DialogService {
   }
 
   public openMatDialog<D extends DialogData>(dialog: any, data: D): void {
-
     this.matDialog.open(dialog, {
       data,
     });
   }
 
-  public showConfirmation(data: ConfirmationDialogData): void {
+  public showConfirmation<T extends ConfirmationDialogData>(data: T): void {
     this.openMatDialog(DialogConfirmationComponent, data);
   }
 }

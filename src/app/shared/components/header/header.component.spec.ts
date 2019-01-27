@@ -47,7 +47,7 @@ describe('HeaderComponent', () => {
   it('should render <profile> element when Auth flag', () => {
     const element = findElem('app-menu-profile');
 
-    if (!component.showProfile()) {
+    if (!component.isAuthenticated()) {
       expect(element).toBeFalsy();
     }
   });
