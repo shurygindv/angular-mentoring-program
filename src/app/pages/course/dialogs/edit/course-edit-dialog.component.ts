@@ -10,7 +10,7 @@ import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import {ConfirmationDialogData} from '../../../../core/services/dialog/dialog.interface';
 import {Omit} from '../../../../utils/types';
 import {Course} from '../../../../core/models/course.interface';
-import { DurationNormalizerPipe } from 'src/app/shared/duration-normalizer.pipe';
+import {DurationNormalizerPipe} from 'src/app/shared/duration-normalizer.pipe';
 
 export class CourseSharedData {
   constructor(

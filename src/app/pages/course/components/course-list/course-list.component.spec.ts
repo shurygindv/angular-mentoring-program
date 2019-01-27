@@ -56,24 +56,14 @@ describe('CourseListComponent', () => {
     expect(findElem('.card-container')).toBeTruthy();
   });
 
-  it('should render course list', () => {
+  it('should be immutable and work with push strategy', () => {
     component.items = testMockedCourses;
 
     fixture.detectChanges();
 
     const courses = findElem('ul').children.length;
 
-    expect(courses).toEqual(2);
-  });
-
-  it('should render course list', () => {
-    component.items = testMockedCourses;
-
-    fixture.detectChanges();
-
-    const courses = findElem('ul').children.length;
-
-    expect(courses).toEqual(2);
+    expect(courses).toEqual(0);
   });
 
   it('should feel right as child of something container', () => {

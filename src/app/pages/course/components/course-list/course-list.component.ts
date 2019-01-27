@@ -1,4 +1,10 @@
-import {Component, Input, EventEmitter, Output, ChangeDetectionStrategy} from '@angular/core';
+import {
+  Component,
+  Input,
+  EventEmitter,
+  Output,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 
 import {Course} from '../../../../core/models/course.interface';
 

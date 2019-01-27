@@ -38,7 +38,7 @@ describe('ButtonComponent', () => {
     fixture.detectChanges();
 
     // TODO: btn--default a.k.a bem
-    expect(hasClasses(findElem('button'), 'btn-default')).toBeTruthy();
+    expect(hasClasses(findElem('button'), 'btn--default')).toBeTruthy();
   });
 
   it('should work map `size` to className', () => {
@@ -56,7 +56,7 @@ describe('ButtonComponent', () => {
     expect(hasClasses(findElem('button'), 'btn--full')).toBeTruthy();
   });
 
-  it('should work attr `circle`', () => {
+  it('should work map `view as circle` to className', () => {
     component.view = 'circle';
     fixture.detectChanges();
 

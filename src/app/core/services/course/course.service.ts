@@ -4,7 +4,6 @@ import {Observable, BehaviorSubject} from 'rxjs';
 import {Course} from '../../models/course.interface';
 import {mockCourses} from '../../mocks/course.mock';
 
-
 const INITIAL_ID = 100;
 
 @Injectable({

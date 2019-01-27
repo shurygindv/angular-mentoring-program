@@ -20,7 +20,7 @@ export class DialogConfirmationComponent {
     this.dialogData = data;
   }
 
-  get data (): ConfirmationDialogData {
+  get data(): ConfirmationDialogData {
     return this.dialogData;
   }
 

@@ -8,13 +8,8 @@ import {CourseListComponent} from './components/course-list/course-list.componen
 import {OrderByCoursePipe} from './order-by-course.pipe';
 import {MaterialUiModule} from '../../shared/material-ui.module';
 
-
 @NgModule({
-  declarations: [
-    CourseComponent,
-    CourseListComponent,
-    OrderByCoursePipe,
-  ],
+  declarations: [CourseComponent, CourseListComponent, OrderByCoursePipe],
   imports: [CommonModule, MaterialUiModule, SharedModule, CourseRoutingModule],
 })
 export class CourseModule {}

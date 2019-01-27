@@ -5,7 +5,7 @@ const formatHours = (value: number) => (value ? `${value}h` : '');
 
 @Pipe({name: 'durationNormalizer'})
 export class DurationNormalizerPipe implements PipeTransform {
-  public static init (value: number): string {
+  public static init(value: number): string {
     return new DurationNormalizerPipe().transform(value);
   }
 
