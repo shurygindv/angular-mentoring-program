@@ -1,10 +1,8 @@
 import {Component, Output, OnInit, OnDestroy} from '@angular/core';
-
 import {Subscription} from 'rxjs';
 
 import {Course} from '../../core/models/course.interface';
 import {CourseService} from './../../core/services/course/course.service';
-import {DialogConfirmationComponent} from '../../shared/components/dialogs/confirm/dialog-confirmation.component';
 import {DialogService} from '../../core/services/dialog/dialog.service';
 
 @Component({
@@ -29,7 +27,7 @@ export class CourseComponent implements OnInit, OnDestroy {
 
   private updateCourses = (courses: Course[]) => {
     this.courses = courses;
-  };
+  }
 
   private subscribeToCourses() {
     this.coursesFetchSubscription = this.courseService.courses.subscribe(
@@ -62,12 +60,12 @@ export class CourseComponent implements OnInit, OnDestroy {
 
   public deleteCourse = (id: number) => {
     this.courseService.delete(id);
-  };
+  }
 
   public showRemovingDialog(course: Course) {
     this.dialogService.showConfirmation({
       title: 'Do you really want to delete this course?',
-      onConfirm: () => this.deleteCourse(course.id),
+      onSubmit: () => this.deleteCourse(course.id),
     });
   }
 }

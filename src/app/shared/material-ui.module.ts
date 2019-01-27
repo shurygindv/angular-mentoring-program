@@ -5,27 +5,22 @@ import {ObserversModule} from '@angular/cdk/observers';
 import {
   MatInputModule,
   MatButton,
-  MatDialogModule,
   MatRippleModule,
 } from '@angular/material';
 
-import {DialogConfirmationComponent} from './components/dialogs/confirm/dialog-confirmation.component';
 
 @NgModule({
-  declarations: [MatButton, DialogConfirmationComponent],
+  declarations: [MatButton],
   imports: [
     CommonModule,
     MatRippleModule,
-    MatDialogModule,
     ObserversModule,
     MatInputModule,
   ],
-  entryComponents: [DialogConfirmationComponent],
   exports: [
     MatInputModule,
     MatRippleModule,
     MatButton,
-    DialogConfirmationComponent,
   ],
 })
 export class MaterialUiModule {}

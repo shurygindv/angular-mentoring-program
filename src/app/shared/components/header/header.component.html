@@ -6,7 +6,15 @@
     >
   </a>
 
-  <section class="page-header__aside" *ngIf="showProfile()">
-    <app-menu-profile (logout)="logout($event)"></app-menu-profile>
-  </section>
+  <ng-container *ngIf="isAuthenticated()">
+    <section>
+      <app-button [view]="'circle'" [uppercased]="true" (click)="showAddingDialog()">
+        Add me
+      </app-button>
+    </section>
+
+    <section class="page-header__aside" >
+      <app-menu-profile (logout)="logout($event)"></app-menu-profile>
+    </section>
+  </ng-container>
 </header>

@@ -56,6 +56,14 @@ describe('ButtonComponent', () => {
     expect(hasClasses(findElem('button'), 'btn--full')).toBeTruthy();
   });
 
+  it('should work attr `circle`', () => {
+    component.view = 'circle';
+    fixture.detectChanges();
+
+    // TODO: btn--default a.k.a bem
+    expect(hasClasses(findElem('button'), 'btn--circle')).toBeTruthy();
+  });
+
   it('should work attr `uppercased`', () => {
     component.uppercased = true;
     fixture.detectChanges();

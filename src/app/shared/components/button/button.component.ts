@@ -18,7 +18,11 @@ export class ButtonComponent {
   @Input() public disabled: boolean; // not used yet
   @Input() public full: boolean;
   // handlers
-  @Output() public click = new EventEmitter<null>(); // TODO: type if need
+  @Output() public clickEvent = new EventEmitter<null>(); // TODO: type if need
+
+  public onClick($event: Event) {
+    this.clickEvent.emit(null);
+  }
 
   public getClasses() {
     return {
@@ -26,7 +30,7 @@ export class ButtonComponent {
       'btn--uppercased': this.uppercased,
 
       [`btn-size--${this.size}`]: this.size,
-      [`btn-${this.view}`]: this.view,
+      [`btn--${this.view}`]: this.view,
       [this.className]: this.className,
     };
   }

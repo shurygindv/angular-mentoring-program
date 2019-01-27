@@ -1,0 +1,53 @@
+<header><h1 mat-dialog-title>Add course</h1></header>
+
+<div class="course-edit-dialog" mat-dialog-content>
+  <form
+    class="course-edit-dialog-form"
+    [formGroup]="courseGroupForm"
+    (ngSubmit)="onFormSubmit()"
+  >
+    <mat-form-field class="course-edit-dialog-form__control">
+      <input matInput placeholder="title" formControlName="title" required />
+      <mat-error *ngIf="formControls.title.invalid">{{
+        getCommonErrorMsg(formControls.title)
+      }}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="course-edit-dialog-form__control">
+      <input
+        matInput
+        placeholder="description"
+        formControlName="description"
+        required
+      />
+      <mat-error *ngIf="formControls.description.invalid">{{
+          getCommonErrorMsg(formControls.description)
+      }}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="course-edit-dialog-form__control">
+      <input matInput placeholder="Date" formControlName="date" required />
+      <mat-error *ngIf="formControls.date.invalid">{{
+          getCommonErrorMsg(formControls.date)
+      }}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="course-edit-dialog-form__control">
+      <input
+        matInput
+        placeholder="Duration"
+        formControlName="duration"
+        required
+      />
+      <mat-error *ngIf="formControls.duration.invalid">{{
+          getCommonErrorMsg(formControls.duration)
+      }}</mat-error>
+    </mat-form-field>
+
+    <div mat-dialog-actions>
+      <button mat-button [mat-dialog-close]="true" (click)="onCancel($event)">Cancel</button>
+      <button mat-button mat-dialog-close type="submit" cdkFocusInitial>Add</button>
+    </div>
+  </form>
+</div>
+<footer></footer>

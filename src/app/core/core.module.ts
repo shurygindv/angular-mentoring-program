@@ -3,11 +3,11 @@ import {CommonModule} from '@angular/common';
 
 import {CourseService} from './services/course/course.service';
 import {AuthService} from './services/auth/auth.service';
-import {DialogService} from './services/dialog/dialog.service';
+import { DialogModule } from './services/dialog/dialog.module';
 
 @NgModule({
   declarations: [],
-  imports: [CommonModule],
-  providers: [CourseService, AuthService, DialogService],
+  imports: [CommonModule, DialogModule],
+  providers: [CourseService, AuthService],
 })
 export class CoreModule {}

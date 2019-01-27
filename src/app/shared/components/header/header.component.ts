@@ -1,5 +1,8 @@
 import {Component} from '@angular/core';
 import {AuthService} from '../../../core/services/auth/auth.service';
+import { DialogService } from '../../../core/services/dialog/dialog.service';
+import { CourseService } from '../../../core/services/course/course.service';
+import { CourseEditDialogComponent, CourseEditDialogData } from '../../../pages/course/dialogs/edit/course-edit-dialog.component';
 
 @Component({
   selector: 'app-header',
@@ -8,13 +11,25 @@ import {AuthService} from '../../../core/services/auth/auth.service';
 })
 export class HeaderComponent {
   private authService: AuthService;
+  private courseService: CourseService;
+  private dialogService: DialogService;
 
-  constructor(authService: AuthService) {
+  constructor(authService: AuthService, dialogService: DialogService, courseService: CourseService) {
     this.authService = authService;
+    this.courseService = courseService;
+    this.dialogService = dialogService;
   }
 
-  public showProfile() {
+  public isAuthenticated () {
     return this.authService.isAuthenticated();
+  }
+
+  public showAddingDialog () {
+   return this.dialogService.openMatDialog<CourseEditDialogData>(CourseEditDialogComponent, {
+      onSubmit: () => {
+
+      }
+    });
   }
 
   public logout() {

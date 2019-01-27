@@ -14,13 +14,14 @@ export class DialogService {
     this.matDialog = materialUiDialog;
   }
 
-  public openMatDialog(dialog: any, data: DialogData): void {
+  public openMatDialog<D extends DialogData>(dialog: any, data: D): void {
+
     this.matDialog.open(dialog, {
       data,
     });
   }
 
-  public showConfirmation(options: ConfirmationDialogData): void {
-    this.openMatDialog(DialogConfirmationComponent, options);
+  public showConfirmation(data: ConfirmationDialogData): void {
+    this.openMatDialog(DialogConfirmationComponent, data);
   }
 }

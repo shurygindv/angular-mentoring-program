@@ -5,6 +5,8 @@ $block: 'page-header';
     align-items: center;
     height: 70px;
     padding: 0 30px;
+    justify-content: space-between;
+
 
     &--grayed {
         background: rgba(0,0,0,0.7);
@@ -19,6 +21,5 @@ $block: 'page-header';
     &__aside {
         display: flex;
         align-items: center;
-        margin-left: auto;
     }
 }

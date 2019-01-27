@@ -1,0 +1,9 @@
+.course-edit-dialog {
+  min-width: 500px; // common
+  overflow: hidden;
+  &-form {
+    display: flex;
+    padding: 10px 0;
+    flex-direction: column;
+  }
+}

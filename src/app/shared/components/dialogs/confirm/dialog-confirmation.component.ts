@@ -20,9 +20,13 @@ export class DialogConfirmationComponent {
     this.dialogData = data;
   }
 
+  get data (): ConfirmationDialogData {
+    return this.dialogData;
+  }
+
   public onConfirm(): void {
-    if (this.dialogData.onConfirm) {
-      this.dialogData.onConfirm();
+    if (this.dialogData.onSubmit) {
+      this.dialogData.onSubmit();
     }
 
     this.dialogRef.close();

@@ -5,7 +5,7 @@ $block: 'btn';
     padding: 5px 15px;
     cursor: pointer;
 
-    &-default {
+    &--default {
         color: white;
         background: transparent;
         text-transform: uppercase;
@@ -21,7 +21,7 @@ $block: 'btn';
         }
     }
 
-    &-lime {
+    &--lime {
         color: white;
         background: #5ccf0c;
         border: 1px solid white;
@@ -34,6 +34,22 @@ $block: 'btn';
 
         &:active {
             transform: scale(0.9);
+        }
+    }
+
+    &--circle {
+        will-change: rotate;
+        transition: transform 0.7s;
+
+        background: white;
+        font-size: 12pt;
+        border: 1px solid black;
+        height: 90px;
+        width: 90px;
+        border-radius:100%;
+
+        &:hover {
+            transform: rotate(-360deg);
         }
     }
 
