@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
 
 type BorderType = 'silver';
 type Sizes = 'xs' | 'sm' | 'md' | 'lg';
@@ -10,6 +10,8 @@ const name = 'content-box';
   selector: 'app-content-box',
   templateUrl: './content-box.component.html',
   styleUrls: ['./content-box.component.scss'],
+
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ContentBoxComponent {
   @Input() public borderType: BorderType;

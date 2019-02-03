@@ -7,7 +7,7 @@ export const mockCourses: Course[] = [
     title: 'How to become better than you thought possible',
     creationDate: '2018-12-25T13:28:06.419Z',
     duration: 60,
-    description: 'ыыы',
+    description: 'expressive',
   },
   {
     id: 1,
@@ -23,7 +23,7 @@ export const mockCourses: Course[] = [
     title: 'How to live own life and not regret about that in old age',
     creationDate: '2011-10-21T13:28:06.419Z',
     duration: 60,
-    description: 'ыыы',
+    description: 'meaningfull',
   },
   {
     id: 3,
@@ -55,7 +55,7 @@ export const mockCourses: Course[] = [
     title: 'Why do you should know about FP ways',
     creationDate: '2018-10-21T13:28:06.419Z',
     duration: 37,
-    description: 'ыыы',
+    description: 'meaningfull',
   },
   {
     id: 7,
@@ -63,7 +63,7 @@ export const mockCourses: Course[] = [
     title: 'It\'s 7 id',
     creationDate: '2018-10-21T13:28:06.419Z',
     duration: 60,
-    description: 'ыы',
+    description: 'meaningfull',
   },
   {
     id: 8,
@@ -71,7 +71,7 @@ export const mockCourses: Course[] = [
     title: 'It\'s 8 id',
     creationDate: '2018-10-21T13:28:06.419Z',
     duration: 25,
-    description: 'ыыы',
+    description: 'meaningfull',
   },
   {
     id: 9,
@@ -79,6 +79,6 @@ export const mockCourses: Course[] = [
     title: 'It\'s 9 id',
     creationDate: '2018-10-21T13:28:06.419Z',
     duration: 17,
-    description: 'yeah',
+    description: 'meaningfull',
   },
 ];

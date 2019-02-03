@@ -1,4 +1,4 @@
-import {Component, Input, Output, EventEmitter} from '@angular/core';
+import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output} from '@angular/core';
 
 type Sizes = 'xs' | 'sm' | 'md' | 'lg';
 type ButtonTypes = 'button' | 'submit' | 'reset';
@@ -7,6 +7,8 @@ type ButtonTypes = 'button' | 'submit' | 'reset';
   selector: 'app-button',
   templateUrl: './button.component.html',
   styleUrls: ['./button.component.scss'],
+
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ButtonComponent {
   @Input() public type: ButtonTypes = 'button';

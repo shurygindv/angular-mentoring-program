@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
-import {Observable, BehaviorSubject} from 'rxjs';
+import {BehaviorSubject, Observable} from 'rxjs';
 
-import {Course} from '../../models/course.interface';
 import {mockCourses} from '../../mocks/course.mock';
+import {Course} from '../../models/course.interface';
 
 const INITIAL_ID = 100;
 
@@ -47,13 +47,13 @@ export class CourseService {
   public update(id: number, course: Course): void {
     const index = this.store.findIndex((item: Course) => item.id === id);
 
-    if (index === -1) {
-      return;
+    const containCourse = index !== -1;
+
+    if (containCourse) {
+      this.store[index] = {id, ...course};
+
+      this.upToDateCourses(this.store);
     }
-
-    this.store[index] = {id, ...course};
-
-    this.upToDateCourses(this.store);
   }
 
   public delete(id: number): void {

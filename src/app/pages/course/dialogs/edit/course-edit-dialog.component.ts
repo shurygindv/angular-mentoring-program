@@ -1,16 +1,11 @@
-import {Component, Inject, ChangeDetectionStrategy, Input} from '@angular/core';
-import {
-  FormGroup,
-  FormControl,
-  Validators,
-  AbstractControl,
-} from '@angular/forms';
-import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import {ChangeDetectionStrategy, Component, Inject, Input} from '@angular/core';
+import {AbstractControl, FormControl, FormGroup, Validators} from '@angular/forms';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import {DurationNormalizerPipe} from 'src/app/shared/duration-normalizer.pipe';
 
+import {Course} from '../../../../core/models/course.interface';
 import {ConfirmationDialogData} from '../../../../core/services/dialog/dialog.interface';
 import {Omit} from '../../../../utils/types';
-import {Course} from '../../../../core/models/course.interface';
-import {DurationNormalizerPipe} from 'src/app/shared/duration-normalizer.pipe';
 
 export class CourseSharedData {
   constructor(
@@ -107,16 +102,16 @@ export class CourseEditDialogComponent {
     this.courseGroupForm = this.initFormGroup(CourseSharedData.map(data));
   }
 
-  get data(): ICourseEditDialogData {
+  public get data(): ICourseEditDialogData {
     return this.dialogData;
   }
 
-  get formControls() {
+  public get formControls() {
     return this.courseGroupForm.controls;
   }
 
   @Input()
-  get durationPlaceholder() {
+  public get durationPlaceholder() {
     const value = this.formControls.duration.value;
 
     if (value) {
@@ -126,11 +121,11 @@ export class CourseEditDialogComponent {
     return 'Duration';
   }
 
-  private closeDialog() {
+  private closeDialog(): void {
     this.dialogRef.close();
   }
 
-  private initFormGroup(courseProps: CourseSharedData) {
+  private initFormGroup(courseProps: CourseSharedData): FormGroup {
     return new FormGroup({
       title: createStrictFormControl(courseProps.title),
       date: createStrictFormControl(courseProps.creationDate),
@@ -150,7 +145,7 @@ export class CourseEditDialogComponent {
     };
   }
 
-  public getCommonErrorMsg(control: AbstractControl) {
+  public getCommonErrorMsg(control: AbstractControl): string {
     if (control.hasError('required')) {
       return 'You must enter a value';
     }
@@ -158,7 +153,7 @@ export class CourseEditDialogComponent {
     return '';
   }
 
-  public onFormSubmit($event: Event) {
+  public onFormSubmit($event: Event): void {
     $event.preventDefault(); // TODO: implement pipe on preventDefault
 
     if (this.courseGroupForm.invalid) {

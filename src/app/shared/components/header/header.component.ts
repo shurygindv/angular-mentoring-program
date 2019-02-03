@@ -1,17 +1,20 @@
-import {Component} from '@angular/core';
+import {ChangeDetectionStrategy, Component} from '@angular/core';
+
 import {AuthService} from '../../../core/services/auth/auth.service';
-import {DialogService} from '../../../core/services/dialog/dialog.service';
 import {CourseService} from '../../../core/services/course/course.service';
+import {DialogService} from '../../../core/services/dialog/dialog.service';
 import {
   CourseEditDialogComponent,
-  ICourseEditDialogData,
   CourseSharedData,
+  ICourseEditDialogData,
 } from '../../../pages/course/dialogs/edit/course-edit-dialog.component';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
+
+ changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HeaderComponent {
   private authService: AuthService;

@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Router} from '@angular/router';
 
-import {Storage, LocalStorage} from '../../../helpers/storage';
+import {LocalStorage, Storage} from '../../../helpers/storage';
 
 interface UserPayload {
   email: string;
@@ -32,11 +32,11 @@ export class AuthService {
     });
   }
 
-  private setHomeUrl(): void {
+  private navigateToHome(): void {
     this.router.navigateByUrl('/courses');
   }
 
-  private setLoginUrl(): void {
+  private navigateToLogin(): void {
     this.router.navigateByUrl('/login');
   }
 
@@ -59,7 +59,7 @@ export class AuthService {
     this.save(email, password); // just save and continue ;)
 
     if (this.isAuth(email, password)) {
-      this.setHomeUrl();
+      this.navigateToHome();
       this.setSession(email, password);
     }
   }
@@ -68,7 +68,7 @@ export class AuthService {
     this.storage.remove(this.session.email);
     this.session = null;
 
-    this.setLoginUrl();
+    this.navigateToLogin();
   }
 
   public isAuthenticated(): boolean {
