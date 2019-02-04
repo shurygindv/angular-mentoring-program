@@ -1,0 +1,32 @@
+@mixin center() {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.page-not-found {
+    @include center();
+
+    &__content {
+        @include center();
+        flex-direction: column;
+        height: 400px;
+        width: 400px;
+
+
+        &--pretty {
+            background: ivory;
+            border: 1px solid silver;
+        }
+    }
+
+    &-title {
+        font-size: 3em;
+        padding: 10px 0;
+    }
+
+
+    &--padded {
+        padding: 100px;
+    }
+}

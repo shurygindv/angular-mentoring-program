@@ -1,5 +1,10 @@
 import {ChangeDetectionStrategy, Component, Inject, Input} from '@angular/core';
-import {AbstractControl, FormControl, FormGroup, Validators} from '@angular/forms';
+import {
+  AbstractControl,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {DurationNormalizerPipe} from 'src/app/shared/duration-normalizer.pipe';
 

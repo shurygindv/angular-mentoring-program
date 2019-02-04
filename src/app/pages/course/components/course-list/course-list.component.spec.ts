@@ -1,9 +1,11 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {RouterModule} from '@angular/router';
 
-import {HostCourseListComponent} from './host-course-list.component.spec';
-import {CourseListComponent} from './course-list.component';
+import {AppRoutingModule} from '../../../../app-routing.module';
 import {SharedModule} from '../../../../shared/shared.module';
 import {OrderByCoursePipe} from '../../order-by-course.pipe';
+import {CourseListComponent} from './course-list.component';
+import {HostCourseListComponent} from './host-course-list.component.spec';
 
 const testMockedCourses = [
   {
@@ -33,7 +35,7 @@ describe('CourseListComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [SharedModule],
+      imports: [RouterModule, SharedModule, AppRoutingModule],
       declarations: [
         CourseListComponent,
         HostCourseListComponent,

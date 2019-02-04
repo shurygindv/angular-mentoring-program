@@ -1,13 +1,10 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {HostHeaderComponent} from './host-header.component.spec';
-import {HeaderComponent} from './header.component';
-import {ButtonComponent} from '../button/button.component';
-import {TextComponent} from '../text/text.component';
-import {IconComponent} from '../icon/icon.component';
-import {MenuProfileComponent} from '../menu-profile/menu-profile.component';
-import {CoreModule} from '../../../core/core.module';
 import {AppRoutingModule} from '../../../app-routing.module';
+import {CoreModule} from '../../../core/core.module';
+import {SharedModule} from '../../shared.module';
+import {HeaderComponent} from './header.component';
+import {HostHeaderComponent} from './host-header.component.spec';
 
 describe('HeaderComponent', () => {
   let component: HeaderComponent;
@@ -18,14 +15,9 @@ describe('HeaderComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [CoreModule, AppRoutingModule],
+      imports: [SharedModule, CoreModule, AppRoutingModule],
       declarations: [
         HostHeaderComponent,
-        HeaderComponent,
-        ButtonComponent,
-        TextComponent,
-        IconComponent,
-        MenuProfileComponent,
       ],
     }).compileComponents();
   }));

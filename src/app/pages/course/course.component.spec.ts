@@ -1,10 +1,13 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {RouterModule} from '@angular/router';
 
-import {CourseComponent} from './course.component';
+import {AppRoutingModule} from '../../app-routing.module';
+import {MaterialUiModule} from '../../shared/material-ui.module';
 import {SharedModule} from '../../shared/shared.module';
 import {CourseListComponent} from './components/course-list/course-list.component';
+import {CourseComponent} from './course.component';
 import {OrderByCoursePipe} from './order-by-course.pipe';
-import {MaterialUiModule} from '../../shared/material-ui.module';
+import {CourseEditPageComponent} from './pages/course-edit-page.component';
 
 describe('CourseComponent', () => {
   let component: CourseComponent;
@@ -15,8 +18,8 @@ describe('CourseComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [SharedModule, MaterialUiModule],
-      declarations: [CourseComponent, CourseListComponent, OrderByCoursePipe],
+      imports: [RouterModule, SharedModule, MaterialUiModule, AppRoutingModule],
+      declarations: [CourseEditPageComponent, CourseComponent, CourseListComponent, OrderByCoursePipe],
     });
   }));
 

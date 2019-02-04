@@ -1,7 +1,12 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {RouterModule} from '@angular/router';
 
+import {AppRoutingModule} from '../../../app-routing.module';
+import {SharedModule} from '../../shared.module';
 import {BreadCrumbsComponent} from './bread-crumbs.component';
 import {HostBreadcrumbComponent} from './host-breadcrumb.component.spec';
+
+
 
 describe('BreadCrumbsComponent', () => {
   let component: BreadCrumbsComponent;
@@ -9,7 +14,8 @@ describe('BreadCrumbsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [BreadCrumbsComponent, HostBreadcrumbComponent],
+      imports: [RouterModule, AppRoutingModule, SharedModule],
+      declarations: [HostBreadcrumbComponent],
     }).compileComponents();
   }));
 
@@ -27,30 +33,5 @@ describe('BreadCrumbsComponent', () => {
     const compiled = fixture.debugElement.nativeElement;
 
     expect(compiled.querySelector('ol')).toBeTruthy();
-  });
-
-  it('should render breadcrumbs', () => {
-    const compiled = fixture.debugElement.nativeElement;
-
-    component.items = ['#one', '#two', 'wooah'];
-    fixture.detectChanges();
-
-    expect(compiled.querySelector('ol').children.length).toBe(3);
-  });
-
-  it('should work pretty as child through host', () => {
-    const testFixture: ComponentFixture<
-      HostBreadcrumbComponent
-    > = TestBed.createComponent(HostBreadcrumbComponent);
-
-    const testComponent = testFixture.componentInstance;
-    const compiled = testFixture.debugElement.nativeElement;
-
-    testComponent.underTestComponent.items = ['#first', '#two', 'wooah'];
-
-    testFixture.detectChanges();
-
-    expect(compiled.querySelector('ol').children.length).toBe(3);
-    expect(compiled.querySelector('li').textContent.trim()).toEqual('#first');
   });
 });

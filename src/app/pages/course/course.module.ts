@@ -1,15 +1,21 @@
-import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
+import {NgModule} from '@angular/core';
 
-import {CourseComponent} from './course.component';
-import {CourseRoutingModule} from './course-routing.module';
+import {MaterialUiModule} from '../../shared/material-ui.module';
 import {SharedModule} from '../../shared/shared.module';
 import {CourseListComponent} from './components/course-list/course-list.component';
+import {CourseRoutingModule} from './course-routing.module';
+import {CourseComponent} from './course.component';
 import {OrderByCoursePipe} from './order-by-course.pipe';
-import {MaterialUiModule} from '../../shared/material-ui.module';
+import {CourseEditPageComponent} from './pages/course-edit-page.component';
 
 @NgModule({
-  declarations: [CourseComponent, CourseListComponent, OrderByCoursePipe],
+  declarations: [
+    CourseEditPageComponent,
+    CourseComponent,
+    CourseListComponent,
+    OrderByCoursePipe,
+  ],
   imports: [CommonModule, MaterialUiModule, SharedModule, CourseRoutingModule],
 })
 export class CourseModule {}

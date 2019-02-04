@@ -1,0 +1,68 @@
+<app-body>
+        <app-bread-crumbs></app-bread-crumbs>
+<div class="course-edit-page">
+    <h1 class="course-edit-page__title">Add/Edit course</h1>
+
+    <form
+      class="course-edit-page-form"
+      [formGroup]="courseGroupForm"
+      (ngSubmit)="onFormSubmit($event)"
+    >
+      <mat-form-field class="course-edit-page-form__control">
+        <input matInput placeholder="title" formControlName="title" required />
+        <mat-error *ngIf="formControls.title.invalid">{{
+          getCommonErrorMsg(formControls.title)
+        }}</mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="course-edit-page-form__control">
+        <input
+          matInput
+          placeholder="description"
+          formControlName="description"
+          required
+        />
+        <mat-error *ngIf="formControls.description.invalid">{{
+          getCommonErrorMsg(formControls.description)
+        }}</mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="course-edit-page-form__control">
+        <input
+          matInput
+          [matDatepicker]="datePicker"
+          formControlName="date"
+          placeholder="Choose a date"
+          required
+        />
+        <mat-datepicker-toggle
+          matSuffix
+          [for]="datePicker"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #datePicker></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field class="course-edit-page-form__control">
+        <input
+          matInput
+          [placeholder]="durationPlaceholder"
+          formControlName="duration"
+          required
+        />
+        <mat-error *ngIf="formControls.duration.invalid">{{
+          getCommonErrorMsg(formControls.duration)
+        }}</mat-error>
+      </mat-form-field>
+
+      <div class="course-edit-page-form__control">
+        <mat-checkbox formControlName="topRated"> Top rated </mat-checkbox>
+      </div>
+
+      <div class="course-edit-page__resolvers">
+        <a mat-button routerLink="/courses">Cancel</a>
+
+        <button mat-raised-button color="primary" type="submit">Done</button>
+      </div>
+    </form>
+  </div>
+</app-body>

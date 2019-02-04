@@ -4,12 +4,22 @@ $block: 'bread-crumbs';
     padding: 10px 0;
 
     &__item {
-        padding: 0 10px;
+        display: inline-block;
 
-        &:after {
-            content: '/';
-            font-weight: bold;
-            display: inline-block;
+        &:nth-child(n+2) {
+            &:before {
+                content: '/';
+                font-weight: bold;
+                display: inline-block;
+            }
+        }
+
+        &--labeled {
+            background: white;
+            padding: 5px 15px;
+            border: 1px solid;
         }
     }
+
+   
 }

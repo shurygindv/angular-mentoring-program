@@ -1,20 +1,21 @@
-import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
+import {NgModule} from '@angular/core';
 import {ReactiveFormsModule} from '@angular/forms';
+import {RouterModule} from '@angular/router';
 
-import {HeaderComponent} from './components/header/header.component';
 import {BodyComponent} from './components/body/body.component';
-import {FooterComponent} from './components/footer/footer.component';
-import {SearchBarComponent} from './components/search-bar/search-bar.component';
-import {IconComponent} from './components/icon/icon.component';
-import {ButtonComponent} from './components/button/button.component';
-import {TextComponent} from './components/text/text.component';
-import {MenuProfileComponent} from './components/menu-profile/menu-profile.component';
 import {BreadCrumbsComponent} from './components/bread-crumbs/bread-crumbs.component';
+import {ButtonComponent} from './components/button/button.component';
 import {ContentBoxComponent} from './components/content-box/content-box.component';
-
+import {FooterComponent} from './components/footer/footer.component';
+import {HeaderComponent} from './components/header/header.component';
+import {IconComponent} from './components/icon/icon.component';
+import {MenuProfileComponent} from './components/menu-profile/menu-profile.component';
+import {SearchBarComponent} from './components/search-bar/search-bar.component';
+import {TextComponent} from './components/text/text.component';
 import {DateStatusDirective} from './date-status.directive';
 import {DurationNormalizerPipe} from './duration-normalizer.pipe';
+import {PageNotFoundComponent} from './pages/page-not-found/page-not-found.component';
 
 @NgModule({
   declarations: [
@@ -32,8 +33,10 @@ import {DurationNormalizerPipe} from './duration-normalizer.pipe';
     MenuProfileComponent,
     BreadCrumbsComponent,
     ContentBoxComponent,
+    // pages
+    PageNotFoundComponent,
   ],
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, RouterModule],
   exports: [
     HeaderComponent,
     BodyComponent,
@@ -48,6 +51,9 @@ import {DurationNormalizerPipe} from './duration-normalizer.pipe';
     DateStatusDirective,
     DurationNormalizerPipe,
     ReactiveFormsModule,
+
+    // pages
+    PageNotFoundComponent,
   ],
 })
 export class SharedModule {}

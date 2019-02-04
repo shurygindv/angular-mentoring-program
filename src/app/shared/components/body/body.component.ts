@@ -5,6 +5,6 @@ import {ChangeDetectionStrategy, Component} from '@angular/core';
   templateUrl: './body.component.html',
   styleUrls: ['./body.component.scss'],
 
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BodyComponent {}

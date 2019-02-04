@@ -1,7 +1,7 @@
 <ol class="bread-crumbs">
-  <li class="bread-crumbs__item" *ngFor="let path of items">
-      <a href='#'>
-          {{path}}
+  <li class="bread-crumbs__item bread-crumbs__item--labeled" *ngFor="let item of breadcrumbs">
+      <a routerLink="{{item.url}}">
+          {{item.name}}
       </a>
     </li>
 </ol>

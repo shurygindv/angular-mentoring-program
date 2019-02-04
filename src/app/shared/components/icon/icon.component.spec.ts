@@ -31,11 +31,4 @@ describe('IconComponent', () => {
   it('should render own <i>', () => {
     expect(findElem('i')).toBeTruthy();
   });
-
-  it('should work map name to className', () => {
-    component.name = 'logo';
-    fixture.detectChanges();
-
-    expect(hasClasses(findElem('i'), 'icon-logo')).toBeTruthy();
-  });
 });

@@ -8,12 +8,17 @@
 
   <ng-container *ngIf="isAuthenticated()">
     <section>
-      <app-button [view]="'circle'" [uppercased]="true" (click)="showAddingDialog()">
-        Add me
-      </app-button>
+      <a routerLink="/courses/new">
+        <app-button
+          [view]="'circle'"
+          [uppercased]="true"
+        >
+          Add me
+        </app-button>
+      </a>
     </section>
 
-    <section class="page-header__aside" >
+    <section class="page-header__aside">
       <app-menu-profile (logout)="logout($event)"></app-menu-profile>
     </section>
   </ng-container>

@@ -24,8 +24,8 @@
           <p> {{ course.duration | durationNormalizer }} </p>
         </section>
 
-        <section class="course-list__item__controls">
-          <app-button [view]="'lime'" (click)="onEdit(course)">Edit</app-button>
+        <section class="course-list__controls">
+           <a mat-raised-button color="primary" routerLink="/courses/{{ course.id }}">Edit</a>
           <app-button [view]="'lime'" (click)="onRemove(course)">Remove</app-button>
         </section>
       </li>

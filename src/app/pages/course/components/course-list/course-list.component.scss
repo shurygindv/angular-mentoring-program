@@ -37,14 +37,16 @@ $block: 'course-list';
             padding: 5px 10px;
         }
 
-        &__controls {
-            display: flex;
-            justify-content: center;
-            flex-grow: 0.5;
-        }
+   
 
         &--favorite {
             background: pink;
         }
+    }
+
+    &__controls {
+        display: flex;
+        justify-content: space-around;
+        flex-grow: 0.5;
     }
 }

@@ -1,4 +1,10 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output} from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+} from '@angular/core';
 
 type Sizes = 'xs' | 'sm' | 'md' | 'lg';
 type ButtonTypes = 'button' | 'submit' | 'reset';
