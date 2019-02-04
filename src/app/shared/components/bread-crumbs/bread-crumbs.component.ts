@@ -22,11 +22,11 @@ export class BreadCrumbsComponent implements OnInit {
     this.route = route;
   }
 
-  public setItems(items: IBreadcrumb[]) {
+  public setItems(items: IBreadcrumb[]): void {
     this.breadcrumbs = [...items];
   }
 
-  private mapRouteUrl () {
+  private mapRouteUrl (): void {
     const course = {
       url: '/courses',
       name: 'Courses',
@@ -47,7 +47,7 @@ export class BreadCrumbsComponent implements OnInit {
     this.setItems([course]);
   }
 
-  public ngOnInit() {
+  public ngOnInit(): void {
     this.mapRouteUrl();
   }
 }

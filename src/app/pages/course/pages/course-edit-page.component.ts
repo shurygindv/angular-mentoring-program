@@ -1,10 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {
-  AbstractControl,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import {AbstractControl, FormControl, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 
 import {Course} from '../../../core/models/course.interface';
@@ -49,7 +44,7 @@ export class CourseEditPageComponent implements OnInit {
   }
 
   @Input()
-  public get durationPlaceholder() {
+  public get durationPlaceholder(): string {
     const value = this.formControls.duration.value;
 
     if (value) {
@@ -63,7 +58,7 @@ export class CourseEditPageComponent implements OnInit {
     return this.route.snapshot.paramMap.get('id');
   }
 
-  public ngOnInit() {
+  public ngOnInit(): void {
     const id = this.courseId;
 
     this.fillFormByCourseId(+id);
@@ -86,7 +81,7 @@ export class CourseEditPageComponent implements OnInit {
     }
   }
 
-  private setPageState(state: coursePageState) {
+  private setPageState(state: coursePageState): void {
     this.pageState = state;
   }
 
@@ -110,7 +105,7 @@ export class CourseEditPageComponent implements OnInit {
     };
   }
 
-  private navigateToHome() {
+  private navigateToHome(): void {
     this.router.navigateByUrl('/courses');
   }
 
