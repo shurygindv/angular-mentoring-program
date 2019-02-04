@@ -1,6 +1,6 @@
 <ol class="bread-crumbs">
   <li class="bread-crumbs__item bread-crumbs__item--labeled" *ngFor="let item of breadcrumbs">
-      <a routerLink="{{item.url}}">
+      <a [routerLink]="[item.url]">
           {{item.name}}
       </a>
     </li>

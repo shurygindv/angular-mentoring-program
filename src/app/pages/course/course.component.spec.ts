@@ -19,7 +19,12 @@ describe('CourseComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [RouterModule, SharedModule, MaterialUiModule, AppRoutingModule],
-      declarations: [CourseEditPageComponent, CourseComponent, CourseListComponent, OrderByCoursePipe],
+      declarations: [
+        CourseEditPageComponent,
+        CourseComponent,
+        CourseListComponent,
+        OrderByCoursePipe,
+      ],
     });
   }));
 

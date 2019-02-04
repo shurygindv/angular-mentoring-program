@@ -26,7 +26,7 @@ export class BreadCrumbsComponent implements OnInit {
     this.breadcrumbs = [...items];
   }
 
-  private mapRouteUrl (): void {
+  private mapRouteUrl(): void {
     const course = {
       url: '/courses',
       name: 'Courses',

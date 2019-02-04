@@ -16,9 +16,7 @@ describe('HeaderComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [SharedModule, CoreModule, AppRoutingModule],
-      declarations: [
-        HostHeaderComponent,
-      ],
+      declarations: [HostHeaderComponent],
     }).compileComponents();
   }));
 

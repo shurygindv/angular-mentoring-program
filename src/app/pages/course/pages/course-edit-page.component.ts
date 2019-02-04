@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {AbstractControl, FormControl, FormGroup, Validators} from '@angular/forms';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 
 import {Course} from '../../../core/models/course.interface';
@@ -61,14 +61,23 @@ export class CourseEditPageComponent implements OnInit {
   public ngOnInit(): void {
     const id = this.courseId;
 
-    this.fillFormByCourseId(+id);
+    this.fillFormByCourseId(Number(id));
 
-    if (id) {
+    if (id !== '') {
       this.setPageState(coursePageState.updating);
     }
   }
 
+  public hasChanges(): boolean {
+    return this.courseGroupForm.touched;
+  }
+
   private save(course: Course): void {
+    if (!this.hasChanges()) {
+      this.navigateToHome();
+      return;
+    }
+
     switch (this.pageState) {
       case coursePageState.creating: {
         this.courseService.create(course);
@@ -109,32 +118,14 @@ export class CourseEditPageComponent implements OnInit {
     this.router.navigateByUrl('/courses');
   }
 
-  public getCommonErrorMsg(control: AbstractControl): string {
-    if (control.hasError('required')) {
-      return 'You must enter a value';
-    }
-
-    return '';
-  }
-
   public fillFormByCourseId(id: number): void {
     const course = this.courseService.getById(id);
 
     this.courseGroupForm = this.initFormGroup(course);
   }
 
-  public onFormSubmit($event: Event): void {
+  public onDone($event: Event): void {
     $event.preventDefault(); // TODO: implement pipe on preventDefault
-
-    if (this.courseGroupForm.invalid) {
-      console.log('Error: form is invalid');
-      return;
-    }
-
-    if (this.courseGroupForm.untouched) {
-      this.navigateToHome();
-      return;
-    }
 
     this.save(this.getDoneCourse());
     this.navigateToHome();

@@ -6,8 +6,6 @@ import {SharedModule} from '../../shared.module';
 import {BreadCrumbsComponent} from './bread-crumbs.component';
 import {HostBreadcrumbComponent} from './host-breadcrumb.component.spec';
 
-
-
 describe('BreadCrumbsComponent', () => {
   let component: BreadCrumbsComponent;
   let fixture: ComponentFixture<BreadCrumbsComponent>;
