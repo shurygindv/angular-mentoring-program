@@ -42,6 +42,7 @@ export class BreadCrumbsComponent implements OnInit {
           name: `Course with id ${id}`,
         },
       ]);
+      return;
     }
 
     this.setItems([course]);
