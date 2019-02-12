@@ -13,6 +13,8 @@ type Course = {
 export interface ICourseService {
   findCourseById(id: number): Promise<MaybeNull<Course>>;
   findCourses(): Promise<Course[]>;
+
+  takeCoursesByLength(from: number, take: number): Promise<Course[]>;
 }
 
 const courses: Course[] = dbCourses; // todo user type
@@ -28,5 +30,11 @@ export class CourseService implements ICourseService {
   // todo user service
   async findCourses(): Promise<Course[]> {
     return await promisify([...courses]);
+  }
+  
+  async takeCoursesByLength (from: number, take: number) {
+    const courses = await this.findCourses();
+
+    return promisify([...courses.slice(from, take)]);
   }
 }
