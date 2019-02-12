@@ -1,5 +1,5 @@
 import { MaybeNull } from '../../types';
-import fakeAuthInfoDatabase from './fake-db.json';
+import {users as dbUsers} from './fake-db.json';
 import { AuthorizationDeniedError } from '../../helpers/authorization-denied';
 
 type User = {
@@ -20,7 +20,7 @@ export interface IAuthorizationService {
   findUserByLogin(login: string): Promise<MaybeNull<User>>;
 }
 
-const users: User[] = fakeAuthInfoDatabase.users; // todo user type
+const users: User[] = dbUsers; // todo user type
 
 const promisify = (data: any) => Promise.resolve(data);
 

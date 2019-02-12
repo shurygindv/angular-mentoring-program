@@ -1,4 +1,4 @@
-import fakeCourseDatabase from './fake-db.json';
+import {courses as dbCourses} from './fake-db.json';
 import { MaybeNull } from '../../types';
 
 type Course = {
@@ -15,7 +15,7 @@ export interface ICourseService {
   findCourses(): Promise<Course[]>;
 }
 
-const courses: Course[] = fakeCourseDatabase.courses; // todo user type
+const courses: Course[] = dbCourses; // todo user type
 
 const promisify = (data: any) => Promise.resolve(data);
 

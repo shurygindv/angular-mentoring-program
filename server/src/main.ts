@@ -21,7 +21,7 @@ const router = createAppRouter();
 bootstrap(router);
 
 app
-  .use(errorMiddleware)
+  .use(errorMiddleware())
   .use(cors())
   .use(logger())
   .use(bodyParser())
