@@ -17,7 +17,6 @@ import {Course} from '../../../../core/models/course.interface';
 })
 export class CourseListComponent {
   @Input() public items: Course[];
-  @Input() public searchBy: string;
 
   @Output() public remove: EventEmitter<Course> = new EventEmitter();
   @Output() public edit: EventEmitter<Course> = new EventEmitter();

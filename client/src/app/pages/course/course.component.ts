@@ -84,7 +84,8 @@ export class CourseComponent implements OnInit, OnDestroy {
   }
 
   public updateSearch(value: string): void {
-    this.searchBy = value;
+    this.courseService.filterBy(value).pipe(first())
+      .subscribe(this.updateCourses);
   }
 
   public showEditingDialog(course: Course) {

@@ -6,7 +6,6 @@ import {MaterialUiModule} from '../../shared/material-ui.module';
 import {SharedModule} from '../../shared/shared.module';
 import {CourseListComponent} from './components/course-list/course-list.component';
 import {CourseComponent} from './course.component';
-import {OrderByCoursePipe} from './order-by-course.pipe';
 import {CourseEditPageComponent} from './pages/course-edit-page.component';
 import { ApiService } from '../../core/services/api.service';
 import { HttpClientModule } from '@angular/common/http';
@@ -26,7 +25,6 @@ describe('CourseComponent', () => {
         CourseEditPageComponent,
         CourseComponent,
         CourseListComponent,
-        OrderByCoursePipe,
       ],
     });
   }));

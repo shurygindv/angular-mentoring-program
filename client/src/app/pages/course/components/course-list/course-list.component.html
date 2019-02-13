@@ -1,6 +1,6 @@
 <section class="card-container">
   <ul class="course-list">
-    <ng-container *ngFor="let course of (items | orderByCourse: searchBy : 'name')">
+    <ng-container *ngFor="let course of items">
       <li
         class="course-list__item"
         [ngClass]="getCourseClasses(course)"

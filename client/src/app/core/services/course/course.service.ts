@@ -44,13 +44,16 @@ export class CourseService {
     return this.apiService.delete(`/courses/delete/${id}`);
   }
 
-  public fetchCourses(params: FetchCoursesParams = {}): void {
-    const take = params.take || 10;
-    const from = params.from || 0;
+  public filterBy(textFragment: string) {
+    return this.apiService.get('/courses/filterBy', {
+      textFragment,
+    }).pipe(map(result => result.Data));
+  }
 
+  public fetchCourses(params: FetchCoursesParams = {}): void {
     const query = {
-      from: from || 0,
-      take: take || 10,
+      from: params.from || 0,
+      take: params.take || 10,
     };
 
     this.apiService

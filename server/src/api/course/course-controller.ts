@@ -3,10 +3,16 @@ import * as Router from 'koa-router';
 
 import { HttpSuccessResult } from '../../helpers/http-success-result';
 import { ICourseService } from './course-service';
+import { createContext } from 'vm';
 
 const selectId = (ctx: Koa.Context): number => +ctx.params.id;
+
+
+// queries
 const selectTake = (ctx: Koa.Context) => ctx.query.take || 10;
 const selectFrom = (ctx: Koa.Context) => ctx.query.from || 0;
+const selectTextFragment = (ctx: Koa.Context) => ctx.query.textFragment || '';
+
 
 export const mount = (courseService: ICourseService): Router => {
   const router: Router = new Router();
@@ -56,6 +62,15 @@ export const mount = (courseService: ICourseService): Router => {
     const courses = await courseService.takeCoursesByLength(from, take);
 
     ctx.body = new HttpSuccessResult(courses).result;
+    ctx.status = 200;
+  });
+
+  router.get('/courses/filterBy', async (ctx: Koa.Context) => {
+    const filterBy = selectTextFragment(ctx);
+
+    const filteredCourses = await courseService.filterByTextFragment(filterBy);
+
+    ctx.body = new HttpSuccessResult(filteredCourses).result;
     ctx.status = 200;
   });
 
