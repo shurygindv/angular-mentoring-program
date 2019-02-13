@@ -5,6 +5,7 @@ import {
   FormGroup,
   AbstractControl,
 } from '@angular/forms';
+import {Router} from '@angular/router';
 
 import {AuthService} from '../../core/services/auth/auth.service';
 
@@ -15,14 +16,17 @@ import {AuthService} from '../../core/services/auth/auth.service';
 })
 export class LoginComponent {
   private authService: AuthService;
+  public errorMessage: string;
+  private router: Router;
 
   public loginForm = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [Validators.required]),
   });
 
-  constructor(authService: AuthService) {
+  constructor(authService: AuthService, router: Router) {
     this.authService = authService;
+    this.router = router;
   }
 
   get emailField(): AbstractControl {
@@ -59,6 +63,13 @@ export class LoginComponent {
       return;
     }
 
-    this.authService.login(this.emailField.value, this.passwordField.value);
+    this.authService
+      .attemptLogin(this.emailField.value, this.passwordField.value)
+      .subscribe(
+        _ => this.router.navigateByUrl('/courses'),
+        (e: any) => {
+          this.errorMessage = e.error.ErrorDescription;
+        }
+      );
   }
 }

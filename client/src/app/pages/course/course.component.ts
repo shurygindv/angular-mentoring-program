@@ -1,5 +1,6 @@
 import {Component, Output, OnInit, OnDestroy} from '@angular/core';
 import {Subscription} from 'rxjs';
+import {first} from 'rxjs/operators';
 
 import {Course} from '../../core/models/course.interface';
 import {CourseService} from './../../core/services/course/course.service';
@@ -14,11 +15,11 @@ import {CourseEditDialogComponent} from './dialogs/edit/course-edit-dialog.compo
 const mapCourseToDialogData = (
   course: Course,
 ): Omit<ICourseEditDialogData, 'onSubmit'> => ({
-  title: course.title,
-  topRated: course.topRated,
-  duration: course.duration,
+  name: course.name,
+  isTopRated: course.isTopRated,
+  length: course.length,
   description: course.description,
-  creationDate: course.creationDate,
+  date: course.date,
 });
 
 @Component({
@@ -36,6 +37,11 @@ export class CourseComponent implements OnInit, OnDestroy {
   private dialogService: DialogService;
   private coursesFetchSubscription: Subscription;
 
+  private pagination = {
+    from: 0,
+    take: 10,
+  };
+
   constructor(courseService: CourseService, dialogService: DialogService) {
     this.courseService = courseService;
     this.dialogService = dialogService;
@@ -45,6 +51,10 @@ export class CourseComponent implements OnInit, OnDestroy {
     this.courses = courses;
   }
 
+  public fetchCourses = () => {
+    this.courseService.fetchCourses(this.pagination.from, this.pagination.take);
+  }
+
   private subscribeToCourses() {
     this.coursesFetchSubscription = this.courseService.courses.subscribe(
       this.updateCourses,
@@ -52,15 +62,14 @@ export class CourseComponent implements OnInit, OnDestroy {
   }
 
   private updateCourseById(id: number, course: Course) {
-    this.courseService.update(id, course);
+    this.courseService
+      .update(id, course)
+      .pipe(first())
+      .subscribe(this.fetchCourses);
   }
 
   private handleEditingSubmit(id: number, dialogData: CourseSharedData) {
     this.updateCourseById(id, CourseSharedData.toCourse(dialogData));
-  }
-
-  public fetchCourses() {
-    this.courseService.fetchCourses();
   }
 
   public ngOnInit(): void {
@@ -85,8 +94,21 @@ export class CourseComponent implements OnInit, OnDestroy {
     });
   }
 
+  public setPagination (from: number, take: number = 10) {
+    this.pagination = {from, take};
+  }
+
+  public addMoreCourses() {
+    this.setPagination(this.pagination.from + 10);
+
+    this.courseService.fetchCourses();
+  }
+
   public deleteCourse = (id: number) => {
-    this.courseService.delete(id);
+    this.courseService
+      .delete(id)
+      .pipe(first())
+      .subscribe(this.fetchCourses);
   }
 
   public showRemovingDialog(course: Course) {

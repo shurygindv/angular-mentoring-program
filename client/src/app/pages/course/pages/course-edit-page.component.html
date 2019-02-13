@@ -9,8 +9,8 @@
       (ngSubmit)="onDone($event)"
     >
       <mat-form-field class="course-edit-page-form__control">
-        <input matInput placeholder="title" formControlName="title" required />
-        <mat-error *ngIf="formControls.title.invalid">
+        <input matInput placeholder="name" formControlName="name" required />
+        <mat-error *ngIf="formControls.name.invalid">
           Invalid field
         </mat-error>
       </mat-form-field>
@@ -46,16 +46,16 @@
         <input
           matInput
           [placeholder]="durationPlaceholder"
-          formControlName="duration"
+          formControlName="length"
           required
         />
-        <mat-error *ngIf="formControls.duration.invalid">
+        <mat-error *ngIf="formControls.length.invalid">
           Invalid field
         </mat-error>
       </mat-form-field>
 
       <div class="course-edit-page-form__control">
-        <mat-checkbox formControlName="topRated"> Top rated </mat-checkbox>
+        <mat-checkbox formControlName="isTopRated"> Top rated </mat-checkbox>
       </div>
 
       <div class="course-edit-page__resolvers">

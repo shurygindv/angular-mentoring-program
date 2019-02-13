@@ -1,66 +1,53 @@
 import {Injectable} from '@angular/core';
+import {HttpParams} from '@angular/common/http';
 import {BehaviorSubject, Observable} from 'rxjs';
+import {map} from 'rxjs/operators';
 
-import {mockCourses} from '../../mocks/course.mock';
 import {Course} from '../../models/course.interface';
-
-const INITIAL_ID = 100;
+import {ApiService} from '../api.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CourseService {
   private coursesBF: BehaviorSubject<Course[]>;
-  private currentId: number;
-  private store: Course[];
+  private apiService: ApiService;
 
-  constructor() {
+  constructor(apiService: ApiService) {
+    this.apiService = apiService;
     this.coursesBF = new BehaviorSubject([]);
-    this.store = mockCourses;
-    this.currentId = INITIAL_ID;
   }
 
   get courses(): Observable<Course[]> {
     return this.coursesBF.asObservable();
   }
 
-  private upToDateCourses(courses: Course[]): void {
-    this.store = [...courses];
-    this.coursesBF.next(Array.from(this.store));
+  public create(course: Course): Observable<any> {
+    return this.apiService.post(`/courses/add`, course);
   }
 
-  public create(course: Course): Course {
-    this.currentId++;
-
-    const item = {id: this.currentId, ...course};
-    this.upToDateCourses([...this.store, item]);
-
-    return item;
+  public update(id: number, course: Course): Observable<any> {
+    return this.apiService.put(`/courses/update/${id}`, course);
   }
 
-  public getById(id: number): Course {
-    const course = this.store.find((item: Course) => item.id === id);
-
-    return {...course};
+  public getCourseById (id: number): Observable<any> {
+    return this.apiService.get(`/courses/${id}`).pipe(map(result => result.Data));
   }
 
-  public update(id: number, course: Course): void {
-    const index = this.store.findIndex((item: Course) => item.id === id);
-
-    const containCourse = index !== -1;
-
-    if (containCourse) {
-      this.store[index] = {id, ...course};
-
-      this.upToDateCourses(this.store);
-    }
+  public delete(id: number): Observable<any> {
+    return this.apiService.delete(`/courses/delete/${id}`);
   }
 
-  public delete(id: number): void {
-    this.upToDateCourses(this.store.filter((item: Course) => item.id !== id));
-  }
+  public fetchCourses(from?: number, take?: number): void {
+    const params = new HttpParams();
 
-  public fetchCourses(): void {
-    this.coursesBF.next(Array.from(this.store.values()));
+    params.set('from', `${from || 0}`);
+    params.set('take', `${take || 10}`);
+
+    this.apiService.get('/courses', params).pipe(
+      map(result => {
+        this.coursesBF.next(result.Data);
+      }),
+    );
   }
 }

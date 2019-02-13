@@ -1,15 +1,16 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
+import {first} from 'rxjs/operators';
 
 import {Course} from '../../../core/models/course.interface';
 import {CourseService} from '../../../core/services/course/course.service';
 import {DurationNormalizerPipe} from '../../../shared/duration-normalizer.pipe';
 
-const createStrictFormControl = <T>(value: T) =>
+const createStrictFormControl = <T>(value?: T) =>
   new FormControl(value, [Validators.required]);
 
-const createFormControl = <T>(value: T) => new FormControl(value);
+const createFormControl = <T>(value?: T) => new FormControl(value);
 
 enum coursePageState {
   creating = 0,
@@ -37,6 +38,7 @@ export class CourseEditPageComponent implements OnInit {
     this.router = router;
     this.courseService = courseService;
     this.pageState = coursePageState.creating;
+    this.courseGroupForm = this.initFormGroup();
   }
 
   public get formControls() {
@@ -61,11 +63,18 @@ export class CourseEditPageComponent implements OnInit {
   public ngOnInit(): void {
     const id = this.courseId;
 
-    this.fillFormByCourseId(Number(id));
-
-    if (id !== '') {
-      this.setPageState(coursePageState.updating);
+    if (id === '') {
+      return;
     }
+
+    this.setPageState(coursePageState.updating);
+
+    this.courseService
+      .getCourseById(Number(id))
+      .pipe(first())
+      .subscribe((course: Course) => {
+        this.fillCourseForm(course);
+      });
   }
 
   public hasChanges(): boolean {
@@ -74,17 +83,22 @@ export class CourseEditPageComponent implements OnInit {
 
   private save(course: Course): void {
     if (!this.hasChanges()) {
-      this.navigateToHome();
       return;
     }
 
     switch (this.pageState) {
       case coursePageState.creating: {
-        this.courseService.create(course);
+        this.courseService
+          .create(course)
+          .pipe(first())
+          .subscribe(() => this.courseService.fetchCourses());
         break;
       }
       case coursePageState.updating: {
-        this.courseService.update(+this.courseId, course);
+        this.courseService
+          .update(+this.courseId, course)
+          .pipe(first())
+          .subscribe(() => this.courseService.fetchCourses());
         break;
       }
     }
@@ -94,22 +108,22 @@ export class CourseEditPageComponent implements OnInit {
     this.pageState = state;
   }
 
-  private initFormGroup(course: Course): FormGroup {
+  private initFormGroup(): FormGroup {
     return new FormGroup({
-      title: createStrictFormControl(course.title),
-      date: createStrictFormControl(course.creationDate),
-      duration: createStrictFormControl(course.duration),
-      topRated: createFormControl(course.topRated),
-      description: createStrictFormControl(course.description),
+      name: createStrictFormControl(),
+      date: createStrictFormControl(),
+      length: createStrictFormControl(),
+      isTopRated: createFormControl(),
+      description: createStrictFormControl(),
     });
   }
 
   private getDoneCourse(): Course {
     return {
-      title: this.formControls.title.value,
-      topRated: this.formControls.topRated.value,
-      creationDate: this.formControls.date.value,
-      duration: this.formControls.duration.value,
+      name: this.formControls.name.value,
+      isTopRated: this.formControls.isTopRated.value,
+      date: this.formControls.date.value,
+      length: this.formControls.duration.value,
       description: this.formControls.description.value,
     };
   }
@@ -118,10 +132,14 @@ export class CourseEditPageComponent implements OnInit {
     this.router.navigateByUrl('/courses');
   }
 
-  public fillFormByCourseId(id: number): void {
-    const course = this.courseService.getById(id);
-
-    this.courseGroupForm = this.initFormGroup(course);
+  public fillCourseForm(course: Course): void {
+    this.courseGroupForm.setValue({
+      name: course.name,
+      isTopRated: course.isTopRated,
+      length: course.length,
+      description: course.description,
+      date: course.date,
+    });
   }
 
   public onDone($event: Event): void {

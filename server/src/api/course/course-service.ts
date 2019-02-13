@@ -2,11 +2,12 @@ import {courses as dbCourses} from './fake-db.json';
 import { MaybeNull } from '../../types';
 
 type Course = {
-  id: number;
+  id?: number;
   name: string;
+  date: string,
   description: string;
   isTopRated: boolean;
-  authors: any[];
+  authors?: any[];
   length: number;
 };
 
@@ -15,9 +16,13 @@ export interface ICourseService {
   findCourses(): Promise<Course[]>;
 
   takeCoursesByLength(from: number, take: number): Promise<Course[]>;
+  addCourse(course: Course): Promise<Course>;
+  deleteCourseById (id: number): Promise<boolean>;
+  updateCourseById (id: number, course: Course): Promise<boolean>;
 }
 
-const courses: Course[] = dbCourses; // todo user type
+let courses: any[] = dbCourses; // todo user type
+let id = 0;
 
 const promisify = (data: any) => Promise.resolve(data);
 
@@ -35,6 +40,30 @@ export class CourseService implements ICourseService {
   async takeCoursesByLength (from: number, take: number) {
     const courses = await this.findCourses();
 
-    return promisify([...courses.slice(from, take)]);
+    return await promisify([...courses.slice(from, take)]);
+  }
+
+  async deleteCourseById (id: number) {
+    const found: number = courses.findIndex(course => course.id === id);
+
+    courses.splice(found, 1);
+    
+    return await promisify(true);
+  }
+
+  async updateCourseById (id: number, updated: Course) {
+    const index: number = courses.findIndex(course => course.id === id);
+
+    courses[index] = updated;
+
+    return await promisify(true);
+  }
+
+  async addCourse (added: Course) {
+    const newItem = {...added, id: id++};
+
+    courses = [...courses, newItem];
+
+    return await promisify(newItem);
   }
 }

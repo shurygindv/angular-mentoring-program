@@ -21,9 +21,10 @@ export class CourseListComponent {
 
   @Output() public remove: EventEmitter<Course> = new EventEmitter();
   @Output() public edit: EventEmitter<Course> = new EventEmitter();
+  @Output() public addMore: EventEmitter<null> = new EventEmitter();
 
   public getCourseClasses(course: Course) {
-    const isFavorite = course.topRated;
+    const isFavorite = course.isTopRated;
 
     return {
       'course-list__item--whited': !isFavorite,
@@ -37,5 +38,9 @@ export class CourseListComponent {
 
   public onEdit(item: Course) {
     this.edit.emit(item);
+  }
+
+  public onMore () {
+    this.addMore.emit(null);
   }
 }

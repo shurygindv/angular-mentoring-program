@@ -14,27 +14,27 @@ import {Omit} from '../../../../utils/types';
 
 export class CourseSharedData {
   constructor(
-    title: string,
+    name: string,
     description: string,
-    duration: number,
-    creationDate: string | Date,
+    length: number,
+    date: string | Date,
     authors: string[],
-    topRated: boolean,
+    isTopRated: boolean,
   ) {
-    this.title = title;
+    this.name = name;
     this.description = description;
-    this.duration = duration;
-    this.creationDate = creationDate;
+    this.length = length;
+    this.date = date;
     this.authors = authors;
-    this.topRated = topRated;
+    this.isTopRated = isTopRated;
   }
   // temp data, static
-  public title: string;
+  public name: string;
   public description: string;
-  public duration: number;
-  public creationDate: string | Date;
+  public length: number;
+  public date: string | Date;
   public authors: string[];
-  public topRated: boolean;
+  public isTopRated: boolean;
 
   public static map(
     data?: Omit<ICourseEditDialogData, 'onSubmit'>,
@@ -46,20 +46,20 @@ export class CourseSharedData {
     return new CourseSharedData(
       data.title,
       data.description,
-      data.duration,
-      data.creationDate,
+      data.length,
+      data.date,
       data.authors,
-      data.topRated,
+      data.isTopRated,
     );
   }
 
   public static toCourse(data: CourseSharedData): Course {
     return {
-      title: data.title,
-      topRated: data.topRated,
-      duration: data.duration,
+      name: data.name,
+      isTopRated: data.isTopRated,
+      length: data.length,
       description: data.description,
-      creationDate: data.creationDate,
+      date: data.date,
     };
   }
 
@@ -72,11 +72,11 @@ export class CourseSharedData {
 export interface ICourseEditDialogData
   extends ConfirmationDialogData<CourseSharedData> {
   authors?: [];
-  title?: string;
-  topRated?: boolean;
-  duration?: number;
+  name?: string;
+  isTopRated?: boolean;
+  length?: number;
   description?: string;
-  creationDate?: string | Date;
+  date?: string | Date;
 }
 
 const createStrictFormControl = <T>(value: T) =>
@@ -132,20 +132,20 @@ export class CourseEditDialogComponent {
 
   private initFormGroup(courseProps: CourseSharedData): FormGroup {
     return new FormGroup({
-      title: createStrictFormControl(courseProps.title),
-      date: createStrictFormControl(courseProps.creationDate),
-      duration: createStrictFormControl(courseProps.duration),
-      topRated: createFormControl(courseProps.topRated),
+      name: createStrictFormControl(courseProps.name),
+      date: createStrictFormControl(courseProps.date),
+      duration: createStrictFormControl(courseProps.length),
+      isTopRated: createFormControl(courseProps.isTopRated),
       description: createStrictFormControl(courseProps.description),
     });
   }
 
   private getDoneCourse(): Omit<ICourseEditDialogData, 'onSubmit'> {
     return {
-      title: this.formControls.title.value,
-      topRated: this.formControls.topRated.value,
-      creationDate: this.formControls.date.value,
-      duration: this.formControls.duration.value,
+      name: this.formControls.name.value,
+      isTopRated: this.formControls.isTopRated.value,
+      date: this.formControls.date.value,
+      length: this.formControls.length.value,
       description: this.formControls.description.value,
     };
   }

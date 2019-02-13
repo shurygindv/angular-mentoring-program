@@ -20,6 +20,7 @@
     *ngIf="courses.length"
 
 
+    (addMore)="addMoreCourses()"
     (remove)="showRemovingDialog($event)"
     (edit)="showEditingDialog($event)"
     ></app-course-list>

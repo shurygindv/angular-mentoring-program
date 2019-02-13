@@ -36,7 +36,7 @@ export class AuthorizationService implements IAuthorizationService {
   }
 
   async login(login: string, password: string): Promise<any> {
-    const userInfo = await this.findUserByLogin(login);
+    const userInfo = await this.findUserByLogin((login || '').trim());
 
     if (!userInfo) {
       throw new AuthorizationDeniedError("Such user isn't created yet");
@@ -44,6 +44,7 @@ export class AuthorizationService implements IAuthorizationService {
 
     if (userInfo.password === password) {
       return await promisify({
+        id: userInfo.id,
         token: userInfo.fakeToken,
         firstName: userInfo.name.first,
         lastName: userInfo.name.first

@@ -1,85 +1,64 @@
 import {Injectable} from '@angular/core';
-import {Router} from '@angular/router';
+import {ReplaySubject, Observable, BehaviorSubject} from 'rxjs';
+import {map} from 'rxjs/operators';
 
-import {LocalStorage, Storage} from '../../../helpers/storage';
+import {ApiService} from '../api.service';
 
-interface UserPayload {
-  email: string;
-  password: string;
+interface UserInfo {
+  id: string;
+  token: string;
+  firstName: string;
+  lastName: string;
 }
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private userLogin: string;
+  private apiService: ApiService;
 
-  private router: Router;
-  private session: UserPayload;
-  private storage: Storage<UserPayload>;
+  private currentUserSubject: BehaviorSubject<UserInfo> = new BehaviorSubject<
+    UserInfo
+  >({} as UserInfo);
+  private isAuthenticatedSubject = new ReplaySubject<boolean>(1);
 
-  constructor(router: Router) {
-    this.router = router;
+  public currentUser = this.currentUserSubject.asObservable();
+  public isAuthenticated = this.isAuthenticatedSubject.asObservable();
 
-    this.storage = new LocalStorage();
-    this.session = null;
+  constructor(apiService: ApiService) {
+    this.apiService = apiService;
   }
 
-  private save(email: string, password: string): void {
-    this.storage.set(email, {
-      email,
-      password,
-    });
+  private setAuth(data: UserInfo): void {
+    this.currentUserSubject.next(data);
+    this.isAuthenticatedSubject.next(true);
   }
 
-  private navigateToHome(): void {
-    this.router.navigateByUrl('/courses');
+  public getUserInfo(): UserInfo {
+    return this.currentUserSubject.value;
   }
 
-  private navigateToLogin(): void {
-    this.router.navigateByUrl('/login');
+  public getFullUserInfo(): Observable<any> {
+    const id = this.currentUserSubject.value.id;
+
+    return this.apiService.get(`/auth/info/${id}`);
   }
 
-  private setSession(email: string, password: string): void {
-    this.session = {
-      email,
-      password,
-    };
-  }
-
-  private isAuth(email: string, password: string): boolean {
-    const user = this.getUserInfo(email || this.userLogin);
-
-    return !!(user && user.password === password);
-  }
-
-  public login(email: string, password: string): void {
-    console.log(`Success: ${email}, ${password}`);
-
-    this.save(email, password); // just save and continue ;)
-
-    if (this.isAuth(email, password)) {
-      this.navigateToHome();
-      this.setSession(email, password);
-    }
+  public attemptLogin(email: string, password: string): Observable<any> {
+    return this.apiService
+      .post('/auth/login', {
+        login: email,
+        password: password,
+      })
+      .pipe(
+        map(result => {
+          this.setAuth(result.Data); // todo request result wrapper
+        }),
+      );
   }
 
   public logout(): void {
-    this.storage.remove(this.session.email);
-    this.session = null;
-
-    this.navigateToLogin();
-  }
-
-  public isAuthenticated(): boolean {
-    if (this.session) {
-      return this.isAuth(this.session.email, this.session.password);
-    }
-
-    return false;
-  }
-
-  public getUserInfo(email: string): UserPayload {
-    return this.storage.get(email);
+    this.currentUserSubject.next({} as UserInfo);
+    this.isAuthenticatedSubject.next(false);
   }
 }
