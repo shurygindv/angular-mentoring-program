@@ -34,10 +34,10 @@ describe('HeaderComponent', () => {
     expect(findElem('header')).toBeTruthy();
   });
 
-  it('should render <profile> element when Auth flag', () => {
+  it('should render <profile> element when auth flag', () => {
     const element = findElem('app-menu-profile');
 
-    if (!component.isAuthenticated()) {
+    if (!component.isAuthenticated) {
       expect(element).toBeFalsy();
     }
   });

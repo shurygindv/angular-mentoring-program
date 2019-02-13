@@ -1,19 +1,24 @@
 import {Observable} from 'rxjs';
+import {TestBed} from '@angular/core/testing';
+import {HttpClientModule} from '@angular/common/http';
 
-import {Course} from '../../models/course.interface';
 import {CourseService} from './course.service';
+import {ApiService} from '../api.service';
 
 describe(`CourseService`, () => {
-  let service: CourseService;
-
   beforeEach(() => {
-    service = new CourseService();
+    TestBed.configureTestingModule({
+      imports: [HttpClientModule],
+      providers: [ApiService, CourseService],
+    });
   });
 
   it('#fetchCourses should return values', (done: DoneFn) => {
+    const service: CourseService = TestBed.get(CourseService);
+
     service.fetchCourses();
 
-    service.courses.subscribe(values => {
+    service.courses.subscribe((values: any) => {
       expect(values.length).toBeGreaterThan(0);
       done();
     });

@@ -8,6 +8,8 @@ import {CourseListComponent} from './components/course-list/course-list.componen
 import {CourseComponent} from './course.component';
 import {OrderByCoursePipe} from './order-by-course.pipe';
 import {CourseEditPageComponent} from './pages/course-edit-page.component';
+import { ApiService } from '../../core/services/api.service';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('CourseComponent', () => {
   let component: CourseComponent;
@@ -18,7 +20,8 @@ describe('CourseComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [RouterModule, SharedModule, MaterialUiModule, AppRoutingModule],
+      imports: [RouterModule, SharedModule, MaterialUiModule, HttpClientModule, AppRoutingModule],
+      providers: [ApiService],
       declarations: [
         CourseEditPageComponent,
         CourseComponent,
@@ -38,10 +41,6 @@ describe('CourseComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should have course list', () => {
-    expect(findElem('app-course-list')).toBeTruthy();
-  });
-
   it('should have container (body)', () => {
     expect(findElem('app-body')).toBeTruthy();
   });
@@ -58,18 +57,18 @@ describe('CourseComponent', () => {
     component.courses = [
       {
         id: 0,
-        topRated: false,
-        title: 'How to become better than you thought possible',
-        creationDate: '2018-10-21T13:28:06.419Z',
-        duration: 60,
+        isTopRated: false,
+        name: 'How to become better than you thought possible',
+        date: '2018-10-21T13:28:06.419Z',
+        length: 60,
         description: '',
       },
       {
         id: 0,
-        topRated: false,
-        title: 'How to become better than you thought possible',
-        creationDate: '2018-10-21T13:28:06.419Z',
-        duration: 60,
+        isTopRated: false,
+        name: 'How to become better than you thought possible',
+        date: '2018-10-21T13:28:06.419Z',
+        length: 60,
         description: '',
       },
     ];

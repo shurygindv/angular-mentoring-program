@@ -1,19 +1,19 @@
-import {Component, OnInit, OnDestroy} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
+import {first} from 'rxjs/operators';
 
 import {AuthService} from '../../../core/services/auth/auth.service';
-import {Subscription} from 'rxjs';
-import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
 })
-export class HeaderComponent implements OnInit, OnDestroy {
+export class HeaderComponent implements OnInit {
   private router: Router;
   private authService: AuthService;
-  private isAuthenticated: boolean;
-  private authSubscription: Subscription;
+
+  public isAuthenticated: boolean;
 
   constructor(authService: AuthService, router: Router) {
     this.authService = authService;
@@ -21,15 +21,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   public ngOnInit() {
-    this.authSubscription = this.authService.isAuthenticated.subscribe(
+    this.authService.isAuthenticated.pipe(first()).subscribe(
       (value: boolean) => {
         this.isAuthenticated = value;
       },
     );
-  }
-
-  public ngOnDestroy() {
-    this.authSubscription.unsubscribe();
   }
 
   public logout() {
