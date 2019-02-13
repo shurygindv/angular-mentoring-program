@@ -3,7 +3,6 @@ import {RouterModule} from '@angular/router';
 
 import {AppRoutingModule} from '../../../../app-routing.module';
 import {SharedModule} from '../../../../shared/shared.module';
-import {OrderByCoursePipe} from '../../order-by-course.pipe';
 import {CourseListComponent} from './course-list.component';
 import {HostCourseListComponent} from './host-course-list.component.spec';
 
@@ -39,7 +38,6 @@ describe('CourseListComponent', () => {
       declarations: [
         CourseListComponent,
         HostCourseListComponent,
-        OrderByCoursePipe,
       ],
     }).compileComponents();
   }));
