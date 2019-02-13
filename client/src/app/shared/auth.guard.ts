@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {CanActivate} from '@angular/router';
-import { Observable } from 'rxjs';
-import {take} from 'rxjs/operators';
+import {Observable} from 'rxjs';
+import {first} from 'rxjs/operators';
 
 import {AuthService} from '../core/services/auth/auth.service';
 
@@ -16,6 +16,6 @@ export class AuthGuard implements CanActivate {
   }
 
   public canActivate(): Observable<boolean> {
-    return this.authService.isAuthenticated.pipe(take(1));
+    return this.authService.isAuthenticated.pipe(first());
   }
 }

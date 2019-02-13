@@ -1,10 +1,10 @@
 <section class="card-container">
   <ul class="course-list">
-    <ng-container *ngFor="let course of (items | orderByCourse: searchBy : 'title')">
+    <ng-container *ngFor="let course of (items | orderByCourse: searchBy : 'name')">
       <li
         class="course-list__item"
         [ngClass]="getCourseClasses(course)"
-        [appDateStatus]="course.creationDate"
+        [appDateStatus]="course.date"
       >
         <section class="course-list__item__preview">
           <div class="course-list-image">((IMAGE_STUB))</div>
@@ -13,15 +13,15 @@
         <section class="course-list__item__content">
           <app-content-box [align]="'vertical'">
             <app-text [bold]="true">
-              {{ course.title | uppercase }}
+              {{ course.name | uppercase }}
             </app-text>
 
-            <app-icon [name]="'favorite'" *ngIf="course.topRated"></app-icon>
+            <app-icon [name]="'favorite'" *ngIf="course.isTopRated"></app-icon>
           </app-content-box>
 
           <p> {{ course.description }} </p>
-          <p> {{ course.creationDate | date: 'fullDate' }} </p>
-          <p> {{ course.duration | durationNormalizer }} </p>
+          <p> Duration: {{ course.date | date: 'fullDate' }} </p>
+          <p> Length: {{ course.length | durationNormalizer }} </p>
         </section>
 
         <section class="course-list__controls">
@@ -33,6 +33,6 @@
   </ul>
 
   <section class="card-container-options">
-    <app-button [view]="'lime'" [size]="'md'" (click)="onMore()">More...</app-button>
+    <app-button [view]="'lime'" [size]="'md'" (click)="onMore()">Next (current items replace on next 10)...</app-button>
   </section>
 </section>

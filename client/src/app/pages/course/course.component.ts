@@ -52,7 +52,7 @@ export class CourseComponent implements OnInit, OnDestroy {
   }
 
   public fetchCourses = () => {
-    this.courseService.fetchCourses(this.pagination.from, this.pagination.take);
+    this.courseService.fetchCourses(this.pagination);
   }
 
   private subscribeToCourses() {
@@ -101,7 +101,7 @@ export class CourseComponent implements OnInit, OnDestroy {
   public addMoreCourses() {
     this.setPagination(this.pagination.from + 10);
 
-    this.courseService.fetchCourses();
+    this.fetchCourses();
   }
 
   public deleteCourse = (id: number) => {

@@ -14,7 +14,7 @@ export class ApiService {
 
   public get(
     path: string,
-    params: HttpParams = new HttpParams(), // just wrapper over http.get
+    params: {} = {}, // just wrapper over http.get
   ): Observable<any> {
     return this.http.get(`${environment.API_BASE}${path}`, {params});
   }

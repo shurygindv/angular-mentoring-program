@@ -16,7 +16,7 @@ $block: 'course-list';
         display: flex;
         flex-flow: nowrap column;
         width: 300px;
-        height: 300px;
+        height: 360px;
         margin: 10px;
         
         &--whited {
@@ -47,6 +47,5 @@ $block: 'course-list';
     &__controls {
         display: flex;
         justify-content: space-around;
-        flex-grow: 0.5;
     }
 }

@@ -39,8 +39,8 @@ export class CourseService implements ICourseService {
   
   async takeCoursesByLength (from: number, take: number) {
     const courses = await this.findCourses();
-
-    return await promisify([...courses.slice(from, take)]);
+    
+    return await promisify([...courses.slice(from, from+take)]);
   }
 
   async deleteCourseById (id: number) {
@@ -62,7 +62,7 @@ export class CourseService implements ICourseService {
   async addCourse (added: Course) {
     const newItem = {...added, id: id++};
 
-    courses = [...courses, newItem];
+    courses = [newItem, ...courses];
 
     return await promisify(newItem);
   }

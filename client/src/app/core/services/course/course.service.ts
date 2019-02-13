@@ -1,10 +1,14 @@
 import {Injectable} from '@angular/core';
-import {HttpParams} from '@angular/common/http';
 import {BehaviorSubject, Observable} from 'rxjs';
-import {map} from 'rxjs/operators';
+import {map, first} from 'rxjs/operators';
 
 import {Course} from '../../models/course.interface';
 import {ApiService} from '../api.service';
+
+interface FetchCoursesParams {
+  take?: number;
+  from?: number;
+}
 
 @Injectable({
   providedIn: 'root',
@@ -30,24 +34,30 @@ export class CourseService {
     return this.apiService.put(`/courses/update/${id}`, course);
   }
 
-  public getCourseById (id: number): Observable<any> {
-    return this.apiService.get(`/courses/${id}`).pipe(map(result => result.Data));
+  public getCourseById(id: number): Observable<any> {
+    return this.apiService
+      .get(`/courses/${id}`)
+      .pipe(map(result => result.Data));
   }
 
   public delete(id: number): Observable<any> {
     return this.apiService.delete(`/courses/delete/${id}`);
   }
 
-  public fetchCourses(from?: number, take?: number): void {
-    const params = new HttpParams();
+  public fetchCourses(params: FetchCoursesParams = {}): void {
+    const take = params.take || 10;
+    const from = params.from || 0;
 
-    params.set('from', `${from || 0}`);
-    params.set('take', `${take || 10}`);
+    const query = {
+      from: from || 0,
+      take: take || 10,
+    };
 
-    this.apiService.get('/courses', params).pipe(
-      map(result => {
+    this.apiService
+      .get('/courses', query)
+      .pipe(first())
+      .subscribe(result => {
         this.coursesBF.next(result.Data);
-      }),
-    );
+      });
   }
 }

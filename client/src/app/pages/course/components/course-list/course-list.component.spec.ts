@@ -10,18 +10,18 @@ import {HostCourseListComponent} from './host-course-list.component.spec';
 const testMockedCourses = [
   {
     id: 0,
-    topRated: false,
-    title: 'How to become better than you thought possible',
-    creationDate: '2018-10-21T13:28:06.419Z',
-    duration: 60,
+    isTopRated: false,
+    name: 'How to become better than you thought possible',
+    date: '2018-10-21T13:28:06.419Z',
+    length: 60,
     description: '',
   },
   {
     id: 0,
-    topRated: false,
-    title: 'How to become better than you thought possible',
-    creationDate: '2018-10-21T13:28:06.419Z',
-    duration: 60,
+    isTopRated: false,
+    name: 'How to become better than you thought possible',
+    date: '2018-10-21T13:28:06.419Z',
+    length: 60,
     description: '',
   },
 ];

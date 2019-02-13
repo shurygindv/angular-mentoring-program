@@ -47,7 +47,7 @@ export class CourseEditPageComponent implements OnInit {
 
   @Input()
   public get durationPlaceholder(): string {
-    const value = this.formControls.duration.value;
+    const value = this.formControls.length.value;
 
     if (value) {
       return `Duration ~ ${DurationNormalizerPipe.init(value)}`;
@@ -63,7 +63,7 @@ export class CourseEditPageComponent implements OnInit {
   public ngOnInit(): void {
     const id = this.courseId;
 
-    if (id === '') {
+    if (id === 'new') {
       return;
     }
 
@@ -90,15 +90,14 @@ export class CourseEditPageComponent implements OnInit {
       case coursePageState.creating: {
         this.courseService
           .create(course)
-          .pipe(first())
-          .subscribe(() => this.courseService.fetchCourses());
+          .subscribe(() => this.navigateToHome());
         break;
       }
       case coursePageState.updating: {
         this.courseService
           .update(+this.courseId, course)
           .pipe(first())
-          .subscribe(() => this.courseService.fetchCourses());
+          .subscribe(() => this.navigateToHome());
         break;
       }
     }
@@ -123,7 +122,7 @@ export class CourseEditPageComponent implements OnInit {
       name: this.formControls.name.value,
       isTopRated: this.formControls.isTopRated.value,
       date: this.formControls.date.value,
-      length: this.formControls.duration.value,
+      length: this.formControls.length.value,
       description: this.formControls.description.value,
     };
   }
@@ -146,6 +145,5 @@ export class CourseEditPageComponent implements OnInit {
     $event.preventDefault(); // TODO: implement pipe on preventDefault
 
     this.save(this.getDoneCourse());
-    this.navigateToHome();
   }
 }
