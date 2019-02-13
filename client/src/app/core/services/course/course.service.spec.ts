@@ -4,6 +4,7 @@ import {HttpClientModule} from '@angular/common/http';
 
 import {CourseService} from './course.service';
 import {ApiService} from '../api.service';
+import { Course } from '../../models/course.interface';
 
 describe(`CourseService`, () => {
   beforeEach(() => {
@@ -13,12 +14,10 @@ describe(`CourseService`, () => {
     });
   });
 
-  it('#fetchCourses should return values', (done: DoneFn) => {
+  it('.filterBy should work', (done: DoneFn) => {
     const service: CourseService = TestBed.get(CourseService);
 
-    service.fetchCourses();
-
-    service.courses.subscribe((values: any) => {
+    service.filterBy('').subscribe((values: Course[]) => {
       expect(values.length).toBeGreaterThan(0);
       done();
     });
