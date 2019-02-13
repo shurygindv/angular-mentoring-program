@@ -6,7 +6,6 @@ import {
   HttpRequest,
 } from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {Router} from '@angular/router';
 
 import {AuthService} from '../core/services/auth/auth.service';
 

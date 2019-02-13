@@ -3,6 +3,7 @@ import {ReplaySubject, Observable, BehaviorSubject} from 'rxjs';
 import {map} from 'rxjs/operators';
 
 import {ApiService} from '../api.service';
+import {Response} from '../../types';
 
 interface UserInfo {
   id: string;
@@ -38,13 +39,13 @@ export class AuthService {
     return this.currentUserSubject.value;
   }
 
-  public getFullUserInfo(): Observable<any> {
+  public getFullUserInfo(): Observable<Response<UserInfo>> {
     const id = this.currentUserSubject.value.id;
 
     return this.apiService.get(`/auth/info/${id}`);
   }
 
-  public attemptLogin(email: string, password: string): Observable<any> {
+  public attemptLogin(email: string, password: string): Observable<void> {
     return this.apiService
       .post('/auth/login', {
         login: email,

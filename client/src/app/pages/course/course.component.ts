@@ -88,31 +88,31 @@ export class CourseComponent implements OnInit, OnDestroy {
       .subscribe(this.updateCourses);
   }
 
-  public showEditingDialog(course: Course) {
+  public showEditingDialog(course: Course): void {
     this.dialogService.openMatDialog(CourseEditDialogComponent, {
       ...mapCourseToDialogData(course),
       onSubmit: this.handleEditingSubmit.bind(this, course.id),
     });
   }
 
-  public setPagination (from: number, take: number = 10) {
+  public setPagination (from: number, take: number = 10): void {
     this.pagination = {from, take};
   }
 
-  public addMoreCourses() {
+  public addMoreCourses(): void {
     this.setPagination(this.pagination.from + 10);
 
     this.fetchCourses();
   }
 
-  public deleteCourse = (id: number) => {
+  public deleteCourse = (id: number): void => {
     this.courseService
       .delete(id)
       .pipe(first())
       .subscribe(this.fetchCourses);
   }
 
-  public showRemovingDialog(course: Course) {
+  public showRemovingDialog(course: Course): void {
     this.dialogService.showConfirmation({
       title: 'Do you really want to delete this course?',
       onSubmit: () => this.deleteCourse(course.id),
