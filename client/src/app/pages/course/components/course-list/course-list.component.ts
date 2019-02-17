@@ -39,7 +39,7 @@ export class CourseListComponent {
     this.edit.emit(item);
   }
 
-  public onMore () {
+  public onMore() {
     this.addMore.emit(null);
   }
 }

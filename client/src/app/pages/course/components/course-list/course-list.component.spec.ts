@@ -35,10 +35,7 @@ describe('CourseListComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [RouterModule, SharedModule, AppRoutingModule],
-      declarations: [
-        CourseListComponent,
-        HostCourseListComponent,
-      ],
+      declarations: [CourseListComponent, HostCourseListComponent],
     }).compileComponents();
   }));
 

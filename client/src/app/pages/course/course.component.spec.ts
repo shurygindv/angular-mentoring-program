@@ -7,8 +7,8 @@ import {SharedModule} from '../../shared/shared.module';
 import {CourseListComponent} from './components/course-list/course-list.component';
 import {CourseComponent} from './course.component';
 import {CourseEditPageComponent} from './pages/course-edit-page.component';
-import { ApiService } from '../../core/services/api.service';
-import { HttpClientModule } from '@angular/common/http';
+import {ApiService} from '../../core/services/api.service';
+import {HttpClientModule} from '@angular/common/http';
 
 describe('CourseComponent', () => {
   let component: CourseComponent;
@@ -19,7 +19,13 @@ describe('CourseComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [RouterModule, SharedModule, MaterialUiModule, HttpClientModule, AppRoutingModule],
+      imports: [
+        RouterModule,
+        SharedModule,
+        MaterialUiModule,
+        HttpClientModule,
+        AppRoutingModule,
+      ],
       providers: [ApiService],
       declarations: [
         CourseEditPageComponent,

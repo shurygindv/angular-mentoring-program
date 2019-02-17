@@ -1,15 +1,15 @@
-<form 
-  class="search-bar search-bar--default"  
-  [formGroup]="searchForm" (ngSubmit)="submitSearchValue()"
-  >
-
+<form
+  class="search-bar search-bar--default"
+  [formGroup]="searchForm"
+  (ngSubmit)="submitSearchValue()"
+>
   <app-icon [name]="'glass'"></app-icon>
 
-  <input class="search-bar-input" type="text" formControlName="search" autofocus>
-
-  <section class="search-bar-control">
-    <app-button [type]="'submit'" [view]="'lime'" [full]="true" [size]="'md'">
-      <app-text [bold]="true">find</app-text>
-    </app-button>
-  </section>
+  <input
+    class="search-bar-input"
+    type="text"
+    formControlName="search"
+    autofocus
+    placeholder="type here"
+  />
 </form>

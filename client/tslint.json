@@ -3,9 +3,12 @@
     "node_modules/codelyzer"
   ],
   "extends": [
-    "tslint-config-prettier"
+    "tslint-config-prettier",
+    "rxjs-tslint-rules"
   ],
   "rules": {
+    "rxjs-add": { "severity": "error" },
+    "rxjs-no-unused-add": { "severity": "error" },
     "arrow-return-shorthand": true,
     "callable-types": true,
     "class-name": true,

@@ -1,10 +1,9 @@
-import {Observable} from 'rxjs';
 import {TestBed} from '@angular/core/testing';
 import {HttpClientModule} from '@angular/common/http';
 
 import {CourseService} from './course.service';
 import {ApiService} from '../api.service';
-import { Course } from '../../models/course.interface';
+import {Course} from '../../models/course.interface';
 
 describe(`CourseService`, () => {
   beforeEach(() => {

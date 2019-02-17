@@ -12,6 +12,15 @@ interface UserInfo {
   lastName: string;
 }
 
+export interface UserFullInfo {
+  name: {
+    last: string;
+    first: string;
+  };
+}
+
+// TODO: make normal auth service
+
 @Injectable({
   providedIn: 'root',
 })
@@ -39,10 +48,12 @@ export class AuthService {
     return this.currentUserSubject.value;
   }
 
-  public getFullUserInfo(): Observable<Response<UserInfo>> {
+  public getFullUserInfo(): Observable<UserFullInfo> {
     const id = this.currentUserSubject.value.id;
 
-    return this.apiService.get(`/auth/info/${id}`);
+    return this.apiService
+      .get(`/auth/userInfo/${id}`)
+      .pipe(map((result: Response<UserFullInfo>) => result.Data));
   }
 
   public attemptLogin(email: string, password: string): Observable<void> {

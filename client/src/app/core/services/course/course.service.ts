@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
-import {BehaviorSubject, Observable} from 'rxjs';
-import {map, first} from 'rxjs/operators';
+import {Observable} from 'rxjs';
+import {map} from 'rxjs/operators';
 
 import {Course} from '../../models/course.interface';
 import {ApiService} from '../api.service';
@@ -15,16 +15,10 @@ interface FetchCoursesParams {
   providedIn: 'root',
 })
 export class CourseService {
-  private coursesBF: BehaviorSubject<Course[]>;
   private apiService: ApiService;
 
   constructor(apiService: ApiService) {
     this.apiService = apiService;
-    this.coursesBF = new BehaviorSubject([]);
-  }
-
-  get courses(): Observable<Course[]> {
-    return this.coursesBF.asObservable();
   }
 
   public create(course: Course): Observable<Response<Course>> {
@@ -46,24 +40,21 @@ export class CourseService {
   }
 
   public filterBy(textFragment: string): Observable<Course[]> {
+    const query = {textFragment};
+
     return this.apiService
-      .get('/courses/filterBy', {
-        textFragment,
-      })
+      .get('/courses/filterBy', query)
       .pipe(map((res: Response<Course[]>) => res.Data));
   }
 
-  public fetchCourses(params: FetchCoursesParams = {}): void {
+  public fetchCourses(params: FetchCoursesParams = {}): Observable<Course[]> {
     const query = {
       from: params.from || 0,
       take: params.take || 10,
     };
 
-    this.apiService
+    return this.apiService
       .get('/courses', query)
-      .pipe(first())
-      .subscribe((res: Response<Course[]>) => {
-        this.coursesBF.next(res.Data);
-      });
+      .pipe(map((res: Response<Course[]>) => res.Data));
   }
 }

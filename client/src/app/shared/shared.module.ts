@@ -14,6 +14,7 @@ import {MenuProfileComponent} from './components/menu-profile/menu-profile.compo
 import {SearchBarComponent} from './components/search-bar/search-bar.component';
 import {TextComponent} from './components/text/text.component';
 import {DateStatusDirective} from './date-status.directive';
+import {LoaderOverlayComponent} from './components/loader-overlay/loader-overlay.component';
 import {DurationNormalizerPipe} from './duration-normalizer.pipe';
 import {PageNotFoundComponent} from './pages/page-not-found/page-not-found.component';
 
@@ -33,6 +34,7 @@ import {PageNotFoundComponent} from './pages/page-not-found/page-not-found.compo
     MenuProfileComponent,
     BreadCrumbsComponent,
     ContentBoxComponent,
+    LoaderOverlayComponent,
     // pages
     PageNotFoundComponent,
   ],
@@ -47,6 +49,7 @@ import {PageNotFoundComponent} from './pages/page-not-found/page-not-found.compo
     IconComponent,
     ButtonComponent,
     ContentBoxComponent,
+    LoaderOverlayComponent,
 
     DateStatusDirective,
     DurationNormalizerPipe,

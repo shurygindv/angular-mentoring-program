@@ -69,7 +69,7 @@ export class LoginComponent {
         _ => this.router.navigateByUrl('/courses'),
         (e: any) => {
           this.errorMessage = e.error.ErrorDescription;
-        }
+        },
       );
   }
 }

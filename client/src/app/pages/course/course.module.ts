@@ -9,11 +9,7 @@ import {CourseComponent} from './course.component';
 import {CourseEditPageComponent} from './pages/course-edit-page.component';
 
 @NgModule({
-  declarations: [
-    CourseEditPageComponent,
-    CourseComponent,
-    CourseListComponent,
-  ],
+  declarations: [CourseEditPageComponent, CourseComponent, CourseListComponent],
   imports: [CommonModule, MaterialUiModule, SharedModule, CourseRoutingModule],
 })
 export class CourseModule {}

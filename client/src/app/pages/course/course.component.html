@@ -7,13 +7,13 @@
     <app-content-box>
       <app-text [bold]="true">
         <span>Count: </span>
-        <span *ngIf="courses.length"> {{ courses.length }} </span>
+        <span *ngIf="courses?.length"> {{ courses.length }} </span>
       </app-text>
     </app-content-box>
 
     <app-course-list
       [items]="courses"
-      *ngIf="courses.length"
+      *ngIf="courses?.length"
       (addMore)="addMoreCourses()"
       (remove)="showRemovingDialog($event)"
       (edit)="showEditingDialog($event)"
@@ -22,11 +22,13 @@
       [align]="'both'"
       [size]="'md'"
       [borderType]="'silver'"
-      *ngIf="!courses.length"
+      *ngIf="!courses?.length"
     >
       <app-text [uppercased]="true" [bold]="true">
         no data, feel free to add new course
       </app-text>
     </app-content-box>
   </ng-container>
+
+  <app-loader-overlay></app-loader-overlay>
 </app-body>

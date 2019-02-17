@@ -1,6 +1,6 @@
 import {Component, Output, OnInit, OnDestroy} from '@angular/core';
-import {Subscription} from 'rxjs';
-import {first} from 'rxjs/operators';
+import {Subject} from 'rxjs';
+import {takeUntil, tap} from 'rxjs/operators';
 
 import {Course} from '../../core/models/course.interface';
 import {CourseService} from './../../core/services/course/course.service';
@@ -11,6 +11,7 @@ import {
 } from './dialogs/edit/course-edit-dialog.component';
 import {Omit} from '../../utils/types';
 import {CourseEditDialogComponent} from './dialogs/edit/course-edit-dialog.component';
+import {LoaderService} from '../../core/services/loader/loader.service';
 
 const mapCourseToDialogData = (
   course: Course,
@@ -33,18 +34,25 @@ export class CourseComponent implements OnInit, OnDestroy {
 
   @Output() public searchBy: string;
 
+  private ngUnsubscribe = new Subject();
+
+  private loaderService: LoaderService;
   private courseService: CourseService;
   private dialogService: DialogService;
-  private coursesFetchSubscription: Subscription;
 
   private pagination = {
     from: 0,
     take: 10,
   };
 
-  constructor(courseService: CourseService, dialogService: DialogService) {
+  constructor(
+    courseService: CourseService,
+    dialogService: DialogService,
+    loaderService: LoaderService,
+  ) {
     this.courseService = courseService;
     this.dialogService = dialogService;
+    this.loaderService = loaderService;
   }
 
   private updateCourses = (courses: Course[]) => {
@@ -52,19 +60,16 @@ export class CourseComponent implements OnInit, OnDestroy {
   }
 
   public fetchCourses = () => {
-    this.courseService.fetchCourses(this.pagination);
-  }
-
-  private subscribeToCourses() {
-    this.coursesFetchSubscription = this.courseService.courses.subscribe(
-      this.updateCourses,
-    );
+    this.courseService
+      .fetchCourses(this.pagination)
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(this.updateCourses);
   }
 
   private updateCourseById(id: number, course: Course) {
     this.courseService
       .update(id, course)
-      .pipe(first())
+      .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(this.fetchCourses);
   }
 
@@ -73,18 +78,18 @@ export class CourseComponent implements OnInit, OnDestroy {
   }
 
   public ngOnInit(): void {
-    this.subscribeToCourses();
     this.fetchCourses();
   }
 
   public ngOnDestroy(): void {
-    if (this.coursesFetchSubscription) {
-      this.coursesFetchSubscription.unsubscribe();
-    }
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
   }
 
   public updateSearch(value: string): void {
-    this.courseService.filterBy(value).pipe(first())
+    this.courseService
+      .filterBy(value)
+      .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(this.updateCourses);
   }
 
@@ -95,7 +100,7 @@ export class CourseComponent implements OnInit, OnDestroy {
     });
   }
 
-  public setPagination (from: number, take: number = 10): void {
+  public setPagination(from: number, take: number = 10): void {
     this.pagination = {from, take};
   }
 
@@ -108,7 +113,7 @@ export class CourseComponent implements OnInit, OnDestroy {
   public deleteCourse = (id: number): void => {
     this.courseService
       .delete(id)
-      .pipe(first())
+      .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(this.fetchCourses);
   }
 

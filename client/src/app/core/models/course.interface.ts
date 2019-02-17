@@ -6,4 +6,3 @@ export interface Course {
   length: number;
   description: string;
 }
-
