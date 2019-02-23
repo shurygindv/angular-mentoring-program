@@ -5,8 +5,8 @@ export interface LoaderState {
   show: boolean;
 }
 
-const show = () => ({show: true});
-const hide = () => ({show: false});
+const show = (): LoaderState => ({show: true});
+const hide = (): LoaderState => ({show: false});
 
 @Injectable({
   providedIn: 'root',
@@ -20,11 +20,11 @@ export class LoaderService {
     return this.loaderSubject.asObservable();
   }
 
-  public show() {
+  public show(): void {
     this.loaderSubject.next(show());
   }
 
-  public hide() {
+  public hide(): void {
     this.loaderSubject.next(hide());
   }
 }

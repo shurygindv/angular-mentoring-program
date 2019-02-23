@@ -1,7 +1,8 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, OnDestroy} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
-import {first} from 'rxjs/operators';
+import {Subject} from 'rxjs';
+import {takeUntil} from 'rxjs/operators';
 
 import {Course} from '../../../core/models/course.interface';
 import {CourseService} from '../../../core/services/course/course.service';
@@ -17,17 +18,21 @@ enum coursePageState {
   updating = 1,
 }
 
+const NEW_COURSE = 'new';
+
 @Component({
   selector: 'app-course-edit-page-component',
   templateUrl: './course-edit-page.component.html',
   styleUrls: ['./course-edit-page.component.scss'],
 })
-export class CourseEditPageComponent implements OnInit {
+export class CourseEditPageComponent implements OnInit, OnDestroy {
   private pageState: coursePageState;
   private route: ActivatedRoute;
   private router: Router;
   private courseGroupForm: FormGroup;
   private courseService: CourseService;
+
+  private ngUnsubscribe = new Subject();
 
   constructor(
     route: ActivatedRoute,
@@ -61,9 +66,9 @@ export class CourseEditPageComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    const id = this.courseId;
+    const id: string = this.courseId;
 
-    if (id === 'new') {
+    if (id === NEW_COURSE) {
       return;
     }
 
@@ -71,14 +76,35 @@ export class CourseEditPageComponent implements OnInit {
 
     this.courseService
       .getCourseById(Number(id))
-      .pipe(first())
+      .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe((course: Course) => {
         this.fillCourseForm(course);
       });
   }
 
+  public ngOnDestroy(): void {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
+  }
+
   public hasChanges(): boolean {
     return this.courseGroupForm.touched;
+  }
+
+  private createCourse(course: Course): void {
+    this.courseService
+      .create(course)
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(() => this.navigateToHome());
+  }
+
+  private updateCourse(course: Course): void {
+    const id = +this.courseId;
+
+    this.courseService
+      .update(id, course)
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(() => this.navigateToHome());
   }
 
   private save(course: Course): void {
@@ -86,20 +112,14 @@ export class CourseEditPageComponent implements OnInit {
       return;
     }
 
-    switch (this.pageState) {
-      case coursePageState.creating: {
-        this.courseService
-          .create(course)
-          .subscribe(() => this.navigateToHome());
-        break;
-      }
-      case coursePageState.updating: {
-        this.courseService
-          .update(+this.courseId, course)
-          .pipe(first())
-          .subscribe(() => this.navigateToHome());
-        break;
-      }
+    if (this.pageState === coursePageState.creating) {
+      this.createCourse(course);
+      return;
+    }
+
+    if (this.pageState === coursePageState.updating) {
+      this.updateCourse(course);
+      return;
     }
   }
 

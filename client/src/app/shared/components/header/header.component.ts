@@ -3,10 +3,8 @@ import {Router} from '@angular/router';
 import {Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
 
-import {
-  AuthService,
-  UserFullInfo,
-} from '../../../core/services/auth/auth.service';
+import {AuthService} from '../../../core/services/auth/auth.service';
+import {UserFullInfo} from '../../../core/services/auth/auth.interface';
 
 @Component({
   selector: 'app-header',
@@ -26,7 +24,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.router = router;
   }
 
-  public fetchUserInfo() {
+  public fetchUserInfo(): void {
     this.authService
       .getFullUserInfo()
       .pipe(takeUntil(this.ngUnsubscribe))
@@ -35,7 +33,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
       });
   }
 
-  public ngOnInit() {
+  public ngOnInit(): void {
     this.authService.isAuthenticated
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe((value: boolean) => {
@@ -47,12 +45,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
       });
   }
 
-  public ngOnDestroy() {
+  public ngOnDestroy(): void {
     this.ngUnsubscribe.next();
     this.ngUnsubscribe.complete();
   }
 
-  public logout() {
+  public logout(): void {
     this.authService.logout();
     this.router.navigateByUrl('/login');
   }

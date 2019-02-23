@@ -1,11 +1,13 @@
-import {Component} from '@angular/core';
+import {Component, OnDestroy} from '@angular/core';
 import {
   FormControl,
   Validators,
   FormGroup,
   AbstractControl,
 } from '@angular/forms';
+import {Subject} from 'rxjs';
 import {Router} from '@angular/router';
+import {takeUntil} from 'rxjs/operators';
 
 import {AuthService} from '../../core/services/auth/auth.service';
 
@@ -14,10 +16,12 @@ import {AuthService} from '../../core/services/auth/auth.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
-export class LoginComponent {
-  private authService: AuthService;
+export class LoginComponent implements OnDestroy {
   public errorMessage: string;
+
   private router: Router;
+  private authService: AuthService;
+  private ngUnsubscribe = new Subject();
 
   public loginForm = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
@@ -37,7 +41,7 @@ export class LoginComponent {
     return this.loginForm.controls.password;
   }
 
-  public getEmailErrorMsg() {
+  public getEmailErrorMsg(): string {
     if (this.emailField.hasError('required')) {
       return 'You must enter a value';
     }
@@ -49,7 +53,7 @@ export class LoginComponent {
     return '';
   }
 
-  public getPasswordErrorMsg() {
+  public getPasswordErrorMsg(): string {
     if (this.passwordField.hasError('required')) {
       return 'You must enter a value';
     }
@@ -57,7 +61,12 @@ export class LoginComponent {
     return '';
   }
 
-  public submitForm() {
+  public ngOnDestroy(): void {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
+  }
+
+  public submitForm(): void {
     if (this.loginForm.invalid) {
       console.log('Error: form is invalid');
       return;
@@ -65,6 +74,7 @@ export class LoginComponent {
 
     this.authService
       .attemptLogin(this.emailField.value, this.passwordField.value)
+      .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(
         _ => this.router.navigateByUrl('/courses'),
         (e: any) => {

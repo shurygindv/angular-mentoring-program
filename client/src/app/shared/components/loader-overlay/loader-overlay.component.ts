@@ -15,13 +15,14 @@ export class LoaderOverlayComponent implements OnInit, OnDestroy {
   private loaderService: LoaderService;
   private subscription: Subscription;
 
-  public show = false;
+  // tslint:disable-next-line:no-inferrable-types
+  public show: boolean = false;
 
   constructor(loaderService: LoaderService) {
     this.loaderService = loaderService;
   }
 
-  public ngOnInit() {
+  public ngOnInit(): void {
     this.subscription = this.loaderService.loaderState.subscribe(
       (state: LoaderState) => {
         this.show = state.show;
@@ -29,7 +30,7 @@ export class LoaderOverlayComponent implements OnInit, OnDestroy {
     );
   }
 
-  public ngOnDestroy() {
+  public ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
 }

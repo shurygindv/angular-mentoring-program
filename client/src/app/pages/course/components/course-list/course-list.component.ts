@@ -31,15 +31,15 @@ export class CourseListComponent {
     };
   }
 
-  public onRemove(item: Course) {
+  public onRemove(item: Course): void {
     this.remove.emit(item);
   }
 
-  public onEdit(item: Course) {
+  public onEdit(item: Course): void {
     this.edit.emit(item);
   }
 
-  public onMore() {
+  public onMore(): void {
     this.addMore.emit(null);
   }
 }

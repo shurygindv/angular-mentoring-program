@@ -40,7 +40,7 @@ export class CourseService {
   }
 
   public filterBy(textFragment: string): Observable<Course[]> {
-    const query = {textFragment};
+    const query: {textFragment: string} = {textFragment};
 
     return this.apiService
       .get('/courses/filterBy', query)
@@ -48,7 +48,7 @@ export class CourseService {
   }
 
   public fetchCourses(params: FetchCoursesParams = {}): Observable<Course[]> {
-    const query = {
+    const query: FetchCoursesParams = {
       from: params.from || 0,
       take: params.take || 10,
     };

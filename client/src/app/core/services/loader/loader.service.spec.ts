@@ -1,5 +1,5 @@
 import {TestBed, tick, fakeAsync} from '@angular/core/testing';
-import {LoaderService, LoaderState} from './loader.service';
+import {LoaderService} from './loader.service';
 
 describe(`LoaderService`, () => {
   beforeEach(() => {
@@ -8,9 +8,9 @@ describe(`LoaderService`, () => {
     });
   });
 
-  it('should return initial state `show = falsse`', fakeAsync(() => {
+  it('should return initial state `show = false`', fakeAsync(() => {
     const service: LoaderService = TestBed.get(LoaderService);
-    const callback = jasmine.createSpy('returnLoaderState');
+    const callback: jasmine.Spy = jasmine.createSpy('returnLoaderState');
 
     service.loaderState.subscribe(callback);
 
@@ -21,9 +21,9 @@ describe(`LoaderService`, () => {
     expect(callback.calls.first().args[0].show).toBeFalsy();
   }));
 
-  it('should work', fakeAsync(() => {
+  it('should toggle own state', fakeAsync(() => {
     const service: LoaderService = TestBed.get(LoaderService);
-    const callback = jasmine.createSpy('returnLoaderState');
+    const callback: jasmine.Spy = jasmine.createSpy('returnLoaderState');
 
     service.loaderState.subscribe(callback);
 

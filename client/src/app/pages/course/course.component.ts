@@ -55,25 +55,25 @@ export class CourseComponent implements OnInit, OnDestroy {
     this.loaderService = loaderService;
   }
 
-  private updateCourses = (courses: Course[]) => {
+  private updateCourses = (courses: Course[]): void => {
     this.courses = courses;
   }
 
-  public fetchCourses = () => {
+  public fetchCourses = (): void => {
     this.courseService
       .fetchCourses(this.pagination)
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(this.updateCourses);
   }
 
-  private updateCourseById(id: number, course: Course) {
+  private updateCourseById(id: number, course: Course): void {
     this.courseService
       .update(id, course)
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(this.fetchCourses);
   }
 
-  private handleEditingSubmit(id: number, dialogData: CourseSharedData) {
+  private handleEditingSubmit(id: number, dialogData: CourseSharedData): void {
     this.updateCourseById(id, CourseSharedData.toCourse(dialogData));
   }
 

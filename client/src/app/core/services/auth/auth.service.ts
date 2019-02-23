@@ -4,20 +4,7 @@ import {map} from 'rxjs/operators';
 
 import {ApiService} from '../api.service';
 import {Response} from '../../types';
-
-interface UserInfo {
-  id: string;
-  token: string;
-  firstName: string;
-  lastName: string;
-}
-
-export interface UserFullInfo {
-  name: {
-    last: string;
-    first: string;
-  };
-}
+import { UserInfo, UserFullInfo } from './auth.interface';
 
 // TODO: make normal auth service
 
@@ -32,8 +19,8 @@ export class AuthService {
   >({} as UserInfo);
   private isAuthenticatedSubject = new ReplaySubject<boolean>(1);
 
-  public currentUser = this.currentUserSubject.asObservable();
-  public isAuthenticated = this.isAuthenticatedSubject.asObservable();
+  public currentUser: Observable<UserInfo> = this.currentUserSubject.asObservable();
+  public isAuthenticated: Observable<boolean> = this.isAuthenticatedSubject.asObservable();
 
   constructor(apiService: ApiService) {
     this.apiService = apiService;
@@ -49,7 +36,7 @@ export class AuthService {
   }
 
   public getFullUserInfo(): Observable<UserFullInfo> {
-    const id = this.currentUserSubject.value.id;
+    const id: string = this.currentUserSubject.value.id;
 
     return this.apiService
       .get(`/auth/userInfo/${id}`)
