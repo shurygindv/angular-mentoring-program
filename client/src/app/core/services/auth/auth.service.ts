@@ -2,9 +2,9 @@ import {Injectable} from '@angular/core';
 import {ReplaySubject, Observable, BehaviorSubject} from 'rxjs';
 import {map} from 'rxjs/operators';
 
+import {UserInfo, UserFullInfo} from './auth.interface';
 import {ApiService} from '../api.service';
 import {Response} from '../../types';
-import { UserInfo, UserFullInfo } from './auth.interface';
 
 // TODO: make normal auth service
 
@@ -19,8 +19,12 @@ export class AuthService {
   >({} as UserInfo);
   private isAuthenticatedSubject = new ReplaySubject<boolean>(1);
 
-  public currentUser: Observable<UserInfo> = this.currentUserSubject.asObservable();
-  public isAuthenticated: Observable<boolean> = this.isAuthenticatedSubject.asObservable();
+  public currentUser: Observable<
+    UserInfo
+  > = this.currentUserSubject.asObservable();
+  public isAuthenticated: Observable<
+    boolean
+  > = this.isAuthenticatedSubject.asObservable();
 
   constructor(apiService: ApiService) {
     this.apiService = apiService;
@@ -43,7 +47,7 @@ export class AuthService {
       .pipe(map((result: Response<UserFullInfo>) => result.Data));
   }
 
-  public attemptLogin(email: string, password: string): Observable<void> {
+  public attemptLogin(email: string, password: string): Observable<UserInfo> {
     return this.apiService
       .post('/auth/login', {
         login: email,
@@ -52,6 +56,7 @@ export class AuthService {
       .pipe(
         map(result => {
           this.setAuth(result.Data); // todo request result wrapper
+          return result.Data;
         }),
       );
   }

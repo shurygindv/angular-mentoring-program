@@ -2,9 +2,17 @@ import {Action} from '@ngrx/store';
 import {Course} from '../../core/models/course.interface';
 
 export enum ActionTypes {
+  START_ADDING_COURSE = '[Courses] Add course',
+  FINISH_ADDING_COURSE_SUCCESS = '[Courses::success] Add course',
+  FINISH_ADDING_COURSE_ERROR = '[Courses::error] Add course',
+
   START_FETCHING_COURSE = '[Courses] Fetch course by id',
   FINISH_FETCHING_COURSE_SUCCESS = '[Courses::success] Fetch course by id',
   FINISH_FETCHING_COURSE_ERROR = '[Courses::error] Fetch course by id',
+
+  START_FILTERING_COURSES = '[Course filter] fetch filtered items',
+  FINISH_FILTERING_COURSES_SUCCESS = '[Course filter::success] fetch filtered items',
+  FINISH_FILTERING_COURSES_ERROR = '[Course filter::error] fetch filtered items',
 
   START_FETCHING_COURSES = '[Courses] Fetch courses',
   FINISH_FETCHING_COURSES_SUCCESS = '[Courses::success] Fetch courses',
@@ -16,7 +24,7 @@ export enum ActionTypes {
 
   START_DELETING_COURSE = '[Courses] Delete course',
   FINISH_DELETING_COURSE_SUCCESS = '[Courses::success] Delete course',
-  FINISH_DELETING_COURSE_ERROR = '[Courses::error] Delete course'
+  FINISH_DELETING_COURSE_ERROR = '[Courses::error] Delete course',
 }
 
 interface ErrorMsg {
@@ -24,8 +32,22 @@ interface ErrorMsg {
 }
 
 // fetch all
+
+interface FetchCoursesPayload {
+  take?: number;
+  from?: number;
+}
+
 export class FetchCoursesAction implements Action {
-  public readonly type = ActionTypes.START_FETCHING_COURSE;
+  public readonly type = ActionTypes.START_FETCHING_COURSES;
+  public readonly payload: FetchCoursesPayload;
+
+  constructor(payload?: FetchCoursesPayload) {
+    this.payload = payload || {
+      take: 10,
+      from: 0,
+    };
+  }
 }
 
 export class FetchCoursesSuccessAction implements Action {
@@ -39,6 +61,66 @@ export class FetchCoursesSuccessAction implements Action {
 
 export class FetchCoursesErrorAction implements Action {
   public readonly type = ActionTypes.FINISH_FETCHING_COURSES_ERROR;
+  public readonly payload: ErrorMsg;
+
+  constructor(payload: ErrorMsg) {
+    this.payload = payload;
+  }
+}
+
+// add
+
+interface AddCoursePayload {
+  course: Course;
+}
+
+export class AddCourseAction implements Action {
+  public readonly type = ActionTypes.START_ADDING_COURSE;
+  public readonly payload: AddCoursePayload;
+
+  constructor(payload: AddCoursePayload) {
+    this.payload = payload;
+  }
+}
+
+export class AddCourseSuccessAction implements Action {
+  public readonly type = ActionTypes.FINISH_ADDING_COURSE_SUCCESS;
+}
+
+export class AddCoursesErrorAction implements Action {
+  public readonly type = ActionTypes.FINISH_ADDING_COURSE_ERROR;
+  public readonly payload: ErrorMsg;
+
+  constructor(payload: ErrorMsg) {
+    this.payload = payload;
+  }
+}
+
+// filterby
+interface FilterPayload {
+  filterBy: string;
+}
+
+export class FilterCoursesAction implements Action {
+  public readonly type = ActionTypes.START_FILTERING_COURSES;
+  public readonly payload: FilterPayload;
+
+  constructor(payload: FilterPayload) {
+    this.payload = payload;
+  }
+}
+
+export class FilterCoursesSuccessAction implements Action {
+  public readonly type = ActionTypes.FINISH_FILTERING_COURSES_SUCCESS;
+  public readonly payload: {items: Course[]};
+
+  constructor(payload: {items: Course[]}) {
+    this.payload = payload;
+  }
+}
+
+export class FilterCoursesErrorAction implements Action {
+  public readonly type = ActionTypes.FINISH_FILTERING_COURSES_ERROR;
   public readonly payload: ErrorMsg;
 
   constructor(payload: ErrorMsg) {
@@ -66,13 +148,18 @@ export class FetchCourseByIdErrorAction implements Action {
 }
 
 // update
-interface UpdatePayload {
+interface UpdateCoursePayload {
   id: number;
   course: Course;
 }
 
 export class UpdateCourseByIdAction implements Action {
   public readonly type = ActionTypes.START_UPDATING_COURSE;
+  public readonly payload: UpdateCoursePayload;
+
+  constructor(payload: UpdateCoursePayload) {
+    this.payload = payload;
+  }
 }
 
 export class UpdateCourseSuccessAction implements Action {
@@ -113,6 +200,9 @@ export class DeleteCourseByIdErrorAction implements Action {
 }
 
 export type Actions =
+  | AddCourseAction
+  | AddCourseSuccessAction
+  | AddCoursesErrorAction
   | FetchCoursesAction
   | FetchCoursesSuccessAction
   | FetchCoursesErrorAction
@@ -124,4 +214,7 @@ export type Actions =
   | UpdateCourseErrorAction
   | DeleteCourseByIdErrorAction
   | DeleteCourseByIdSuccessAction
-  | DeleteCourseByIdAction;
+  | DeleteCourseByIdAction
+  | FilterCoursesAction
+  | FilterCoursesSuccessAction
+  | FilterCoursesErrorAction;

@@ -32,7 +32,6 @@ const interceptor = (implementation: {new (): HttpInterceptor} | any) => ({
       maxAge: 25,
       logOnly: false,
     }),
-    ,
   ],
   providers: [interceptor(AuthInterceptor), interceptor(LoaderInterceptor)],
   bootstrap: [AppComponent],

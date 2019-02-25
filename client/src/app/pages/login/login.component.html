@@ -1,7 +1,7 @@
 <app-body>
   <form class="login-form" [formGroup]="loginForm" (ngSubmit)="submitForm()">
     <p>
-        {{errorMessage}}
+        {{error}}
     </p>
     <mat-form-field class="login-form__control">
       <input

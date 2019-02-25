@@ -1,5 +1,5 @@
 import {Component, Output, OnInit, OnDestroy} from '@angular/core';
-import {Subject} from 'rxjs';
+import {Subject, Observable, Subscription} from 'rxjs';
 import {takeUntil, tap} from 'rxjs/operators';
 
 import {Course} from '../../core/models/course.interface';
@@ -12,6 +12,15 @@ import {
 import {Omit} from '../../utils/types';
 import {CourseEditDialogComponent} from './dialogs/edit/course-edit-dialog.component';
 import {LoaderService} from '../../core/services/loader/loader.service';
+import {RootStoreState} from 'src/app/root-store';
+import {Store} from '@ngrx/store';
+import {CourseStoreSelectors} from 'src/app/root-store/course-store';
+import { UpdateCourseByIdAction } from '../../root-store/course-store/actions';
+import {
+  FilterCoursesAction,
+  DeleteCourseByIdAction,
+  FetchCoursesAction,
+} from '../../root-store/course-store/actions';
 
 const mapCourseToDialogData = (
   course: Course,
@@ -31,14 +40,12 @@ const mapCourseToDialogData = (
 export class CourseComponent implements OnInit, OnDestroy {
   @Output() public routes: string[] = ['Courses'];
   @Output() public courses: Course[];
-
   @Output() public searchBy: string;
 
-  private ngUnsubscribe = new Subject();
-
+  private store$: Store<RootStoreState.State>;
   private loaderService: LoaderService;
-  private courseService: CourseService;
   private dialogService: DialogService;
+  private coursesSubscription: Subscription;
 
   private pagination = {
     from: 0,
@@ -46,51 +53,53 @@ export class CourseComponent implements OnInit, OnDestroy {
   };
 
   constructor(
-    courseService: CourseService,
+    store$: Store<RootStoreState.State>,
     dialogService: DialogService,
     loaderService: LoaderService,
   ) {
-    this.courseService = courseService;
+    this.store$ = store$;
     this.dialogService = dialogService;
     this.loaderService = loaderService;
   }
 
-  private updateCourses = (courses: Course[]): void => {
-    this.courses = courses;
-  }
-
   public fetchCourses = (): void => {
-    this.courseService
-      .fetchCourses(this.pagination)
-      .pipe(takeUntil(this.ngUnsubscribe))
-      .subscribe(this.updateCourses);
+    this.store$.dispatch(
+      new FetchCoursesAction(this.pagination)
+    );
   }
 
   private updateCourseById(id: number, course: Course): void {
-    this.courseService
-      .update(id, course)
-      .pipe(takeUntil(this.ngUnsubscribe))
-      .subscribe(this.fetchCourses);
+    this.store$.dispatch(
+      new UpdateCourseByIdAction({id, course})
+    );
   }
 
   private handleEditingSubmit(id: number, dialogData: CourseSharedData): void {
     this.updateCourseById(id, CourseSharedData.toCourse(dialogData));
   }
 
+  private subscribeOnCourses (): void {
+    this.coursesSubscription = this.store$.select(CourseStoreSelectors.selectAllCourses).subscribe(
+      (courses: Course[]) => {
+        console.log(courses);
+        this.courses = courses;
+      }
+    );
+  }
+
   public ngOnInit(): void {
+    this.subscribeOnCourses();
     this.fetchCourses();
   }
 
-  public ngOnDestroy(): void {
-    this.ngUnsubscribe.next();
-    this.ngUnsubscribe.complete();
+  public ngOnDestroy (): void {
+    if (this.coursesSubscription) {
+      this.coursesSubscription.unsubscribe();
+    }
   }
 
-  public updateSearch(value: string): void {
-    this.courseService
-      .filterBy(value)
-      .pipe(takeUntil(this.ngUnsubscribe))
-      .subscribe(this.updateCourses);
+  public updateSearch(filterBy: string): void {
+    this.store$.dispatch(new FilterCoursesAction({filterBy}));
   }
 
   public showEditingDialog(course: Course): void {
@@ -111,10 +120,7 @@ export class CourseComponent implements OnInit, OnDestroy {
   }
 
   public deleteCourse = (id: number): void => {
-    this.courseService
-      .delete(id)
-      .pipe(takeUntil(this.ngUnsubscribe))
-      .subscribe(this.fetchCourses);
+    this.store$.dispatch(new DeleteCourseByIdAction({id}));
   }
 
   public showRemovingDialog(course: Course): void {

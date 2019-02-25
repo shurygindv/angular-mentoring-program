@@ -7,6 +7,10 @@ import {takeUntil} from 'rxjs/operators';
 import {Course} from '../../../core/models/course.interface';
 import {CourseService} from '../../../core/services/course/course.service';
 import {DurationNormalizerPipe} from '../../../shared/duration-normalizer.pipe';
+import {Store} from '@ngrx/store';
+import {RootStoreState} from 'src/app/root-store';
+import {CourseStoreSelectors} from 'src/app/root-store/course-store';
+import { UpdateCourseByIdAction, AddCourseAction } from '../../../root-store/course-store/actions';
 
 const createStrictFormControl = <T>(value?: T) =>
   new FormControl(value, [Validators.required]);
@@ -25,23 +29,21 @@ const NEW_COURSE = 'new';
   templateUrl: './course-edit-page.component.html',
   styleUrls: ['./course-edit-page.component.scss'],
 })
-export class CourseEditPageComponent implements OnInit, OnDestroy {
+export class CourseEditPageComponent implements OnInit {
   private pageState: coursePageState;
   private route: ActivatedRoute;
   private router: Router;
   private courseGroupForm: FormGroup;
-  private courseService: CourseService;
-
-  private ngUnsubscribe = new Subject();
+  private store$: Store<RootStoreState.State>;
 
   constructor(
     route: ActivatedRoute,
     router: Router,
-    courseService: CourseService,
+    store$: Store<RootStoreState.State>,
   ) {
     this.route = route;
     this.router = router;
-    this.courseService = courseService;
+    this.store$ = store$;
     this.pageState = coursePageState.creating;
     this.courseGroupForm = this.initFormGroup();
   }
@@ -74,17 +76,10 @@ export class CourseEditPageComponent implements OnInit, OnDestroy {
 
     this.setPageState(coursePageState.updating);
 
-    this.courseService
-      .getCourseById(Number(id))
-      .pipe(takeUntil(this.ngUnsubscribe))
-      .subscribe((course: Course) => {
-        this.fillCourseForm(course);
-      });
-  }
-
-  public ngOnDestroy(): void {
-    this.ngUnsubscribe.next();
-    this.ngUnsubscribe.complete();
+    this.store$
+      .select(CourseStoreSelectors.selectCourseById(+id))
+      .subscribe(this.fillCourseForm)
+      .unsubscribe();
   }
 
   public hasChanges(): boolean {
@@ -92,19 +87,17 @@ export class CourseEditPageComponent implements OnInit, OnDestroy {
   }
 
   private createCourse(course: Course): void {
-    this.courseService
-      .create(course)
-      .pipe(takeUntil(this.ngUnsubscribe))
-      .subscribe(() => this.navigateToHome());
+    this.store$.dispatch(
+      new AddCourseAction({course})
+    );
   }
 
   private updateCourse(course: Course): void {
     const id = +this.courseId;
 
-    this.courseService
-      .update(id, course)
-      .pipe(takeUntil(this.ngUnsubscribe))
-      .subscribe(() => this.navigateToHome());
+    this.store$.dispatch(
+      new UpdateCourseByIdAction({id, course})
+    );
   }
 
   private save(course: Course): void {
@@ -114,13 +107,13 @@ export class CourseEditPageComponent implements OnInit, OnDestroy {
 
     if (this.pageState === coursePageState.creating) {
       this.createCourse(course);
-      return;
     }
 
     if (this.pageState === coursePageState.updating) {
       this.updateCourse(course);
-      return;
     }
+
+    this.navigateToHome();
   }
 
   private setPageState(state: coursePageState): void {
@@ -151,7 +144,7 @@ export class CourseEditPageComponent implements OnInit, OnDestroy {
     this.router.navigateByUrl('/courses');
   }
 
-  public fillCourseForm(course: Course): void {
+  public fillCourseForm = (course: Course): void => {
     this.courseGroupForm.setValue({
       name: course.name,
       isTopRated: course.isTopRated,

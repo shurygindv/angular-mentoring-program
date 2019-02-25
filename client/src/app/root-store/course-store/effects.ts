@@ -1,32 +1,31 @@
 import {Injectable} from '@angular/core';
 import {Actions, Effect, ofType} from '@ngrx/effects';
-import {Action} from '@ngrx/store';
+import {Action, Store} from '@ngrx/store';
 import {Observable, of} from 'rxjs';
-import {catchError, map, startWith, switchMap} from 'rxjs/operators';
+import {catchError, map, startWith, switchMap, tap} from 'rxjs/operators';
 
 import * as courseActions from './actions';
 
 import {CourseService} from '../../core/services/course/course.service';
 import {Course} from 'src/app/core/models/course.interface';
+import { FetchCoursesAction } from './actions';
+import { RootStoreState } from '..';
 
 @Injectable()
 export class CourseStoreEffects {
-  private courseService: CourseService;
-  private actions$: Actions;
-
-  constructor(courseService: CourseService, actions$: Actions) {
-    this.courseService = courseService;
-    this.actions$ = actions$;
-  }
+  constructor(
+    private courseService: CourseService,
+    private actions$: Actions,
+    private store$: Store<RootStoreState.State>
+  )  {}
 
   @Effect()
   public fetchCoursesEffect$: Observable<Action> = this.actions$.pipe(
     ofType<courseActions.FetchCoursesAction>(
       courseActions.ActionTypes.START_FETCHING_COURSES,
     ),
-    startWith(new courseActions.FetchCoursesAction()),
-    switchMap(_ =>
-      this.courseService.fetchCourses().pipe(
+    switchMap(action =>
+      this.courseService.fetchCourses(action.payload).pipe(
         map(
           (items: Course[]) =>
             new courseActions.FetchCoursesSuccessAction({
@@ -45,15 +44,31 @@ export class CourseStoreEffects {
     ofType<courseActions.UpdateCourseByIdAction>(
       courseActions.ActionTypes.START_UPDATING_COURSE,
     ),
-    startWith(new courseActions.UpdateCourseByIdAction()),
-    switchMap(_ =>
-      this.courseService.fetchCourses().pipe(
-        map(
-          (items: Course[]) =>
-            new courseActions.UpdateCourseSuccessAction(),
-        ),
+    switchMap(action =>
+      this.courseService.update(action.payload.id, action.payload.course).pipe(
+        map(_ => new courseActions.UpdateCourseSuccessAction()),
+        tap(() => this.store$.dispatch(new FetchCoursesAction())),
         catchError(error =>
           of(new courseActions.UpdateCourseErrorAction({error})),
+        ),
+
+      ),
+    ),
+  );
+
+  @Effect()
+  public filterBy$: Observable<Action> = this.actions$.pipe(
+    ofType<courseActions.FilterCoursesAction>(
+      courseActions.ActionTypes.START_FILTERING_COURSES,
+    ),
+    switchMap(action =>
+      this.courseService.filterBy(action.payload.filterBy).pipe(
+        map(
+          (items: Course[]) =>
+            new courseActions.FilterCoursesSuccessAction({items}),
+        ),
+        catchError(error =>
+          of(new courseActions.FilterCoursesErrorAction({error})),
         ),
       ),
     ),
@@ -67,6 +82,7 @@ export class CourseStoreEffects {
     switchMap(action =>
       this.courseService.delete(action.payload.id).pipe(
         map(() => new courseActions.DeleteCourseByIdSuccessAction()),
+        tap(() => this.store$.dispatch(new FetchCoursesAction())),
         catchError(error =>
           of(new courseActions.DeleteCourseByIdErrorAction({error})),
         ),

@@ -1,10 +1,18 @@
 import {Component, OnInit, OnDestroy} from '@angular/core';
 import {Router} from '@angular/router';
-import {Subject} from 'rxjs';
+import {Subject, Subscription} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
 
 import {AuthService} from '../../../core/services/auth/auth.service';
 import {UserFullInfo} from '../../../core/services/auth/auth.interface';
+import {Store} from '@ngrx/store';
+import {RootStoreState} from 'src/app/root-store';
+import {RootStoreModule} from 'src/app/root-store/root-store.module';
+import {AuthStoreSelectors} from 'src/app/root-store/auth-store';
+import {
+  LogoutAction,
+  FetchUserInfoAction,
+} from '../../../root-store/auth-store/actions';
 
 @Component({
   selector: 'app-header',
@@ -13,31 +21,27 @@ import {UserFullInfo} from '../../../core/services/auth/auth.interface';
 })
 export class HeaderComponent implements OnInit, OnDestroy {
   private router: Router;
-  private authService: AuthService;
-  private ngUnsubscribe = new Subject();
+  private userInfoSubscription: Subscription;
+  private store$: Store<RootStoreState.State>;
 
   public isAuthenticated: boolean;
   public userName: string;
 
-  constructor(authService: AuthService, router: Router) {
-    this.authService = authService;
+  constructor(store$: Store<RootStoreState.State>, router: Router) {
+    this.store$ = store$;
     this.router = router;
   }
 
   public fetchUserInfo(): void {
-    this.authService
-      .getFullUserInfo()
-      .pipe(takeUntil(this.ngUnsubscribe))
-      .subscribe((info: UserFullInfo) => {
-        this.userName = `${info.name.first} ${info.name.last}`;
-      });
+    this.store$.dispatch(new FetchUserInfoAction());
   }
 
-  public ngOnInit(): void {
-    this.authService.isAuthenticated
-      .pipe(takeUntil(this.ngUnsubscribe))
-      .subscribe((value: boolean) => {
-        this.isAuthenticated = value;
+  public updateAuthFlag(): void {
+    this.store$
+      .select(AuthStoreSelectors.selectAuthFlag)
+      .subscribe((isAuth: boolean) => {
+        console.log('11');
+        this.isAuthenticated = isAuth;
 
         if (this.isAuthenticated) {
           this.fetchUserInfo();
@@ -45,13 +49,30 @@ export class HeaderComponent implements OnInit, OnDestroy {
       });
   }
 
+  private subscribeOnUserInfo (): void {
+    this.userInfoSubscription = this.store$
+    .select(AuthStoreSelectors.selectUserInfo)
+    .subscribe((info: any) => {
+      if (!info) {
+        return;
+      }
+
+      this.userName = `${info.firstName} ${info.lastName}`;
+    });
+  }
+
+  public ngOnInit(): void {
+    this.subscribeOnUserInfo();
+    this.updateAuthFlag();
+  }
+
   public ngOnDestroy(): void {
-    this.ngUnsubscribe.next();
-    this.ngUnsubscribe.complete();
+    if (this.userInfoSubscription) {
+      this.userInfoSubscription.unsubscribe();
+    }
   }
 
   public logout(): void {
-    this.authService.logout();
-    this.router.navigateByUrl('/login');
+    this.store$.dispatch(new LogoutAction());
   }
 }

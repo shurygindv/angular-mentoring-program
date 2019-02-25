@@ -7,11 +7,11 @@ import {PageNotFoundComponent} from './shared/pages/page-not-found/page-not-foun
 const routes: Routes = [
   {path: '', redirectTo: '/login', pathMatch: 'full'},
 
-  {path: 'login', loadChildren: './pages/login/login.module#LoginModule'},
+  {path: 'login', loadChildren: 'src/app/pages/login/login.module#LoginModule'},
   {
     path: 'courses',
     canActivate: [AuthGuard],
-    loadChildren: './pages/course/course.module#CourseModule',
+    loadChildren: 'src/app/pages/course/course.module#CourseModule',
   },
 
   {path: '**', component: PageNotFoundComponent},

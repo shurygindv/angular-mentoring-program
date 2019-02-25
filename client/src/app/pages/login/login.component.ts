@@ -1,36 +1,34 @@
-import {Component, OnDestroy} from '@angular/core';
+import {Component, OnInit, OnDestroy} from '@angular/core';
 import {
   FormControl,
   Validators,
   FormGroup,
   AbstractControl,
 } from '@angular/forms';
-import {Subject} from 'rxjs';
-import {Router} from '@angular/router';
-import {takeUntil} from 'rxjs/operators';
+import {Observable, Subscription} from 'rxjs';
+import {Store} from '@ngrx/store';
 
-import {AuthService} from '../../core/services/auth/auth.service';
+import {RootStoreState} from '../../root-store';
+import {AttemptLoginAction} from '../../root-store/auth-store/actions';
+import {AuthStoreSelectors} from 'src/app/root-store/auth-store';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
-export class LoginComponent implements OnDestroy {
-  public errorMessage: string;
+export class LoginComponent implements OnInit, OnDestroy {
+  private errorMsgSubscription: Subscription;
+  private store$: Store<RootStoreState.State>;
 
-  private router: Router;
-  private authService: AuthService;
-  private ngUnsubscribe = new Subject();
-
+  public error: string;
   public loginForm = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [Validators.required]),
   });
 
-  constructor(authService: AuthService, router: Router) {
-    this.authService = authService;
-    this.router = router;
+  constructor(store$: Store<RootStoreState.State>) {
+    this.store$ = store$;
   }
 
   get emailField(): AbstractControl {
@@ -39,6 +37,18 @@ export class LoginComponent implements OnDestroy {
 
   get passwordField(): AbstractControl {
     return this.loginForm.controls.password;
+  }
+
+  public ngOnInit(): void {
+    this.errorMsgSubscription = this.store$
+      .select(AuthStoreSelectors.selectAuthError)
+      .subscribe(error => (this.error = error));
+  }
+
+  public ngOnDestroy(): void {
+    if (this.errorMsgSubscription) {
+      this.errorMsgSubscription.unsubscribe();
+    }
   }
 
   public getEmailErrorMsg(): string {
@@ -61,25 +71,17 @@ export class LoginComponent implements OnDestroy {
     return '';
   }
 
-  public ngOnDestroy(): void {
-    this.ngUnsubscribe.next();
-    this.ngUnsubscribe.complete();
-  }
-
   public submitForm(): void {
     if (this.loginForm.invalid) {
       console.log('Error: form is invalid');
       return;
     }
 
-    this.authService
-      .attemptLogin(this.emailField.value, this.passwordField.value)
-      .pipe(takeUntil(this.ngUnsubscribe))
-      .subscribe(
-        _ => this.router.navigateByUrl('/courses'),
-        (e: any) => {
-          this.errorMessage = e.error.ErrorDescription;
-        },
-      );
+    this.store$.dispatch(
+      new AttemptLoginAction({
+        email: this.emailField.value,
+        password: this.passwordField.value,
+      }),
+    );
   }
 }

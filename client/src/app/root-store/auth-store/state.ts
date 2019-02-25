@@ -1,17 +1,19 @@
-import {createEntityAdapter, EntityAdapter, EntityState} from '@ngrx/entity';
+import {createEntityAdapter, EntityState} from '@ngrx/entity';
+import { Response } from '../../core/types';
 
 export const authAdapter = createEntityAdapter();
 
 export interface State extends EntityState<{}> {
   isAuthenticated?: boolean;
-  currentUser: any;
+  userInfo: any;
   isFetching?: boolean;
-  error?: any;
+  error?: Response<void>;
 }
+
 
 export const initialState: State = authAdapter.getInitialState({
   isAuthenticated: false,
   isFetching: false,
-  currentUser: null,
+  userInfo: null,
   error: null,
 });

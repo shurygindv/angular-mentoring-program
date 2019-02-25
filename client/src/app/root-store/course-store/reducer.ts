@@ -1,75 +1,47 @@
-import {initialState} from './state';
+import {initialState, courseAdapter} from './state';
 import {ActionTypes, Actions} from './actions';
 
 export const courseReducer = (state = initialState, action: Actions) => {
   switch (action.type) {
-    case ActionTypes.START_FETCHING_COURSE: {
+    case ActionTypes.START_FETCHING_COURSES:
+    case ActionTypes.START_FILTERING_COURSES:
+    case ActionTypes.START_DELETING_COURSE:
+    case ActionTypes.START_UPDATING_COURSE:
+    case ActionTypes.START_FETCHING_COURSE:
+    case ActionTypes.START_ADDING_COURSE: {
       return {
         ...state,
         error: null,
         isFetching: true,
       };
     }
-    case ActionTypes.FINISH_FETCHING_COURSES_SUCCESS: {
-      return {
-        ...state,
-        items: action.payload.items,
-        isFetching: false,
-      };
-    }
-    case ActionTypes.FINISH_FETCHING_COURSES_ERROR: {
+    case ActionTypes.FINISH_DELETING_COURSE_ERROR:
+    case ActionTypes.FINISH_UPDATING_COURSE_ERROR:
+    case ActionTypes.FINISH_FETCHING_COURSES_ERROR:
+    case ActionTypes.FINISH_FILTERING_COURSES_ERROR:
+    case ActionTypes.FINISH_ADDING_COURSE_ERROR: {
       return {
         ...state,
         isFetching: false,
         error: action.payload.error,
       };
     }
-    // ==== //
-    case ActionTypes.START_FETCHING_COURSE: {
+    case ActionTypes.FINISH_FETCHING_COURSES_SUCCESS:
+    case ActionTypes.FINISH_FILTERING_COURSES_SUCCESS: {
+      return courseAdapter.addAll(action.payload.items, {
+        ...state,
+        isFetching: false,
+      });
+    }
+    case ActionTypes.FINISH_DELETING_COURSE_SUCCESS:
+    case ActionTypes.FINISH_UPDATING_COURSE_SUCCESS:
+    case ActionTypes.FINISH_ADDING_COURSE_SUCCESS: {
       return {
         ...state,
-        error: null,
-        isFetching: true,
+        isFetching: false,
       };
     }
-    case ActionTypes.FINISH_FETCHING_COURSES_SUCCESS: {
-      return state;
-    }
-    case ActionTypes.FINISH_FETCHING_COURSES_ERROR: {
-      return state;
-    }
-    // ==== //
-    case ActionTypes.START_UPDATING_COURSE: {
-      return {
-        ...state,
-        error: null,
-        isFetching: true,
-      };
-    }
-    case ActionTypes.FINISH_UPDATING_COURSE_SUCCESS: {
-      return state;
-    }
-    case ActionTypes.FINISH_UPDATING_COURSE_ERROR: {
-      return state;
-    }
-    // ==== //
-    case ActionTypes.START_DELETING_COURSE: {
-      return {
-        ...state,
-        error: null,
-        isFetching: true
-      };
-    }
-    case ActionTypes.FINISH_DELETING_COURSE_SUCCESS: {
-      return state;
-    }
-    case ActionTypes.FINISH_DELETING_COURSE_ERROR: {
-      return {
-        ...state,
-        error: action.payload.error,
-        isFetching: false
-      };
-    }
+
     default: {
       return state;
     }
