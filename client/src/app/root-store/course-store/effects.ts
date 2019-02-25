@@ -8,16 +8,16 @@ import * as courseActions from './actions';
 
 import {CourseService} from '../../core/services/course/course.service';
 import {Course} from 'src/app/core/models/course.interface';
-import { FetchCoursesAction } from './actions';
-import { RootStoreState } from '..';
+import {FetchCoursesAction} from './actions';
+import {RootStoreState} from '..';
 
 @Injectable()
 export class CourseStoreEffects {
   constructor(
     private courseService: CourseService,
     private actions$: Actions,
-    private store$: Store<RootStoreState.State>
-  )  {}
+    private store$: Store<RootStoreState.State>,
+  ) {}
 
   @Effect()
   public fetchCoursesEffect$: Observable<Action> = this.actions$.pipe(
@@ -51,7 +51,6 @@ export class CourseStoreEffects {
         catchError(error =>
           of(new courseActions.UpdateCourseErrorAction({error})),
         ),
-
       ),
     ),
   );

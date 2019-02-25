@@ -49,16 +49,16 @@ export class HeaderComponent implements OnInit, OnDestroy {
       });
   }
 
-  private subscribeOnUserInfo (): void {
+  private subscribeOnUserInfo(): void {
     this.userInfoSubscription = this.store$
-    .select(AuthStoreSelectors.selectUserInfo)
-    .subscribe((info: any) => {
-      if (!info) {
-        return;
-      }
+      .select(AuthStoreSelectors.selectUserInfo)
+      .subscribe((info: any) => {
+        if (!info) {
+          return;
+        }
 
-      this.userName = `${info.firstName} ${info.lastName}`;
-    });
+        this.userName = `${info.firstName} ${info.lastName}`;
+      });
   }
 
   public ngOnInit(): void {

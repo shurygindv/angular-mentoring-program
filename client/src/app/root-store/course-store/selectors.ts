@@ -27,7 +27,10 @@ export const selectCourseById = (id: number) =>
     },
   );
 
-export const selectCourseError: MemoizedSelector<object, string> = createSelector(
+export const selectCourseError: MemoizedSelector<
+  object,
+  string
+> = createSelector(
   selectCourseState,
   getError,
 );

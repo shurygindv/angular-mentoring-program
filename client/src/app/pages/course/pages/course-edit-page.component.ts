@@ -10,7 +10,10 @@ import {DurationNormalizerPipe} from '../../../shared/duration-normalizer.pipe';
 import {Store} from '@ngrx/store';
 import {RootStoreState} from 'src/app/root-store';
 import {CourseStoreSelectors} from 'src/app/root-store/course-store';
-import { UpdateCourseByIdAction, AddCourseAction } from '../../../root-store/course-store/actions';
+import {
+  UpdateCourseByIdAction,
+  AddCourseAction,
+} from '../../../root-store/course-store/actions';
 
 const createStrictFormControl = <T>(value?: T) =>
   new FormControl(value, [Validators.required]);
@@ -87,17 +90,13 @@ export class CourseEditPageComponent implements OnInit {
   }
 
   private createCourse(course: Course): void {
-    this.store$.dispatch(
-      new AddCourseAction({course})
-    );
+    this.store$.dispatch(new AddCourseAction({course}));
   }
 
   private updateCourse(course: Course): void {
     const id = +this.courseId;
 
-    this.store$.dispatch(
-      new UpdateCourseByIdAction({id, course})
-    );
+    this.store$.dispatch(new UpdateCourseByIdAction({id, course}));
   }
 
   private save(course: Course): void {

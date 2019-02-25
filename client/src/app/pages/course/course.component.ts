@@ -1,9 +1,8 @@
 import {Component, Output, OnInit, OnDestroy} from '@angular/core';
-import {Subject, Observable, Subscription} from 'rxjs';
-import {takeUntil, tap} from 'rxjs/operators';
+import {Store} from '@ngrx/store';
+import {Subscription} from 'rxjs';
 
 import {Course} from '../../core/models/course.interface';
-import {CourseService} from './../../core/services/course/course.service';
 import {DialogService} from '../../core/services/dialog/dialog.service';
 import {
   ICourseEditDialogData,
@@ -13,9 +12,8 @@ import {Omit} from '../../utils/types';
 import {CourseEditDialogComponent} from './dialogs/edit/course-edit-dialog.component';
 import {LoaderService} from '../../core/services/loader/loader.service';
 import {RootStoreState} from 'src/app/root-store';
-import {Store} from '@ngrx/store';
 import {CourseStoreSelectors} from 'src/app/root-store/course-store';
-import { UpdateCourseByIdAction } from '../../root-store/course-store/actions';
+import {UpdateCourseByIdAction} from '../../root-store/course-store/actions';
 import {
   FilterCoursesAction,
   DeleteCourseByIdAction,
@@ -63,28 +61,24 @@ export class CourseComponent implements OnInit, OnDestroy {
   }
 
   public fetchCourses = (): void => {
-    this.store$.dispatch(
-      new FetchCoursesAction(this.pagination)
-    );
+    this.store$.dispatch(new FetchCoursesAction(this.pagination));
   }
 
   private updateCourseById(id: number, course: Course): void {
-    this.store$.dispatch(
-      new UpdateCourseByIdAction({id, course})
-    );
+    this.store$.dispatch(new UpdateCourseByIdAction({id, course}));
   }
 
   private handleEditingSubmit(id: number, dialogData: CourseSharedData): void {
     this.updateCourseById(id, CourseSharedData.toCourse(dialogData));
   }
 
-  private subscribeOnCourses (): void {
-    this.coursesSubscription = this.store$.select(CourseStoreSelectors.selectAllCourses).subscribe(
-      (courses: Course[]) => {
+  private subscribeOnCourses(): void {
+    this.coursesSubscription = this.store$
+      .select(CourseStoreSelectors.selectAllCourses)
+      .subscribe((courses: Course[]) => {
         console.log(courses);
         this.courses = courses;
-      }
-    );
+      });
   }
 
   public ngOnInit(): void {
@@ -92,7 +86,7 @@ export class CourseComponent implements OnInit, OnDestroy {
     this.fetchCourses();
   }
 
-  public ngOnDestroy (): void {
+  public ngOnDestroy(): void {
     if (this.coursesSubscription) {
       this.coursesSubscription.unsubscribe();
     }

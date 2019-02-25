@@ -9,7 +9,7 @@ import * as authActions from './actions';
 
 import {AuthService} from '../../core/services/auth/auth.service';
 import {UserInfo} from '../../core/services/auth/auth.interface';
-import { LogoutSuccessAction } from './actions';
+import {LogoutSuccessAction} from './actions';
 
 @Injectable()
 export class AuthStoreEffects {
@@ -60,8 +60,8 @@ export class AuthStoreEffects {
     switchMap(_ =>
       of(this.authService.logout()).pipe(
         map(() => new LogoutSuccessAction()),
-        tap(() => this.navigateToLogin())
-        ),
+        tap(() => this.navigateToLogin()),
+      ),
     ),
   );
 
