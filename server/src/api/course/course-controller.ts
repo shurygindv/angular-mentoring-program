@@ -3,16 +3,13 @@ import * as Router from 'koa-router';
 
 import { HttpSuccessResult } from '../../helpers/http-success-result';
 import { ICourseService } from './course-service';
-import { createContext } from 'vm';
 
 const selectId = (ctx: Koa.Context): number => +ctx.params.id;
-
 
 // queries
 const selectTake = (ctx: Koa.Context) => ctx.query.take || 10;
 const selectFrom = (ctx: Koa.Context) => ctx.query.from || 0;
 const selectTextFragment = (ctx: Koa.Context) => ctx.query.textFragment || '';
-
 
 export const mount = (courseService: ICourseService): Router => {
   const router: Router = new Router();
@@ -76,7 +73,7 @@ export const mount = (courseService: ICourseService): Router => {
 
   // tsss it's bad userInfo from authService 'todo users'
   router.get('/courses/:id', async (ctx: Koa.Context) => {
-    const course = await courseService.findCourseById(+selectId(ctx));
+    const course = await courseService.findCourseById(selectId(ctx));
 
     ctx.body = new HttpSuccessResult(course).result;
     ctx.status = 200;
