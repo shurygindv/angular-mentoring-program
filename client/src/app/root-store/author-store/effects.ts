@@ -7,8 +7,8 @@ import {catchError, map, switchMap} from 'rxjs/operators';
 import * as authorActions from './actions';
 
 import {RootStoreState} from '..';
-import {AuthorService} from '../../../../../server/src/api/author/author-service';
 import {Author} from '../../core/models/author.interface';
+import {AuthorService} from '../../core/services/author/author.service';
 
 @Injectable()
 export class AuthStoreEffects {

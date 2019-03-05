@@ -5,7 +5,7 @@ import {
 } from '@ngrx/store';
 
 import {authorAdapter, State} from './state';
-import { Author } from '../../core/models/author.interface';
+import {Author} from '../../core/models/author.interface';
 
 export const getError = (state: State): string => state.error;
 export const getIsFetching = (state: State): boolean => state.isFetching;
@@ -14,13 +14,13 @@ export const getCurrentAuthor = (state: State): Author | null => state.current;
 export const selectAuthorState: MemoizedSelector<
   object,
   State
-> = createFeatureSelector<State>('courses');
+> = createFeatureSelector<State>('authors');
 
 export const selectAllAuthors: (
   state: object,
 ) => Author[] = authorAdapter.getSelectors(selectAuthorState).selectAll;
 
-export const selectCourseById = (id: number) =>
+export const selectCourseById = (id: string) =>
   createSelector(
     selectAllAuthors,
     (authors: Author[]) => {
@@ -28,10 +28,12 @@ export const selectCourseById = (id: number) =>
     },
   );
 
-
-export const selectCurrentAuthor  = createSelector(
+export const selectCurrentAuthor: MemoizedSelector<
+  object,
+  Author | null
+> = createSelector(
   selectAuthorState,
-  getCurrentAuthor
+  getCurrentAuthor,
 );
 
 export const selectCourseError: MemoizedSelector<
