@@ -3,9 +3,19 @@ import { MaybeNull } from '../../types';
 
 type Author = {
   id: string;
-  name: string;
-  description?: string;
+  firstName: string;
+  lastName: string;
 };
+
+const mappedAuthors = dbAuthors.map(item => {
+  const [firstName, lastName] = item.name.split(' ');
+
+  return {
+    id: item.id,
+    firstName,
+    lastName
+  };
+});
 
 const promisify = <T>(data: T): Promise<T> => Promise.resolve(data);
 
@@ -17,11 +27,11 @@ export interface IAuthorService {
 export class AuthorService implements IAuthorService {
   async findAuthorById(id: string): Promise<MaybeNull<Author>> {
     return await promisify(
-      dbAuthors.find((author: Author) => author.id === id) || null
+      mappedAuthors.find((author: Author) => author.id === id) || null
     );
   }
 
   async findAuthors(): Promise<Author[]> {
-    return await promisify([...dbAuthors]);
+    return await promisify([...mappedAuthors]);
   }
 }

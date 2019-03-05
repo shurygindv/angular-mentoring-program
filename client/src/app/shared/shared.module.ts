@@ -17,6 +17,7 @@ import {DateStatusDirective} from './date-status.directive';
 import {LoaderOverlayComponent} from './components/loader-overlay/loader-overlay.component';
 import {DurationNormalizerPipe} from './duration-normalizer.pipe';
 import {PageNotFoundComponent} from './pages/page-not-found/page-not-found.component';
+import { LabelListComponent } from './components/label-list/label-list.component';
 
 @NgModule({
   declarations: [
@@ -50,6 +51,7 @@ import {PageNotFoundComponent} from './pages/page-not-found/page-not-found.compo
     ButtonComponent,
     ContentBoxComponent,
     LoaderOverlayComponent,
+    LabelListComponent,
 
     DateStatusDirective,
     DurationNormalizerPipe,

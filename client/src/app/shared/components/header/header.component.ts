@@ -1,13 +1,8 @@
 import {Component, OnInit, OnDestroy} from '@angular/core';
 import {Router} from '@angular/router';
-import {Subject, Subscription} from 'rxjs';
-import {takeUntil} from 'rxjs/operators';
-
-import {AuthService} from '../../../core/services/auth/auth.service';
-import {UserFullInfo} from '../../../core/services/auth/auth.interface';
+import {Subscription} from 'rxjs';
 import {Store} from '@ngrx/store';
 import {RootStoreState} from 'src/app/root-store';
-import {RootStoreModule} from 'src/app/root-store/root-store.module';
 import {AuthStoreSelectors} from 'src/app/root-store/auth-store';
 import {
   LogoutAction,
