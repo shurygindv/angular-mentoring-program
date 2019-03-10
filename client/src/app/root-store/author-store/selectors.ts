@@ -20,13 +20,32 @@ export const selectAllAuthors: (
   state: object,
 ) => Author[] = authorAdapter.getSelectors(selectAuthorState).selectAll;
 
-export const selectCourseById = (id: string) =>
+export const selectAuthorById = (id: string) =>
   createSelector(
     selectAllAuthors,
     (authors: Author[]) => {
       return (authors || []).find((author: Author) => author.id === id) || null;
     },
   );
+
+export const selectAuthorsByIds = (id: string[]) =>
+  createSelector(
+    selectAllAuthors,
+    (authors: Author[]) => {
+      return authors.reduce(
+        (prev: Author[], current: Author) =>
+          id.includes(current.id) ? [...prev, current] : prev,
+        [],
+      );
+    },
+  );
+
+
+
+export const selectLastAddedAuthor = createSelector(
+  selectAuthorState,
+  (state: State) => state.added,
+);
 
 export const selectCurrentAuthor: MemoizedSelector<
   object,

@@ -4,6 +4,7 @@ import {ActionTypes, Actions} from './actions';
 export const authorReducer = (state = initialState, action: Actions) => {
   switch (action.type) {
     case ActionTypes.START_FETCHING_AUTHORS:
+    case ActionTypes.START_ADDING_AUTHOR:
     case ActionTypes.START_FETCHING_ONE_AUTHOR_BY_ID: {
       return {
         ...state,
@@ -12,6 +13,7 @@ export const authorReducer = (state = initialState, action: Actions) => {
       };
     }
     case ActionTypes.FINISH_FETCHING_AUTHORS_ERROR:
+    case ActionTypes.FINISH_ADDING_AUTHOR_ERROR:
     case ActionTypes.FINISH_FETCHING_ONE_AUTHOR_ERROR: {
       return {
         ...state,
@@ -32,7 +34,13 @@ export const authorReducer = (state = initialState, action: Actions) => {
         isFetching: false,
       };
     }
-
+    case ActionTypes.FINISH_ADDING_AUTHOR_SUCCESS: {
+      return {
+        ...state,
+        added: action.payload.item,
+        isFetching: false,
+      };
+    }
     default: {
       return state;
     }

@@ -1,6 +1,12 @@
-<ul *ngFor="let course of items">
-    <li >
-       <p>{{name}}<p>
-        <i>x</i>
+<section>
+  <form (ngSubmit)="onSubmit()" [formGroup]="labelGroupForm">
+    <input type="text" formControlName="labelValue" />
+  </form>
+
+  <ul *ngFor="let label of items">
+    <li>
+      <p>{{ label.name }}</p>
+      <p (click)="onRemove(label)"><i>x</i></p>
     </li>
-</ul>
+  </ul>
+</section>

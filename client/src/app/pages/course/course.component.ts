@@ -19,6 +19,7 @@ import {
   DeleteCourseByIdAction,
   FetchCoursesAction,
 } from '../../root-store/course-store/actions';
+import { FetchAuthorsAction } from 'src/app/root-store/author-store/actions';
 
 const mapCourseToDialogData = (
   course: Course,
@@ -64,6 +65,10 @@ export class CourseComponent implements OnInit, OnDestroy {
     this.store$.dispatch(new FetchCoursesAction(this.pagination));
   }
 
+  public fetchAuthors () {
+    this.store$.dispatch(new FetchAuthorsAction());
+  }
+
   private updateCourseById(id: number, course: Course): void {
     this.store$.dispatch(new UpdateCourseByIdAction({id, course}));
   }
@@ -76,14 +81,15 @@ export class CourseComponent implements OnInit, OnDestroy {
     this.coursesSubscription = this.store$
       .select(CourseStoreSelectors.selectAllCourses)
       .subscribe((courses: Course[]) => {
-        console.log(courses);
         this.courses = courses;
       });
   }
 
   public ngOnInit(): void {
     this.subscribeOnCourses();
+
     this.fetchCourses();
+    this.fetchAuthors();
   }
 
   public ngOnDestroy(): void {

@@ -1,5 +1,5 @@
 import {Action} from '@ngrx/store';
-import { Author } from '../../core/models/author.interface';
+import {Author} from '../../core/models/author.interface';
 
 export enum ActionTypes {
   START_FETCHING_ONE_AUTHOR_BY_ID = '[One Author] Fetch author by id',
@@ -9,6 +9,10 @@ export enum ActionTypes {
   START_FETCHING_AUTHORS = '[Authors] Fetch all',
   FINISH_FETCHING_AUTHORS_SUCCESS = '[Authors::success] Fetch all',
   FINISH_FETCHING_AUTHORS_ERROR = '[Authors::error] Fetch all',
+
+  START_ADDING_AUTHOR = '[Authors] Add one',
+  FINISH_ADDING_AUTHOR_SUCCESS = '[Authors::success] Add one',
+  FINISH_ADDING_AUTHOR_ERROR = '[Authors::error] Add one',
 }
 
 interface ErrorMsg {
@@ -53,7 +57,6 @@ export class FetchAuthorByIdErrorAction implements Action {
   }
 }
 
-
 /*
   FETCH ALL
 */
@@ -80,7 +83,39 @@ export class FetchAuthorsErrorAction implements Action {
   }
 }
 
+// add one
+
+export class AddAuthorAction implements Action {
+  public readonly type = ActionTypes.START_ADDING_AUTHOR;
+  public readonly payload: {firstName: string, lastName: string};
+
+  constructor(payload: {firstName: string, lastName: string}) {
+    this.payload = payload;
+  }
+}
+
+export class AddAuthorSuccessAction implements Action {
+  public readonly type = ActionTypes.FINISH_ADDING_AUTHOR_SUCCESS;
+  public readonly payload: {item: Author};
+
+  constructor(payload: {item: Author}) {
+    this.payload = payload;
+  }
+}
+
+export class AddAuthorErrorAction implements Action {
+  public readonly type = ActionTypes.FINISH_ADDING_AUTHOR_ERROR;
+  public readonly payload: ErrorMsg;
+
+  constructor(payload: ErrorMsg) {
+    this.payload = payload;
+  }
+}
+
 export type Actions =
+  | AddAuthorAction
+  | AddAuthorSuccessAction
+  | AddAuthorErrorAction
   | FetchAuthorsAction
   | FetchAuthorsSuccessAction
   | FetchAuthorsErrorAction

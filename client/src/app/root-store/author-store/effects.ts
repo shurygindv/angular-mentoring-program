@@ -32,7 +32,7 @@ export class AuthStoreEffects {
       authorActions.ActionTypes.START_FETCHING_AUTHORS,
     ),
     switchMap(_ =>
-      this.authorService.findAuthors().pipe(
+      this.authorService.fetchAuthors().pipe(
         map(
           (items: Author[]) =>
             new authorActions.FetchAuthorsSuccessAction({
@@ -47,12 +47,37 @@ export class AuthStoreEffects {
   );
 
   @Effect()
+  public addAuthorEffect$: Observable<Action> = this.actions$.pipe(
+    ofType<authorActions.AddAuthorAction>(
+      authorActions.ActionTypes.START_FETCHING_AUTHORS,
+    ),
+    switchMap(action =>
+      this.authorService
+        .addAuthor({
+          firstName: action.payload.firstName,
+          lastName: action.payload.lastName,
+        })
+        .pipe(
+          map(
+            (item: Author) =>
+              new authorActions.AddAuthorSuccessAction({
+                item,
+              }),
+          ),
+          catchError(error =>
+            of(new authorActions.AddAuthorErrorAction({error})),
+          ),
+        ),
+    ),
+  );
+
+  @Effect()
   public fetchAuthorByIdEffect$: Observable<Action> = this.actions$.pipe(
     ofType<authorActions.FetchAuthorByIdAction>(
       authorActions.ActionTypes.START_FETCHING_ONE_AUTHOR_BY_ID,
     ),
     switchMap(action =>
-      this.authorService.findAuthorById(action.payload.id).pipe(
+      this.authorService.fetchAuthorById(action.payload.id).pipe(
         map(
           (item: Author) =>
             new authorActions.FetchAuthorByIdSuccessAction({item}),

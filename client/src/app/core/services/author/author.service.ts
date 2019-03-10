@@ -14,15 +14,21 @@ export class AuthorService {
     this.apiService = apiService;
   }
 
-  public fetchAuthorByCourseId(id: string): Observable<Author> {
+  public addAuthor(author: Author) {
     return this.apiService
-      .get(`/courses/${id}`)
+      .post(`/authors/add`, author)
+      .pipe(map((res: Response<Author>) => res.Data));
+  }
+
+  public fetchAuthorById(id: string): Observable<Author> {
+    return this.apiService
+      .get(`/authors/${id}`)
       .pipe(map((res: Response<Author>) => res.Data));
   }
 
   public fetchAuthors(): Observable<Author[]> {
     return this.apiService
-      .get('/courses')
+      .get('/authors')
       .pipe(map((res: Response<Author[]>) => res.Data));
   }
 }

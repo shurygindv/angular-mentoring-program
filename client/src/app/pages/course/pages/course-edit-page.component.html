@@ -55,7 +55,7 @@
       </mat-form-field>
 
       <mat-form-field class="course-edit-page-form__control">
-        <app-label-list></app-label-list>
+        <app-label-list (items)="authorLabels" (add)="addAuthor($event)" (remove)="removeAuthor($event)"></app-label-list>
       </mat-form-field>
 
       <div class="course-edit-page-form__control">

@@ -23,5 +23,16 @@ export const mount = (authorService: IAuthorService): Router => {
     ctx.status = 200;
   });
 
+  router.post('/authors/add', async (ctx: Koa.Context) => {
+    const { firstName, lastName } = ctx.request.body;
+    const author = await authorService.addAuthor({
+      firstName,
+      lastName
+    });
+
+    ctx.body = new HttpSuccessResult(author).result;
+    ctx.status = 200;
+  });
+
   return router;
 };
