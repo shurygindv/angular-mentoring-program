@@ -17,10 +17,10 @@ export enum ErrorCode {
 
 export type MaybeNull<T> = T | null;
 
-export interface HttpDataResponse<T = null> {
-    Data: MaybeNull<T>;
-    Success: boolean;
-    ErrorCode: MaybeNull<ErrorCode>;
-    ErrorDescription:  MaybeNull<string>;
-  }
+export interface ResponseResult<T = null> {
+  Data: MaybeNull<T>;
+  Success: boolean;
+  ErrorDescription: MaybeNull<string>;
+  ErrorCode: MaybeNull<number>;
+}
   

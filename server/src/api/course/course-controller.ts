@@ -1,18 +1,15 @@
 import * as Koa from 'koa';
 import * as Router from 'koa-router';
 
-import { HttpSuccessResult } from '../../helpers/http-success-result';
+import { HttpResult } from '../../helpers/http-result';
 import { ICourseService } from './course-service';
-import { createContext } from 'vm';
 
 const selectId = (ctx: Koa.Context): number => +ctx.params.id;
-
 
 // queries
 const selectTake = (ctx: Koa.Context) => ctx.query.take || 10;
 const selectFrom = (ctx: Koa.Context) => ctx.query.from || 0;
 const selectTextFragment = (ctx: Koa.Context) => ctx.query.textFragment || '';
-
 
 export const mount = (courseService: ICourseService): Router => {
   const router: Router = new Router();
@@ -28,7 +25,7 @@ export const mount = (courseService: ICourseService): Router => {
       description: description
     });
 
-    ctx.body = new HttpSuccessResult(courses).result;
+    ctx.body = HttpResult.success(courses);
     ctx.status = 200;
   });
 
@@ -45,14 +42,14 @@ export const mount = (courseService: ICourseService): Router => {
       description: description
     });
 
-    ctx.body = new HttpSuccessResult(courses).result;
+    ctx.body = HttpResult.success(courses);
     ctx.status = 200;
   });
 
   router.delete('/courses/delete/:id', async (ctx: Koa.Context) => {
     const status: boolean = await courseService.deleteCourseById(selectId(ctx));
 
-    ctx.body = new HttpSuccessResult(status).result;
+    ctx.body = HttpResult.success(status);
     ctx.status = 204;
   });
 
@@ -61,7 +58,7 @@ export const mount = (courseService: ICourseService): Router => {
 
     const courses = await courseService.takeCoursesByLength(from, take);
 
-    ctx.body = new HttpSuccessResult(courses).result;
+    ctx.body = HttpResult.success(courses);
     ctx.status = 200;
   });
 
@@ -70,7 +67,7 @@ export const mount = (courseService: ICourseService): Router => {
 
     const filteredCourses = await courseService.filterByTextFragment(filterBy);
 
-    ctx.body = new HttpSuccessResult(filteredCourses).result;
+    ctx.body = HttpResult.success(filteredCourses);
     ctx.status = 200;
   });
 
@@ -78,7 +75,7 @@ export const mount = (courseService: ICourseService): Router => {
   router.get('/courses/:id', async (ctx: Koa.Context) => {
     const course = await courseService.findCourseById(+selectId(ctx));
 
-    ctx.body = new HttpSuccessResult(course).result;
+    ctx.body = HttpResult.success(course);
     ctx.status = 200;
   });
 

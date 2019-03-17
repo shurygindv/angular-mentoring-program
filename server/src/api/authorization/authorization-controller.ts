@@ -1,7 +1,7 @@
 import * as Koa from 'koa';
 import * as Router from 'koa-router';
 
-import { HttpSuccessResult } from '../../helpers/http-success-result';
+import { HttpResult } from '../../helpers/http-result';
 import { IAuthorizationService } from './authorization-service';
 
 const selectId = (ctx: Koa.Context) => ctx.params.id;
@@ -16,7 +16,7 @@ export const mount = (authService: IAuthorizationService): Router => {
     
     const loginData = await authService.login(login, password);
 
-    ctx.body = new HttpSuccessResult(loginData).result;
+    ctx.body = HttpResult.success(loginData);
     ctx.status = 200;
   });
 
@@ -24,7 +24,7 @@ export const mount = (authService: IAuthorizationService): Router => {
   router.get('/auth/userInfo/:id', async (ctx: Koa.Context) => {
     const userInfo = await authService.findUserById(+selectId(ctx));
 
-    ctx.body = new HttpSuccessResult(userInfo).result;
+    ctx.body = HttpResult.success(userInfo);
     ctx.status = 200;
   });
 

@@ -1,7 +1,7 @@
 import * as Koa from 'koa';
 
-import { HttpErrorResult } from '../helpers/http-error-result';
-//import {ValidationError} from '../helpers/validation-error';
+import { HttpResult } from '../helpers/http-result';
+// import {ValidationError} from '../helpers/validation-error';
 import { HTTP_CODE, ErrorCode } from '../types';
 import { AuthorizationDeniedError } from '../helpers/authorization-denied';
 
@@ -23,7 +23,7 @@ export const errorMiddleware = () => async (ctx: Koa.Context, next: any) => {
   } catch (e) {
     const [statusCode, errorCode] = selectErrorInfo(e);
 
-    ctx.body = new HttpErrorResult(errorCode, e.message).result;
+    ctx.body = HttpResult.error(e.message, errorCode).valueOf();
     ctx.status = statusCode;
   }
 };
