@@ -4,6 +4,7 @@ import {EffectsModule} from '@ngrx/effects';
 import {StoreModule} from '@ngrx/store';
 
 import {CourseStoreModule} from './course-store';
+import {AuthorStoreModule} from './author-store';
 import {AuthStoreModule} from './auth-store';
 
 @NgModule({
@@ -11,6 +12,7 @@ import {AuthStoreModule} from './auth-store';
     CommonModule,
     AuthStoreModule,
     CourseStoreModule,
+    AuthorStoreModule,
 
     StoreModule.forRoot({}),
     EffectsModule.forRoot([]),
