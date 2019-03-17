@@ -25,32 +25,19 @@
         </mat-error>
       </mat-form-field>
 
-      <mat-form-field class="course-edit-page-form__control">
-        <input
-          matInput
-          [matDatepicker]="datePicker"
-          formControlName="date"
-          placeholder="Choose a date"
-          required
-        />
-        <mat-datepicker-toggle
-          matSuffix
-          [for]="datePicker"
-        ></mat-datepicker-toggle>
-        <mat-datepicker #datePicker></mat-datepicker>
-      </mat-form-field>
+      <section class="course-edit-page-form__control">
+          <app-course-edit-date-period-control formControlName="date"></app-course-edit-date-period-control>
+          <mat-error *ngIf="formControls.date.touched && formControls.date.invalid">
+              Invalid field
+          </mat-error>
+      </section>
 
-      <mat-form-field class="course-edit-page-form__control">
-        <input
-          matInput
-          [placeholder]="durationPlaceholder"
-          formControlName="length"
-          required
-        />
-        <mat-error *ngIf="formControls.length.invalid">
+      <section class="course-edit-page-form__control">
+        <app-course-edit-length-control formControlName="length"></app-course-edit-length-control>
+        <mat-error *ngIf="formControls.length.touched && formControls.length.invalid">
           Invalid field
         </mat-error>
-      </mat-form-field>
+      </section>
 
       <section class="course-edit-page-form__control">
         <app-course-author-control

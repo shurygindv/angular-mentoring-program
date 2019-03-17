@@ -1,13 +1,10 @@
-import {Component, Input, OnInit, OnDestroy} from '@angular/core';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {Component, Input, OnInit} from '@angular/core';
+import {FormControl, FormGroup, Validators, ValidatorFn} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
-import {Subject} from 'rxjs';
-import {takeUntil} from 'rxjs/operators';
+import {Store, State} from '@ngrx/store';
 
 import {Course} from '../../../core/models/course.interface';
-import {CourseService} from '../../../core/services/course/course.service';
 import {DurationNormalizerPipe} from '../../../shared/duration-normalizer.pipe';
-import {Store, State} from '@ngrx/store';
 import {RootStoreState} from 'src/app/root-store';
 import {CourseStoreSelectors} from 'src/app/root-store/course-store';
 import {
@@ -15,10 +12,9 @@ import {
   AddCourseAction,
 } from '../../../root-store/course-store/actions';
 import { Author } from 'src/app/core/models/author.interface';
-import { AuthorStoreState, AuthorStoreSelectors } from 'src/app/root-store/author-store';
 
-const createStrictFormControl = <T>(value?: T) =>
-  new FormControl(value, [Validators.required]);
+const createStrictFormControl = <T>(value: T, validators?: ValidatorFn[]) =>
+  new FormControl(value, [Validators.required].concat(validators || []));
 
 const createFormControl = <T>(value?: T) => new FormControl(value);
 
@@ -124,11 +120,11 @@ export class CourseEditPageComponent implements OnInit {
 
   private initFormGroup(): FormGroup {
     return new FormGroup({
-      name: createStrictFormControl(),
-      date: createStrictFormControl(),
-      length: createStrictFormControl(),
-      isTopRated: createFormControl(),
-      description: createStrictFormControl(),
+      name: createStrictFormControl('', [Validators.maxLength(50)]),
+      description: createStrictFormControl('', [Validators.maxLength(50)]),
+      date: createStrictFormControl(''),
+      length: createStrictFormControl(''),
+      isTopRated: createFormControl(''),
     });
   }
 
@@ -153,7 +149,7 @@ export class CourseEditPageComponent implements OnInit {
     this.router.navigateByUrl('/courses');
   }
 
-  private setPlainCourseValues (course: Course) {
+  private setPlainCourseValues (course: Course): void {
     this.courseGroupForm.setValue({
       name: course.name,
       isTopRated: course.isTopRated,
@@ -170,17 +166,17 @@ export class CourseEditPageComponent implements OnInit {
 
 
   public onDone($event: Event): void {
-    console.log('11');
+
     $event.preventDefault(); // TODO: implement pipe on preventDefault
 
     this.save(this.getDoneCourse());
   }
 
-  public mapAuthorToControlIds (authors: Author[]) {
+  public mapAuthorToControlIds (authors: Author[]): void {
     this.setSelectedAuthorIds(authors.map((author: Author) => author.id));
   }
 
-  public setSelectedAuthorIds (ids: string[]) {
+  public setSelectedAuthorIds (ids: string[]): void {
     this.selectedAuthorIds = [...ids];
   }
 }
