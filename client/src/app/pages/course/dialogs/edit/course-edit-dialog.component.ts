@@ -6,11 +6,12 @@ import {
   Validators,
 } from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-import {DurationNormalizerPipe} from 'src/app/shared/duration-normalizer.pipe';
 
+import {DurationNormalizerPipe} from 'src/app/shared/duration-normalizer.pipe';
 import {Course} from '../../../../core/models/course.interface';
 import {ConfirmationDialogData} from '../../../../core/services/dialog/dialog.interface';
 import {Omit} from '../../../../utils/types';
+import { Author } from 'src/app/core/models/author.interface';
 
 export class CourseSharedData {
   constructor(
@@ -18,7 +19,7 @@ export class CourseSharedData {
     description: string,
     length: number,
     date: string | Date,
-    authors: string[],
+    authors: Author[],
     isTopRated: boolean,
   ) {
     this.name = name;
@@ -33,7 +34,7 @@ export class CourseSharedData {
   public description: string;
   public length: number;
   public date: string | Date;
-  public authors: string[];
+  public authors: Author[];
   public isTopRated: boolean;
 
   public static map(
@@ -60,6 +61,7 @@ export class CourseSharedData {
       length: data.length,
       description: data.description,
       date: data.date,
+      authors: data.authors,
     };
   }
 

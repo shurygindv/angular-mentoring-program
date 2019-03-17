@@ -5,9 +5,12 @@ import {ObserversModule} from '@angular/cdk/observers';
 import {
   MatInputModule,
   MatButton,
+  MatChipsModule,
   MatRippleModule,
   MatNativeDateModule,
   MatButtonModule,
+  MatSelectModule,
+  MatIconModule,
 } from '@angular/material';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatDatepickerModule} from '@angular/material/datepicker';
@@ -21,6 +24,9 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
     MatRippleModule,
     ObserversModule,
     MatInputModule,
+    MatSelectModule,
+    MatIconModule,
+    MatChipsModule,
   ],
   exports: [
     MatNativeDateModule,
@@ -29,6 +35,9 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
     MatInputModule,
     MatRippleModule,
     MatButtonModule,
+    MatSelectModule,
+    MatIconModule,
+    MatChipsModule
   ],
 })
 export class MaterialUiModule {}

@@ -7,13 +7,15 @@ import {takeUntil} from 'rxjs/operators';
 import {Course} from '../../../core/models/course.interface';
 import {CourseService} from '../../../core/services/course/course.service';
 import {DurationNormalizerPipe} from '../../../shared/duration-normalizer.pipe';
-import {Store} from '@ngrx/store';
+import {Store, State} from '@ngrx/store';
 import {RootStoreState} from 'src/app/root-store';
 import {CourseStoreSelectors} from 'src/app/root-store/course-store';
 import {
   UpdateCourseByIdAction,
   AddCourseAction,
 } from '../../../root-store/course-store/actions';
+import { Author } from 'src/app/core/models/author.interface';
+import { AuthorStoreState, AuthorStoreSelectors } from 'src/app/root-store/author-store';
 
 const createStrictFormControl = <T>(value?: T) =>
   new FormControl(value, [Validators.required]);
@@ -36,17 +38,21 @@ export class CourseEditPageComponent implements OnInit {
   private pageState: coursePageState;
   private route: ActivatedRoute;
   private router: Router;
+  private state: State<RootStoreState.State>;
   private courseGroupForm: FormGroup;
   private store$: Store<RootStoreState.State>;
+  private selectedAuthorIds: string[];
 
   constructor(
     route: ActivatedRoute,
     router: Router,
+    state: State<RootStoreState.State>,
     store$: Store<RootStoreState.State>,
   ) {
     this.route = route;
     this.router = router;
     this.store$ = store$;
+    this.state = state;
     this.pageState = coursePageState.creating;
     this.courseGroupForm = this.initFormGroup();
   }
@@ -100,9 +106,6 @@ export class CourseEditPageComponent implements OnInit {
   }
 
   private save(course: Course): void {
-    if (!this.hasChanges()) {
-      return;
-    }
 
     if (this.pageState === coursePageState.creating) {
       this.createCourse(course);
@@ -129,6 +132,12 @@ export class CourseEditPageComponent implements OnInit {
     });
   }
 
+  private mapIdsToAuthors(ids: string[]): Author[] {
+    const authorDictionary: {[key: string]: Author} = this.state.getValue().authors.entities;
+
+    return (ids || []).map((selectedId: string) => authorDictionary[selectedId]);
+  }
+
   private getDoneCourse(): Course {
     return {
       name: this.formControls.name.value,
@@ -136,6 +145,7 @@ export class CourseEditPageComponent implements OnInit {
       date: this.formControls.date.value,
       length: this.formControls.length.value,
       description: this.formControls.description.value,
+      authors: this.mapIdsToAuthors(this.selectedAuthorIds),
     };
   }
 
@@ -143,7 +153,7 @@ export class CourseEditPageComponent implements OnInit {
     this.router.navigateByUrl('/courses');
   }
 
-  public fillCourseForm = (course: Course): void => {
+  private setPlainCourseValues (course: Course) {
     this.courseGroupForm.setValue({
       name: course.name,
       isTopRated: course.isTopRated,
@@ -153,9 +163,24 @@ export class CourseEditPageComponent implements OnInit {
     });
   }
 
+  public fillCourseForm = (course: Course): void => {
+    this.mapAuthorToControlIds(course.authors || []);
+    this.setPlainCourseValues(course);
+  }
+
+
   public onDone($event: Event): void {
+    console.log('11');
     $event.preventDefault(); // TODO: implement pipe on preventDefault
 
     this.save(this.getDoneCourse());
+  }
+
+  public mapAuthorToControlIds (authors: Author[]) {
+    this.setSelectedAuthorIds(authors.map((author: Author) => author.id));
+  }
+
+  public setSelectedAuthorIds (ids: string[]) {
+    this.selectedAuthorIds = [...ids];
   }
 }

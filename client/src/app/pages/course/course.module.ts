@@ -7,9 +7,15 @@ import {CourseListComponent} from './components/course-list/course-list.componen
 import {CourseRoutingModule} from './course-routing.module';
 import {CourseComponent} from './course.component';
 import {CourseEditPageComponent} from './pages/course-edit-page.component';
+import {AuthorControlComponent} from './components/author-control/author-control.component';
 
 @NgModule({
-  declarations: [CourseEditPageComponent, CourseComponent, CourseListComponent],
-  imports: [CommonModule, MaterialUiModule, SharedModule, CourseRoutingModule],
+  declarations: [
+    CourseEditPageComponent,
+    CourseComponent,
+    CourseListComponent,
+    AuthorControlComponent,
+  ],
+  imports: [CommonModule, SharedModule, MaterialUiModule, CourseRoutingModule],
 })
 export class CourseModule {}

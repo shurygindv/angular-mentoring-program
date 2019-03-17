@@ -10,9 +10,7 @@
     >
       <mat-form-field class="course-edit-page-form__control">
         <input matInput placeholder="name" formControlName="name" required />
-        <mat-error *ngIf="formControls.name.invalid">
-          Invalid field
-        </mat-error>
+        <mat-error *ngIf="formControls.name.invalid"> Invalid field </mat-error>
       </mat-form-field>
 
       <mat-form-field class="course-edit-page-form__control">
@@ -53,6 +51,13 @@
           Invalid field
         </mat-error>
       </mat-form-field>
+
+      <section class="course-edit-page-form__control">
+        <app-course-author-control
+          [selectedAuthorIds]="selectedAuthorIds"
+          (selectionChange)="setSelectedAuthorIds($event)"
+        ></app-course-author-control>
+      </section>
 
       <div class="course-edit-page-form__control">
         <mat-checkbox formControlName="isTopRated"> Top rated </mat-checkbox>

@@ -31,7 +31,7 @@ export const mount = (courseService: ICourseService): Router => {
 
   router.put('/courses/update/:id', async (ctx: Koa.Context) => {
     const id: number = selectId(ctx);
-    const { name, isTopRated, date, length, description } = ctx.request.body;
+    const { name, isTopRated, date, length, description, authors} = ctx.request.body;
 
     const courses = await courseService.updateCourseById(id, {
       id,
@@ -39,6 +39,7 @@ export const mount = (courseService: ICourseService): Router => {
       isTopRated: isTopRated,
       date: date,
       length: length,
+      authors: authors,
       description: description
     });
 
@@ -57,7 +58,7 @@ export const mount = (courseService: ICourseService): Router => {
     const [take, from] = [selectTake(ctx), selectFrom(ctx)];
 
     const courses = await courseService.takeCoursesByLength(from, take);
-
+    
     ctx.body = HttpResult.success(courses);
     ctx.status = 200;
   });
@@ -74,7 +75,7 @@ export const mount = (courseService: ICourseService): Router => {
   // tsss it's bad userInfo from authService 'todo users'
   router.get('/courses/:id', async (ctx: Koa.Context) => {
     const course = await courseService.findCourseById(+selectId(ctx));
-
+    console.log(course);
     ctx.body = HttpResult.success(course);
     ctx.status = 200;
   });

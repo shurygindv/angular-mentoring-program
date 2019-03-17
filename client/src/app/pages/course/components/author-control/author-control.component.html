@@ -1,9 +1,21 @@
-<section>
-    <input type="text" >
-    
-    <ul>
-        <li>
+<mat-form-field class="author-control">
+  <mat-select
+    placeholder="Authors"
+    [(ngModel)]="selectedAuthorIds"
+    (selectionChange)="updateCheckedAuthors($event)"
+    multiple
+  >
+    <mat-option *ngFor="let author of authorList" [value]="author.id">
+      <span>{{ author.firstName }}</span>&nbsp;  <span>{{ author.lastName }}</span>
+    </mat-option>
+  </mat-select>
 
-        </li>
-    </ul>
-</section>
+  <mat-chip-list class="author-control-list mat-chip-list-stacked">
+    <mat-chip *ngFor="let author of authorLabels" (removed)="uncheck(author)">
+      <span>{{ author.firstName }} </span>  
+      &nbsp; 
+      <span>{{ author.lastName }}</span>
+      <mat-icon matChipRemove>X</mat-icon>
+    </mat-chip>
+  </mat-chip-list>
+</mat-form-field>

@@ -41,7 +41,7 @@ export class CourseService implements ICourseService {
 
   async takeCoursesByLength(from: number, take: number) {
     const courses = await this.findCourses();
-
+   
     return await promisify([...courses.slice(from, from + take)]);
   }
 

@@ -12,19 +12,11 @@ import {AuthorService} from '../../core/services/author/author.service';
 
 @Injectable()
 export class AuthStoreEffects {
-  private actions$: Actions;
-  private store$: Store<RootStoreState.State>;
-  private authorService: AuthorService;
-
   constructor(
-    authorService: AuthorService,
-    actions$: Actions,
-    store$: Store<RootStoreState.State>,
-  ) {
-    this.actions$ = actions$;
-    this.authorService = authorService;
-    this.store$ = store$;
-  }
+    private authorService: AuthorService,
+    private actions$: Actions,
+    private store$: Store<RootStoreState.State>,
+  ) {}
 
   @Effect()
   public fetchAuthorsEffect$: Observable<Action> = this.actions$.pipe(

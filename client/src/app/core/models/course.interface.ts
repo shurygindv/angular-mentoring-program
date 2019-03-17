@@ -1,3 +1,5 @@
+import { Author } from './author.interface';
+
 export interface Course {
   id?: number;
   name: string;
@@ -5,4 +7,5 @@ export interface Course {
   date: string | Date;
   length: number;
   description: string;
+  authors: Author[];
 }

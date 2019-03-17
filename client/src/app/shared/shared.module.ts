@@ -1,6 +1,6 @@
 import {CommonModule} from '@angular/common';
 import {NgModule} from '@angular/core';
-import {ReactiveFormsModule} from '@angular/forms';
+import {ReactiveFormsModule, FormsModule} from '@angular/forms';
 import {RouterModule} from '@angular/router';
 
 import {BodyComponent} from './components/body/body.component';
@@ -38,7 +38,7 @@ import {PageNotFoundComponent} from './pages/page-not-found/page-not-found.compo
     // pages
     PageNotFoundComponent,
   ],
-  imports: [CommonModule, ReactiveFormsModule, RouterModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterModule],
   exports: [
     HeaderComponent,
     BodyComponent,
@@ -54,6 +54,7 @@ import {PageNotFoundComponent} from './pages/page-not-found/page-not-found.compo
     DateStatusDirective,
     DurationNormalizerPipe,
     ReactiveFormsModule,
+    FormsModule,
 
     // pages
     PageNotFoundComponent,
