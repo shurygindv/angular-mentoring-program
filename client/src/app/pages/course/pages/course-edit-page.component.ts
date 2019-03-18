@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, OnDestroy} from '@angular/core';
 import {FormControl, FormGroup, Validators, ValidatorFn} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Store, State} from '@ngrx/store';
@@ -11,7 +11,8 @@ import {
   UpdateCourseByIdAction,
   AddCourseAction,
 } from '../../../root-store/course-store/actions';
-import { Author } from 'src/app/core/models/author.interface';
+import {Author} from 'src/app/core/models/author.interface';
+import {Subscription} from 'rxjs';
 
 const createStrictFormControl = <T>(value: T, validators?: ValidatorFn[]) =>
   new FormControl(value, [Validators.required].concat(validators || []));
@@ -30,7 +31,7 @@ const NEW_COURSE = 'new';
   templateUrl: './course-edit-page.component.html',
   styleUrls: ['./course-edit-page.component.scss'],
 })
-export class CourseEditPageComponent implements OnInit {
+export class CourseEditPageComponent implements OnInit, OnDestroy {
   private pageState: coursePageState;
   private route: ActivatedRoute;
   private router: Router;
@@ -38,6 +39,7 @@ export class CourseEditPageComponent implements OnInit {
   private courseGroupForm: FormGroup;
   private store$: Store<RootStoreState.State>;
   private selectedAuthorIds: string[];
+  private authorsNotifierSubscription: Subscription;
 
   constructor(
     route: ActivatedRoute,
@@ -57,34 +59,42 @@ export class CourseEditPageComponent implements OnInit {
     return this.courseGroupForm.controls;
   }
 
-  @Input()
-  public get durationPlaceholder(): string {
-    const value = this.formControls.length.value;
-
-    if (value) {
-      return `Duration ~ ${DurationNormalizerPipe.init(value)}`;
-    }
-
-    return 'Duration';
-  }
-
   public get courseId(): string {
     return this.route.snapshot.paramMap.get('id');
   }
 
-  public ngOnInit(): void {
-    const id: string = this.courseId;
-
-    if (id === NEW_COURSE) {
-      return;
-    }
-
+  private updateCourseForm(id: number) {
     this.setPageState(coursePageState.updating);
 
     this.store$
-      .select(CourseStoreSelectors.selectCourseById(+id))
+      .select(CourseStoreSelectors.selectCourseById(id))
       .subscribe(this.fillCourseForm)
       .unsubscribe();
+  }
+
+  private notifyWhenAuthorsChange () {
+    this.authorsNotifierSubscription = this.formControls.authors.valueChanges.subscribe(
+      (ids: string[]) => {
+        this.setSelectedAuthorIds(ids);
+      },
+    );
+  }
+
+  public ngOnInit(): void {
+    this.notifyWhenAuthorsChange();
+
+    if (this.courseId === NEW_COURSE) {
+      return;
+    }
+
+    this.updateCourseForm(+this.courseId);
+
+  }
+
+  public ngOnDestroy() {
+    if (this.authorsNotifierSubscription) {
+      this.authorsNotifierSubscription.unsubscribe();
+    }
   }
 
   public hasChanges(): boolean {
@@ -102,7 +112,6 @@ export class CourseEditPageComponent implements OnInit {
   }
 
   private save(course: Course): void {
-
     if (this.pageState === coursePageState.creating) {
       this.createCourse(course);
     }
@@ -121,17 +130,21 @@ export class CourseEditPageComponent implements OnInit {
   private initFormGroup(): FormGroup {
     return new FormGroup({
       name: createStrictFormControl('', [Validators.maxLength(50)]),
-      description: createStrictFormControl('', [Validators.maxLength(50)]),
+      description: createStrictFormControl('', [Validators.maxLength(200)]),
       date: createStrictFormControl(''),
       length: createStrictFormControl(''),
       isTopRated: createFormControl(''),
+      authors: createStrictFormControl([]),
     });
   }
 
   private mapIdsToAuthors(ids: string[]): Author[] {
-    const authorDictionary: {[key: string]: Author} = this.state.getValue().authors.entities;
+    const authorDictionary: {[key: string]: Author} = this.state.getValue()
+      .authors.entities;
 
-    return (ids || []).map((selectedId: string) => authorDictionary[selectedId]);
+    return (ids || []).map(
+      (selectedId: string) => authorDictionary[selectedId],
+    );
   }
 
   private getDoneCourse(): Course {
@@ -149,34 +162,31 @@ export class CourseEditPageComponent implements OnInit {
     this.router.navigateByUrl('/courses');
   }
 
-  private setPlainCourseValues (course: Course): void {
+  public fillCourseForm = (course: Course): void => {
     this.courseGroupForm.setValue({
       name: course.name,
       isTopRated: course.isTopRated,
       length: course.length,
       description: course.description,
       date: course.date,
+      authors: this.mapAuthorToControlIds(course.authors || []),
     });
-  }
 
-  public fillCourseForm = (course: Course): void => {
-    this.mapAuthorToControlIds(course.authors || []);
-    this.setPlainCourseValues(course);
   }
-
 
   public onDone($event: Event): void {
-
     $event.preventDefault(); // TODO: implement pipe on preventDefault
 
     this.save(this.getDoneCourse());
   }
 
-  public mapAuthorToControlIds (authors: Author[]): void {
+  public mapAuthorToControlIds(authors: Author[]): string[] {
     this.setSelectedAuthorIds(authors.map((author: Author) => author.id));
+
+    return this.selectedAuthorIds;
   }
 
-  public setSelectedAuthorIds (ids: string[]): void {
+  public setSelectedAuthorIds(ids: string[]): void {
     this.selectedAuthorIds = [...ids];
   }
 }

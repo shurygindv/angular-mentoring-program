@@ -8,6 +8,7 @@
       [formGroup]="courseGroupForm"
       (ngSubmit)="onDone($event)"
     >
+
       <mat-form-field class="course-edit-page-form__control">
         <input matInput placeholder="name" formControlName="name" required />
         <mat-error *ngIf="formControls.name.invalid"> Invalid field </mat-error>
@@ -26,24 +27,37 @@
       </mat-form-field>
 
       <section class="course-edit-page-form__control">
-          <app-course-edit-date-period-control formControlName="date"></app-course-edit-date-period-control>
-          <mat-error *ngIf="formControls.date.touched && formControls.date.invalid">
-              Invalid field
-          </mat-error>
-      </section>
-
-      <section class="course-edit-page-form__control">
-        <app-course-edit-length-control formControlName="length"></app-course-edit-length-control>
-        <mat-error *ngIf="formControls.length.touched && formControls.length.invalid">
-          Invalid field
+        <app-course-edit-date-period-control
+          formControlName="date"
+        ></app-course-edit-date-period-control>
+        <mat-error
+          *ngIf="formControls.date.touched && formControls.date.invalid"
+        >
+        {{formControls.date.getError('datePeriodError')}}
         </mat-error>
       </section>
 
       <section class="course-edit-page-form__control">
-        <app-course-author-control
+        <app-course-edit-length-control
+          formControlName="length"
+        ></app-course-edit-length-control>
+        <mat-error
+          *ngIf="formControls.length.touched && formControls.length.invalid"
+        >
+        {{formControls.length.getError('lengthError')}}
+        </mat-error>
+      </section>
+
+      <section class="course-edit-page-form__control">
+        <app-course-edit-authors-control
+          formControlName="authors"
           [selectedAuthorIds]="selectedAuthorIds"
-          (selectionChange)="setSelectedAuthorIds($event)"
-        ></app-course-author-control>
+        ></app-course-edit-authors-control>
+        <mat-error
+          *ngIf="formControls.authors.touched && formControls.authors.invalid"
+        >
+          {{formControls.authors.getError('authorControlError')}}
+        </mat-error>
       </section>
 
       <div class="course-edit-page-form__control">

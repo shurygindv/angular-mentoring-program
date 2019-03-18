@@ -20,6 +20,24 @@ export class CourseStoreEffects {
   ) {}
 
   @Effect()
+  public addCourseEffect$: Observable<Action> = this.actions$.pipe(
+    ofType<courseActions.AddCourseAction>(
+      courseActions.ActionTypes.START_ADDING_COURSE,
+    ),
+    switchMap(action =>
+      this.courseService.create(action.payload.course).pipe(
+        map(
+          () =>
+            new courseActions.AddCourseSuccessAction(),
+        ),
+        catchError(error =>
+          of(new courseActions.AddCoursesErrorAction({error})),
+        ),
+      ),
+    ),
+  );
+
+  @Effect()
   public fetchCoursesEffect$: Observable<Action> = this.actions$.pipe(
     ofType<courseActions.FetchCoursesAction>(
       courseActions.ActionTypes.START_FETCHING_COURSES,

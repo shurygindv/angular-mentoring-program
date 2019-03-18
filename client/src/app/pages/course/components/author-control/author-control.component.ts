@@ -22,7 +22,6 @@ import {FormControl} from '@angular/forms';
   templateUrl: './author-control.component.html',
   styleUrls: ['./author-control.component.scss'],
 
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AuthorControlComponent implements OnInit, OnDestroy, OnChanges {
   private store$: Store<RootStoreState.State>;
@@ -30,8 +29,9 @@ export class AuthorControlComponent implements OnInit, OnDestroy, OnChanges {
   private authorList: Author[];
 
   public authorLabels: Author[];
-  @Input() public selectedAuthorIds: string[];
 
+
+  @Input() public selectedAuthorIds: string[];
   @Output() public selectionChange = new EventEmitter<string[]>();
 
   constructor(store$: Store<RootStoreState.State>) {
@@ -40,7 +40,7 @@ export class AuthorControlComponent implements OnInit, OnDestroy, OnChanges {
 
   private assignAuthors = (authors: Author[]): void => {
     this.authorList = authors;
-
+    console.log(authors);
     this.setAuthorLabels(authors);
   }
 

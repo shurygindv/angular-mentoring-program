@@ -5,7 +5,7 @@ import {
   FormGroup,
   AbstractControl,
 } from '@angular/forms';
-import {Observable, Subscription} from 'rxjs';
+import {Subscription} from 'rxjs';
 import {Store} from '@ngrx/store';
 
 import {RootStoreState} from '../../root-store';

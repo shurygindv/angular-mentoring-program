@@ -22,11 +22,21 @@
           <p> {{ course.description }} </p>
           <p> Duration: {{ course.date | date: 'fullDate' }} </p>
           <p> Length: {{ course.length | durationNormalizer }} </p>
+
+          <section *ngIf="course.authors?.length">
+              <p>Author list (contains firstName):</p>
+              <ul>
+                  <li *ngFor="let author of course.authors">
+                    {{author.firstName}}
+                  </li>
+                </ul>
+          </section>
+         
         </section>
 
         <section class="course-list__controls">
            <a mat-raised-button color="primary" [routerLink]="['/courses', course.id]">Edit</a>
-          <app-button [view]="'lime'" (click)="onRemove(course)">Remove</app-button>
+           <button mat-raised-button (click)="onRemove(course)">Remove</button>
         </section>
       </li>
     </ng-container>

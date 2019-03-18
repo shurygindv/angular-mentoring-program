@@ -1,4 +1,4 @@
-import {Component, ChangeDetectionStrategy, forwardRef} from '@angular/core';
+import {Component, forwardRef} from '@angular/core';
 import {
   ControlValueAccessor,
   NG_VALUE_ACCESSOR,
@@ -25,7 +25,6 @@ const DATE_TEMPLATE_REGEX = /^[0-3]?[0-9].[0-3]?[0-9].(?:[0-9]{2})?[0-9]{2}$/;
       multi: true,
     },
   ],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DatePeriodComponent implements ControlValueAccessor, Validator {
   private datePeriod: string;
@@ -38,15 +37,14 @@ export class DatePeriodComponent implements ControlValueAccessor, Validator {
 
     this.isInvalid = !sourceValue.match(DATE_TEMPLATE_REGEX);
 
-    this.propagateChange(this.datePeriod);
-    this.propagateTouch(this.datePeriod);
+    this.propagateChange(sourceValue);
+    this.propagateTouch(sourceValue);
   }
 
   public validate(control: AbstractControl): ValidationErrors {
-    return this.isInvalid ? {datePeriod: 'Date invalid'} : null;
+    return this.isInvalid ? {datePeriodError: 'Date invalid'} : null;
   }
 
-  public registerOnValidatorChange?(fn: () => void): void {}
   public writeValue(obj: string): void {
     this.datePeriod = obj;
   }
@@ -60,4 +58,5 @@ export class DatePeriodComponent implements ControlValueAccessor, Validator {
   }
 
   public setDisabledState?(isDisabled: boolean): void {}
+  public registerOnValidatorChange?(fn: () => void): void {}
 }

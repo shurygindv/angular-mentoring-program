@@ -75,7 +75,7 @@ export const mount = (courseService: ICourseService): Router => {
   // tsss it's bad userInfo from authService 'todo users'
   router.get('/courses/:id', async (ctx: Koa.Context) => {
     const course = await courseService.findCourseById(+selectId(ctx));
-    console.log(course);
+  
     ctx.body = HttpResult.success(course);
     ctx.status = 200;
   });

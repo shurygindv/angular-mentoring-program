@@ -10,7 +10,7 @@ const routes: Routes = [
   {path: 'login', loadChildren: 'src/app/pages/login/login.module#LoginModule'},
   {
     path: 'courses',
-    // canActivate: [AuthGuard],
+    canActivate: [AuthGuard],
     loadChildren: 'src/app/pages/course/course.module#CourseModule',
   },
 

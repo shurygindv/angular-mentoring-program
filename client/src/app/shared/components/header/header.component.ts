@@ -32,6 +32,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.router = router;
   }
 
+  public canAddCourse (): boolean {
+    return this.router.url === '/courses';
+  }
+
   public fetchUserInfo(): void {
     this.store$.dispatch(new FetchUserInfoAction());
   }
@@ -40,7 +44,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.store$
       .select(AuthStoreSelectors.selectAuthFlag)
       .subscribe((isAuth: boolean) => {
-        console.log('11');
         this.isAuthenticated = isAuth;
 
         if (this.isAuthenticated) {

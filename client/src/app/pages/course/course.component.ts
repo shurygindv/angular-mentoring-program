@@ -76,7 +76,6 @@ export class CourseComponent implements OnInit, OnDestroy {
     this.coursesSubscription = this.store$
       .select(CourseStoreSelectors.selectAllCourses)
       .subscribe((courses: Course[]) => {
-        console.log(courses);
         this.courses = courses;
       });
   }

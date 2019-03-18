@@ -6,7 +6,7 @@
     >
   </a>
 
-  <ng-container *ngIf="isAuthenticated">
+  <ng-container *ngIf="isAuthenticated && canAddCourse()">
     <section>
       <a routerLink="/courses/new">
         <app-button [view]="'circle'" [uppercased]="true"> Add me </app-button>

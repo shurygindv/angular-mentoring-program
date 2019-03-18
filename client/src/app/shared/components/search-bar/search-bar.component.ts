@@ -26,7 +26,7 @@ export class SearchBarComponent implements OnInit, OnDestroy {
 
   @Output() public inputChanges: EventEmitter<string> = new EventEmitter();
 
-  public ngOnInit() {
+  public ngOnInit(): void {
     this.searchForm.controls.search.valueChanges
       .pipe(
         skipWhile((value: string) => value.length <= 3),
@@ -36,12 +36,12 @@ export class SearchBarComponent implements OnInit, OnDestroy {
       .subscribe(this.submitSearchValue);
   }
 
-  public ngOnDestroy() {
+  public ngOnDestroy(): void {
     this.ngUnsubscribe.next();
     this.ngUnsubscribe.complete();
   }
 
-  public submitSearchValue = (value: string) => {
+  public submitSearchValue = (value: string): void => {
     this.inputChanges.emit(value);
   }
 }

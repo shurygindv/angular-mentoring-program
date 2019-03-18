@@ -1,39 +1,62 @@
-import {Component, ChangeDetectionStrategy, forwardRef} from '@angular/core';
-import {ControlValueAccessor, NG_VALUE_ACCESSOR, Validator, ValidationErrors, AbstractControl} from '@angular/forms';
+import {Component, forwardRef, Input} from '@angular/core';
+import {
+  ControlValueAccessor,
+  NG_VALUE_ACCESSOR,
+  Validator,
+  ValidationErrors,
+  AbstractControl,
+  NG_VALIDATORS,
+} from '@angular/forms';
 
 @Component({
-  selector: 'app-course-edit-date-period-control',
-
+  selector: 'app-course-edit-authors-control',
+  templateUrl: './authors-control.component.html',
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => DatePeriodComponent),
+      useExisting: forwardRef(() => AuthorsControlComponent),
+      multi: true,
+    },
+    {
+      provide: NG_VALIDATORS,
+      useExisting: forwardRef(() => AuthorsControlComponent),
       multi: true,
     },
   ],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+
 })
-export class DatePeriodComponent implements ControlValueAccessor, Validator {
-  public validate(control: AbstractControl): ValidationErrors {
-    throw new Error('Method not implemented.');
+export class AuthorsControlComponent implements ControlValueAccessor, Validator {
+  private isInvalid: boolean;
+
+  @Input() public selectedAuthorIds: string[];
+
+  private propagateChange = (_: any) => { };
+  private propagateTouch = (_: any) => { };
+
+
+  private onChange (ids: string[]) {
+    this.isInvalid = (ids || []).length === 0;
+
+    this.propagateChange(ids);
+    this.propagateTouch(ids);
   }
 
-  public registerOnValidatorChange?(fn: () => void): void {
-    throw new Error('Method not implemented.');
+  public validate(control: AbstractControl): ValidationErrors {
+    return this.isInvalid ? {authorControlError: 'Too few authors'} : null;
   }
-  public writeValue(obj: any): void {
-    throw new Error('Method not implemented.');
+
+  public registerOnValidatorChange?(fn: () => void): void {}
+  public writeValue(ids: string[]): void {
+    this.selectedAuthorIds = ids;
   }
 
   public registerOnChange(fn: any): void {
-    throw new Error('Method not implemented.');
+    this.propagateChange = fn;
   }
 
   public registerOnTouched(fn: any): void {
-    throw new Error('Method not implemented.');
+    this.propagateTouch = fn;
   }
 
-  public setDisabledState?(isDisabled: boolean): void {
-    throw new Error('Method not implemented.');
-  }
+  public setDisabledState?(isDisabled: boolean): void {}
 }
