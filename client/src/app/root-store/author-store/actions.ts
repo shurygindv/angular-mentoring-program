@@ -84,7 +84,6 @@ export class FetchAuthorsErrorAction implements Action {
   }
 }
 
-
 export type Actions =
   | FetchAuthorsAction
   | FetchAuthorsSuccessAction

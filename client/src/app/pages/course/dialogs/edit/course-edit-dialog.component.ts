@@ -11,7 +11,7 @@ import {DurationNormalizerPipe} from 'src/app/shared/duration-normalizer.pipe';
 import {Course} from '../../../../core/models/course.interface';
 import {ConfirmationDialogData} from '../../../../core/services/dialog/dialog.interface';
 import {Omit} from '../../../../utils/types';
-import { Author } from 'src/app/core/models/author.interface';
+import {Author} from 'src/app/core/models/author.interface';
 
 export class CourseSharedData {
   constructor(

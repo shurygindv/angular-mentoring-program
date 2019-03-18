@@ -4,7 +4,7 @@ import {RouterTestingModule} from '@angular/router/testing';
 import {AppComponent} from './app.component';
 import {SharedModule} from './shared/shared.module';
 import {CoreModule} from './core/core.module';
-import { RootStoreModule } from './root-store/root-store.module';
+import {RootStoreModule} from './root-store/root-store.module';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {

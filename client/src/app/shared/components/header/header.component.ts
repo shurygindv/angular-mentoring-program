@@ -32,7 +32,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.router = router;
   }
 
-  public canAddCourse (): boolean {
+  public canAddCourse(): boolean {
     return this.router.url === '/courses';
   }
 

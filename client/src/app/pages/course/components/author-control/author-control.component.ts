@@ -21,7 +21,6 @@ import {FormControl} from '@angular/forms';
   selector: 'app-course-author-control',
   templateUrl: './author-control.component.html',
   styleUrls: ['./author-control.component.scss'],
-
 })
 export class AuthorControlComponent implements OnInit, OnDestroy, OnChanges {
   private store$: Store<RootStoreState.State>;
@@ -29,7 +28,6 @@ export class AuthorControlComponent implements OnInit, OnDestroy, OnChanges {
   private authorList: Author[];
 
   public authorLabels: Author[];
-
 
   @Input() public selectedAuthorIds: string[];
   @Output() public selectionChange = new EventEmitter<string[]>();
@@ -60,7 +58,6 @@ export class AuthorControlComponent implements OnInit, OnDestroy, OnChanges {
       .subscribe(this.assignAuthors);
   }
 
-
   public ngOnInit(): void {
     this.fetchAuthors();
     this.listenFetchedAuthors();
@@ -70,7 +67,7 @@ export class AuthorControlComponent implements OnInit, OnDestroy, OnChanges {
     this.authorsSubscription.unsubscribe();
   }
 
-  public ngOnChanges () {
+  public ngOnChanges() {
     this.setAuthorLabels(this.authorList);
   }
 

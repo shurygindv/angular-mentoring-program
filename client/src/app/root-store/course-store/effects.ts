@@ -26,10 +26,7 @@ export class CourseStoreEffects {
     ),
     switchMap(action =>
       this.courseService.create(action.payload.course).pipe(
-        map(
-          () =>
-            new courseActions.AddCourseSuccessAction(),
-        ),
+        map(() => new courseActions.AddCourseSuccessAction()),
         catchError(error =>
           of(new courseActions.AddCoursesErrorAction({error})),
         ),

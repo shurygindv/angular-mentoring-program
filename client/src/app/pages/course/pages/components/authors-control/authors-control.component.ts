@@ -23,18 +23,17 @@ import {
       multi: true,
     },
   ],
-
 })
-export class AuthorsControlComponent implements ControlValueAccessor, Validator {
+export class AuthorsControlComponent
+  implements ControlValueAccessor, Validator {
   private isInvalid: boolean;
 
   @Input() public selectedAuthorIds: string[];
 
-  private propagateChange = (_: any) => { };
-  private propagateTouch = (_: any) => { };
+  private propagateChange = (_: any) => {};
+  private propagateTouch = (_: any) => {};
 
-
-  private onChange (ids: string[]) {
+  private onChange(ids: string[]) {
     this.isInvalid = (ids || []).length === 0;
 
     this.propagateChange(ids);

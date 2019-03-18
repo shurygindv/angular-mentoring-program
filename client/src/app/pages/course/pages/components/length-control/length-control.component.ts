@@ -7,7 +7,7 @@ import {
   AbstractControl,
   NG_VALIDATORS,
 } from '@angular/forms';
-import { DurationNormalizerPipe } from 'src/app/shared/duration-normalizer.pipe';
+import {DurationNormalizerPipe} from 'src/app/shared/duration-normalizer.pipe';
 
 const DURATION_LENGTH_TEMPLATE_REGEX = /^[0-9]+$/;
 
@@ -30,10 +30,10 @@ const DURATION_LENGTH_TEMPLATE_REGEX = /^[0-9]+$/;
 export class LengthControlComponent implements ControlValueAccessor, Validator {
   private lengthValue: string;
   private isInvalid: boolean;
-  private propagateChange = (_: any) => { };
-  private propagateTouch = (_: any) => { };
+  private propagateChange = (_: any) => {};
+  private propagateTouch = (_: any) => {};
 
-  private onInput ($event: any) {
+  private onInput($event: any) {
     const sourceValue: string = $event.target.value;
     this.isInvalid = !sourceValue.match(DURATION_LENGTH_TEMPLATE_REGEX);
 
@@ -43,7 +43,6 @@ export class LengthControlComponent implements ControlValueAccessor, Validator {
 
   @Input()
   public get durationPlaceholder(): string {
-
     if (this.lengthValue) {
       return `Duration ~ ${DurationNormalizerPipe.init(+this.lengthValue)}`;
     }
@@ -52,7 +51,9 @@ export class LengthControlComponent implements ControlValueAccessor, Validator {
   }
 
   public validate(control: AbstractControl): ValidationErrors {
-    return this.isInvalid ? {lengthError: 'Length should contain numbers'} : null;
+    return this.isInvalid
+      ? {lengthError: 'Length should contain numbers'}
+      : null;
   }
 
   public registerOnValidatorChange?(fn: () => void): void {}

@@ -29,10 +29,10 @@ const DATE_TEMPLATE_REGEX = /^[0-3]?[0-9].[0-3]?[0-9].(?:[0-9]{2})?[0-9]{2}$/;
 export class DatePeriodComponent implements ControlValueAccessor, Validator {
   private datePeriod: string;
   private isInvalid: boolean;
-  private propagateChange = (_: any) => { };
-  private propagateTouch = (_: any) => { };
+  private propagateChange = (_: any) => {};
+  private propagateTouch = (_: any) => {};
 
-  private onInput ($event: any) {
+  private onInput($event: any) {
     const sourceValue: string = $event.target.value;
 
     this.isInvalid = !sourceValue.match(DATE_TEMPLATE_REGEX);

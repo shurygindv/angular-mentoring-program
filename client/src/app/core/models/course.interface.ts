@@ -1,4 +1,4 @@
-import { Author } from './author.interface';
+import {Author} from './author.interface';
 
 export interface Course {
   id?: number;

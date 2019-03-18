@@ -38,7 +38,6 @@ export class AuthStoreEffects {
     ),
   );
 
-
   @Effect()
   public fetchAuthorByIdEffect$: Observable<Action> = this.actions$.pipe(
     ofType<authorActions.FetchAuthorByIdAction>(

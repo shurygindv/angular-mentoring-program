@@ -72,7 +72,7 @@ export class CourseEditPageComponent implements OnInit, OnDestroy {
       .unsubscribe();
   }
 
-  private notifyWhenAuthorsChange () {
+  private notifyWhenAuthorsChange() {
     this.authorsNotifierSubscription = this.formControls.authors.valueChanges.subscribe(
       (ids: string[]) => {
         this.setSelectedAuthorIds(ids);
@@ -88,7 +88,6 @@ export class CourseEditPageComponent implements OnInit, OnDestroy {
     }
 
     this.updateCourseForm(+this.courseId);
-
   }
 
   public ngOnDestroy() {
@@ -171,7 +170,6 @@ export class CourseEditPageComponent implements OnInit, OnDestroy {
       date: course.date,
       authors: this.mapAuthorToControlIds(course.authors || []),
     });
-
   }
 
   public onDone($event: Event): void {

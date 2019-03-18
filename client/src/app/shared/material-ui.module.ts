@@ -37,7 +37,7 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
     MatButtonModule,
     MatSelectModule,
     MatIconModule,
-    MatChipsModule
+    MatChipsModule,
   ],
 })
 export class MaterialUiModule {}

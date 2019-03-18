@@ -9,13 +9,13 @@ import {CourseListComponent} from './components/course-list/course-list.componen
 import {CourseComponent} from './course.component';
 import {CourseEditPageComponent} from './pages/course-edit-page.component';
 import {ApiService} from '../../core/services/api.service';
-import { RootStoreModule } from 'src/app/root-store/root-store.module';
+import {RootStoreModule} from 'src/app/root-store/root-store.module';
 import {AuthorControlComponent} from './components/author-control/author-control.component';
 import {DatePeriodComponent} from './pages/components/date-period-control/date-period.component';
 import {LengthControlComponent} from './pages/components/length-control/length-control.component';
 import {AuthorsControlComponent} from './pages/components/authors-control/authors-control.component';
-import { AuthorService } from 'src/app/core/services/author/author.service';
-import { CourseService } from 'src/app/core/services/course/course.service';
+import {AuthorService} from 'src/app/core/services/author/author.service';
+import {CourseService} from 'src/app/core/services/course/course.service';
 
 describe('CourseComponent', () => {
   let component: CourseComponent;
