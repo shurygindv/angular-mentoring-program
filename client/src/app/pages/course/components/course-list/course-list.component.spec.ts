@@ -14,6 +14,7 @@ const testMockedCourses = [
     date: '2018-10-21T13:28:06.419Z',
     length: 60,
     description: '',
+    authors: [],
   },
   {
     id: 0,
@@ -22,6 +23,7 @@ const testMockedCourses = [
     date: '2018-10-21T13:28:06.419Z',
     length: 60,
     description: '',
+    authors: [],
   },
 ];
 

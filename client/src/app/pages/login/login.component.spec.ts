@@ -7,6 +7,7 @@ import {LoginComponent} from './login.component';
 import {CoreModule} from '../../core/core.module';
 import {AppRoutingModule} from '../../app-routing.module';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { RootStoreModule } from 'src/app/root-store/root-store.module';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -23,6 +24,7 @@ describe('LoginComponent', () => {
         SharedModule,
         CoreModule,
         MaterialUiModule,
+        RootStoreModule,
       ],
       declarations: [LoginComponent],
     });

@@ -1,4 +1,5 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {HttpClientModule} from '@angular/common/http';
 import {RouterModule} from '@angular/router';
 
 import {AppRoutingModule} from '../../app-routing.module';
@@ -8,7 +9,13 @@ import {CourseListComponent} from './components/course-list/course-list.componen
 import {CourseComponent} from './course.component';
 import {CourseEditPageComponent} from './pages/course-edit-page.component';
 import {ApiService} from '../../core/services/api.service';
-import {HttpClientModule} from '@angular/common/http';
+import { RootStoreModule } from 'src/app/root-store/root-store.module';
+import {AuthorControlComponent} from './components/author-control/author-control.component';
+import {DatePeriodComponent} from './pages/components/date-period-control/date-period.component';
+import {LengthControlComponent} from './pages/components/length-control/length-control.component';
+import {AuthorsControlComponent} from './pages/components/authors-control/authors-control.component';
+import { AuthorService } from 'src/app/core/services/author/author.service';
+import { CourseService } from 'src/app/core/services/course/course.service';
 
 describe('CourseComponent', () => {
   let component: CourseComponent;
@@ -25,12 +32,17 @@ describe('CourseComponent', () => {
         MaterialUiModule,
         HttpClientModule,
         AppRoutingModule,
+        RootStoreModule,
       ],
-      providers: [ApiService],
+      providers: [ApiService, AuthorService, CourseService],
       declarations: [
         CourseEditPageComponent,
         CourseComponent,
         CourseListComponent,
+        AuthorControlComponent,
+        DatePeriodComponent,
+        LengthControlComponent,
+        AuthorsControlComponent,
       ],
     });
   }));
@@ -66,6 +78,7 @@ describe('CourseComponent', () => {
         date: '2018-10-21T13:28:06.419Z',
         length: 60,
         description: '',
+        authors: [],
       },
       {
         id: 0,
@@ -74,6 +87,7 @@ describe('CourseComponent', () => {
         date: '2018-10-21T13:28:06.419Z',
         length: 60,
         description: '',
+        authors: [],
       },
     ];
 
