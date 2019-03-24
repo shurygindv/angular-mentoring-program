@@ -1,34 +1,32 @@
-import {Component, OnInit, OnDestroy} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {
   FormControl,
   Validators,
   FormGroup,
   AbstractControl,
 } from '@angular/forms';
-import {Subscription} from 'rxjs';
-import {Store} from '@ngrx/store';
+import {Observable} from 'rxjs';
 
-import {RootStoreState} from '../../root-store';
 import {AttemptLoginAction} from '../../root-store/auth-store/actions';
-import {AuthStoreSelectors} from 'src/app/root-store/auth-store';
+import {AuthStoreSelectors} from '../../root-store/auth-store';
+import { StoreService } from '../../core/services/store/store.service';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
-export class LoginComponent implements OnInit, OnDestroy {
-  private errorMsgSubscription: Subscription;
-  private store$: Store<RootStoreState.State>;
+export class LoginComponent implements OnInit {
+  private storeService: StoreService;
 
-  public error: string;
+  public error: Observable<string>;
   public loginForm = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [Validators.required]),
   });
 
-  constructor(store$: Store<RootStoreState.State>) {
-    this.store$ = store$;
+  constructor(storeService: StoreService) {
+    this.storeService = storeService;
   }
 
   get emailField(): AbstractControl {
@@ -40,15 +38,8 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   public ngOnInit(): void {
-    this.errorMsgSubscription = this.store$
-      .select(AuthStoreSelectors.selectAuthError)
-      .subscribe(error => (this.error = error));
-  }
-
-  public ngOnDestroy(): void {
-    if (this.errorMsgSubscription) {
-      this.errorMsgSubscription.unsubscribe();
-    }
+    this.error = this.storeService
+      .select(AuthStoreSelectors.selectAuthError);
   }
 
   public getEmailErrorMsg(): string {
@@ -77,7 +68,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.store$.dispatch(
+    this.storeService.dispatch(
       new AttemptLoginAction({
         email: this.emailField.value,
         password: this.passwordField.value,

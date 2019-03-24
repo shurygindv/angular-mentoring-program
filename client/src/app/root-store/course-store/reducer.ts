@@ -15,11 +15,11 @@ export const courseReducer = (state = initialState, action: Actions) => {
         isFetching: true,
       };
     }
-    case ActionTypes.FINISH_DELETING_COURSE_ERROR:
-    case ActionTypes.FINISH_UPDATING_COURSE_ERROR:
-    case ActionTypes.FINISH_FETCHING_COURSES_ERROR:
-    case ActionTypes.FINISH_FILTERING_COURSES_ERROR:
-    case ActionTypes.FINISH_ADDING_COURSE_ERROR: {
+    case ActionTypes.FINISH_DELETING_COURSE_FAIL:
+    case ActionTypes.FINISH_UPDATING_COURSE_FAIL:
+    case ActionTypes.FINISH_FETCHING_COURSES_FAIL:
+    case ActionTypes.FINISH_FILTERING_COURSES_FAIL:
+    case ActionTypes.FINISH_ADDING_COURSE_FAIL: {
       return {
         ...state,
         isFetching: false,

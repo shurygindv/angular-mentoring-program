@@ -34,7 +34,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   public fetchUserInfo(): void {
-    this.storeService.dispatch(new FetchUserInfoAction());
+    this.storeService.dispatch(new FetchUserInfoAction(undefined));
   }
 
   public updateAuthFlag(): void {
@@ -53,7 +53,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.userInfoSubscription = this.storeService
       .select(AuthStoreSelectors.selectUserInfo)
       .subscribe((info: any) => {
-        if (!info) {
+        if (!info) { // todo map(filter())
           return;
         }
 

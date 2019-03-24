@@ -12,7 +12,6 @@ import {DatePeriodComponent} from './pages/components/date-period-control/date-p
 import {LengthControlComponent} from './pages/components/length-control/length-control.component';
 import {AuthorsControlComponent} from './pages/components/authors-control/authors-control.component';
 
-import {importTranslateModule} from '../../../app/app.module';
 @NgModule({
   declarations: [
     CourseEditPageComponent,
@@ -28,7 +27,6 @@ import {importTranslateModule} from '../../../app/app.module';
     SharedModule,
     MaterialUiModule,
     CourseRoutingModule,
-    importTranslateModule(),
   ],
 })
 export class CourseModule {}
