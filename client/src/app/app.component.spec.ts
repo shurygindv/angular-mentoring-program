@@ -5,11 +5,18 @@ import {AppComponent} from './app.component';
 import {SharedModule} from './shared/shared.module';
 import {CoreModule} from './core/core.module';
 import {RootStoreModule} from './root-store/root-store.module';
+import {importTranslateModule} from './app.module';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [RouterTestingModule, SharedModule, CoreModule, RootStoreModule],
+      imports: [
+        RouterTestingModule,
+        SharedModule,
+        CoreModule,
+        RootStoreModule,
+        importTranslateModule(),
+      ],
       declarations: [AppComponent],
     }).compileComponents();
   }));

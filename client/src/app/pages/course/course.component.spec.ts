@@ -16,6 +16,10 @@ import {LengthControlComponent} from './pages/components/length-control/length-c
 import {AuthorsControlComponent} from './pages/components/authors-control/authors-control.component';
 import {AuthorService} from 'src/app/core/services/author/author.service';
 import {CourseService} from 'src/app/core/services/course/course.service';
+import {CoreModule} from 'src/app/core/core.module';
+import {TranslateService} from 'src/app/core/services/translate/translate-service';
+import {StoreService} from 'src/app/core/services/store/store.service';
+import { importTranslateModule } from 'src/app/app.module';
 
 describe('CourseComponent', () => {
   let component: CourseComponent;
@@ -33,8 +37,15 @@ describe('CourseComponent', () => {
         HttpClientModule,
         AppRoutingModule,
         RootStoreModule,
+        importTranslateModule()
       ],
-      providers: [ApiService, AuthorService, CourseService],
+      providers: [
+        ApiService,
+        AuthorService,
+        CourseService,
+        TranslateService,
+        StoreService,
+      ],
       declarations: [
         CourseEditPageComponent,
         CourseComponent,

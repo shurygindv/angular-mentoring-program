@@ -31,7 +31,7 @@ const interceptor = (implementation: {new (): HttpInterceptor} | any) => ({
   multi: true,
 });
 
-const importTranslateModule = (): ModuleWithProviders => {
+export const importTranslateModule = (): ModuleWithProviders => {
   return TranslateModule.forRoot({
     loader: {
       provide: TranslateLoader,

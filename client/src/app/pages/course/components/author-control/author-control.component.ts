@@ -35,7 +35,7 @@ export class AuthorControlComponent implements OnInit, OnDestroy, OnChanges {
 
   private assignAuthors = (authors: Author[]): void => {
     this.authorList = authors;
-    console.log(authors);
+
     this.setAuthorLabels(authors);
   }
 

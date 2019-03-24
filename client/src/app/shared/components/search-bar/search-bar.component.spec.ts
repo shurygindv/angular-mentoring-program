@@ -7,13 +7,15 @@ import {ButtonComponent} from '../button/button.component';
 import {TextComponent} from '../text/text.component';
 import {IconComponent} from '../icon/icon.component';
 
+import {importTranslateModule} from '../../../app.module';
+import {CoreModule} from '../../../core/core.module';
 describe('SearchBarComponent', () => {
   let component: SearchBarComponent;
   let fixture: ComponentFixture<SearchBarComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [ReactiveFormsModule],
+      imports: [ReactiveFormsModule, CoreModule, importTranslateModule()],
       declarations: [
         SearchBarComponent,
         ButtonComponent,
