@@ -6,6 +6,8 @@ import {SharedModule} from '../../shared.module';
 import {HeaderComponent} from './header.component';
 import {HostHeaderComponent} from './host-header.component.spec';
 import {RootStoreModule} from 'src/app/root-store/root-store.module';
+import {StoreService} from 'src/app/core/services/store/store.service';
+import {importTranslateModule} from 'src/app/app.module';
 
 describe('HeaderComponent', () => {
   let component: HeaderComponent;
@@ -16,7 +18,14 @@ describe('HeaderComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [SharedModule, CoreModule, AppRoutingModule, RootStoreModule],
+      imports: [
+        SharedModule,
+        CoreModule,
+        AppRoutingModule,
+        RootStoreModule,
+        importTranslateModule(),
+      ],
+      providers: [StoreService],
       declarations: [HostHeaderComponent],
     }).compileComponents();
   }));

@@ -1,5 +1,4 @@
 import {Component, Output, OnInit, OnDestroy} from '@angular/core';
-import {Store} from '@ngrx/store';
 import {Subscription} from 'rxjs';
 
 import {Course} from '../../core/models/course.interface';
@@ -11,14 +10,14 @@ import {
 import {Omit} from '../../utils/types';
 import {CourseEditDialogComponent} from './dialogs/edit/course-edit-dialog.component';
 import {LoaderService} from '../../core/services/loader/loader.service';
-import {RootStoreState} from 'src/app/root-store';
-import {CourseStoreSelectors} from 'src/app/root-store/course-store';
+import {CourseStoreSelectors} from '../../root-store/course-store';
 import {UpdateCourseByIdAction} from '../../root-store/course-store/actions';
 import {
   FilterCoursesAction,
   DeleteCourseByIdAction,
   FetchCoursesAction,
 } from '../../root-store/course-store/actions';
+import {StoreService} from '../../core/services/store/store.service';
 
 const mapCourseToDialogData = (
   course: Course,
@@ -40,7 +39,7 @@ export class CourseComponent implements OnInit, OnDestroy {
   @Output() public courses: Course[];
   @Output() public searchBy: string;
 
-  private store$: Store<RootStoreState.State>;
+  private storeService: StoreService;
   private loaderService: LoaderService;
   private dialogService: DialogService;
   private coursesSubscription: Subscription;
@@ -51,21 +50,21 @@ export class CourseComponent implements OnInit, OnDestroy {
   };
 
   constructor(
-    store$: Store<RootStoreState.State>,
+    storeService: StoreService,
     dialogService: DialogService,
     loaderService: LoaderService,
   ) {
-    this.store$ = store$;
+    this.storeService = storeService;
     this.dialogService = dialogService;
     this.loaderService = loaderService;
   }
 
   public fetchCourses = (): void => {
-    this.store$.dispatch(new FetchCoursesAction(this.pagination));
+    this.storeService.dispatch(new FetchCoursesAction(this.pagination));
   }
 
   private updateCourseById(id: number, course: Course): void {
-    this.store$.dispatch(new UpdateCourseByIdAction({id, course}));
+    this.storeService.dispatch(new UpdateCourseByIdAction({id, course}));
   }
 
   private handleEditingSubmit(id: number, dialogData: CourseSharedData): void {
@@ -73,7 +72,7 @@ export class CourseComponent implements OnInit, OnDestroy {
   }
 
   private subscribeOnCourses(): void {
-    this.coursesSubscription = this.store$
+    this.coursesSubscription = this.storeService
       .select(CourseStoreSelectors.selectAllCourses)
       .subscribe((courses: Course[]) => {
         this.courses = courses;
@@ -92,7 +91,7 @@ export class CourseComponent implements OnInit, OnDestroy {
   }
 
   public updateSearch(filterBy: string): void {
-    this.store$.dispatch(new FilterCoursesAction({filterBy}));
+    this.storeService.dispatch(new FilterCoursesAction({filterBy}));
   }
 
   public showEditingDialog(course: Course): void {
@@ -113,7 +112,7 @@ export class CourseComponent implements OnInit, OnDestroy {
   }
 
   public deleteCourse = (id: number): void => {
-    this.store$.dispatch(new DeleteCourseByIdAction({id}));
+    this.storeService.dispatch(new DeleteCourseByIdAction({id}));
   }
 
   public showRemovingDialog(course: Course): void {

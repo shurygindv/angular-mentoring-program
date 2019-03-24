@@ -1,5 +1,4 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
-import {By} from '@angular/platform-browser';
 
 import {SharedModule} from '../../shared/shared.module';
 import {MaterialUiModule} from '../../shared/material-ui.module';
@@ -7,7 +6,9 @@ import {LoginComponent} from './login.component';
 import {CoreModule} from '../../core/core.module';
 import {AppRoutingModule} from '../../app-routing.module';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {RootStoreModule} from 'src/app/root-store/root-store.module';
+import {RootStoreModule} from '../../root-store/root-store.module';
+
+import {importTranslateModule} from '../../../app/app.module';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -25,6 +26,7 @@ describe('LoginComponent', () => {
         CoreModule,
         MaterialUiModule,
         RootStoreModule,
+        importTranslateModule(),
       ],
       declarations: [LoginComponent],
     });

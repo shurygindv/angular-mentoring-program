@@ -12,37 +12,48 @@
 
         <section class="course-list__item__content">
           <app-content-box [align]="'vertical'">
-            <app-text [bold]="true">
-              {{ course.name | uppercase }}
-            </app-text>
+            <app-text [bold]="true"> {{ course.name | uppercase }} </app-text>
 
             <app-icon [name]="'favorite'" *ngIf="course.isTopRated"></app-icon>
           </app-content-box>
 
-          <p> {{ course.description }} </p>
-          <p> Duration: {{ course.date | date: 'fullDate' }} </p>
-          <p> Length: {{ course.length | durationNormalizer }} </p>
+          <p>{{ course.description }}</p>
+          <p>
+            {{ 'DURATION' | translate }}: {{ course.date | date: 'fullDate' }}
+          </p>
+          <p>
+            {{ 'LENGTH' | translate }}: {{ course.length | durationNormalizer }}
+          </p>
 
           <section *ngIf="course.authors?.length">
-              <p>Author list (contains firstName):</p>
-              <ul>
-                  <li *ngFor="let author of course.authors">
-                    {{author.firstName}}
-                  </li>
-                </ul>
+            <p>{{ 'AUTHOR_LIST' | translate }}:</p>
+            <ul>
+              <li *ngFor="let author of course.authors">
+                {{ author.firstName }}
+              </li>
+            </ul>
           </section>
-         
         </section>
 
         <section class="course-list__controls">
-           <a mat-raised-button color="primary" [routerLink]="['/courses', course.id]">Edit</a>
-           <button mat-raised-button (click)="onRemove(course)">Remove</button>
+          <a
+            mat-raised-button
+            color="primary"
+            [routerLink]="['/courses', course.id]"
+          >
+            {{ 'EDIT' | translate }}
+          </a>
+          <button mat-raised-button (click)="onRemove(course)">
+            {{ 'REMOVE' | translate }}
+          </button>
         </section>
       </li>
     </ng-container>
   </ul>
 
   <section class="card-container-options">
-    <app-button [view]="'lime'" [size]="'md'" (click)="onMore()">Next (current items replace on next 10)...</app-button>
+    <app-button [view]="'lime'" [size]="'md'" (click)="onMore()">
+      {{ 'NEXT_COURSE_ITEMS' | translate }}
+    </app-button>
   </section>
 </section>

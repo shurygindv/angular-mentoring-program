@@ -1,6 +1,5 @@
 import {
   Component,
-  ChangeDetectionStrategy,
   OnInit,
   OnDestroy,
   Input,
@@ -8,14 +7,12 @@ import {
   EventEmitter,
   OnChanges,
 } from '@angular/core';
-import {Store} from '@ngrx/store';
 import {Subscription} from 'rxjs';
 
-import {RootStoreState} from './../../../../root-store';
-import {AuthorStoreSelectors} from 'src/app/root-store/author-store';
-import {Author} from 'src/app/core/models/author.interface';
-import {FetchAuthorsAction} from 'src/app/root-store/author-store/actions';
-import {FormControl} from '@angular/forms';
+import {AuthorStoreSelectors} from '../../../../root-store/author-store';
+import {Author} from '../../../../core/models/author.interface';
+import {FetchAuthorsAction} from '../../../../root-store/author-store/actions';
+import {StoreService} from 'src/app/core/services/store/store.service';
 
 @Component({
   selector: 'app-course-author-control',
@@ -23,7 +20,7 @@ import {FormControl} from '@angular/forms';
   styleUrls: ['./author-control.component.scss'],
 })
 export class AuthorControlComponent implements OnInit, OnDestroy, OnChanges {
-  private store$: Store<RootStoreState.State>;
+  private storeService: StoreService;
   private authorsSubscription: Subscription;
   private authorList: Author[];
 
@@ -32,13 +29,13 @@ export class AuthorControlComponent implements OnInit, OnDestroy, OnChanges {
   @Input() public selectedAuthorIds: string[];
   @Output() public selectionChange = new EventEmitter<string[]>();
 
-  constructor(store$: Store<RootStoreState.State>) {
-    this.store$ = store$;
+  constructor(storeService: StoreService) {
+    this.storeService = storeService;
   }
 
   private assignAuthors = (authors: Author[]): void => {
     this.authorList = authors;
-    console.log(authors);
+
     this.setAuthorLabels(authors);
   }
 
@@ -49,11 +46,11 @@ export class AuthorControlComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   private fetchAuthors(): void {
-    this.store$.dispatch(new FetchAuthorsAction());
+    this.storeService.dispatch(new FetchAuthorsAction());
   }
 
   private listenFetchedAuthors(): void {
-    this.authorsSubscription = this.store$
+    this.authorsSubscription = this.storeService
       .select(AuthorStoreSelectors.selectAllAuthors)
       .subscribe(this.assignAuthors);
   }

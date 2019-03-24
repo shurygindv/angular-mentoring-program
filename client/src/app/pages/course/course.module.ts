@@ -22,6 +22,11 @@ import {AuthorsControlComponent} from './pages/components/authors-control/author
     CourseListComponent,
     AuthorsControlComponent,
   ],
-  imports: [CommonModule, SharedModule, MaterialUiModule, CourseRoutingModule],
+  imports: [
+    CommonModule,
+    SharedModule,
+    MaterialUiModule,
+    CourseRoutingModule,
+  ],
 })
 export class CourseModule {}

@@ -1,11 +1,13 @@
 import {createEntityAdapter, EntityState} from '@ngrx/entity';
+
 import {Response} from '../../core/types';
+import { UserInfo } from '../../core/services/auth/auth.interface';
 
 export const authAdapter = createEntityAdapter();
 
 export interface State extends EntityState<{}> {
   isAuthenticated?: boolean;
-  userInfo: any;
+  userInfo: UserInfo;
   isFetching?: boolean;
   error?: Response<void>;
 }

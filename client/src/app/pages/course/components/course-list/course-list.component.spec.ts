@@ -5,6 +5,10 @@ import {AppRoutingModule} from '../../../../app-routing.module';
 import {SharedModule} from '../../../../shared/shared.module';
 import {CourseListComponent} from './course-list.component';
 import {HostCourseListComponent} from './host-course-list.component.spec';
+import {StoreService} from 'src/app/core/services/store/store.service';
+import {TranslateService} from 'src/app/core/services/translate/translate-service';
+import {CoreModule} from 'src/app/core/core.module';
+import {importTranslateModule} from 'src/app/app.module';
 
 const testMockedCourses = [
   {
@@ -36,8 +40,15 @@ describe('CourseListComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [RouterModule, SharedModule, AppRoutingModule],
+      imports: [
+        RouterModule,
+        SharedModule,
+        AppRoutingModule,
+        CoreModule,
+        importTranslateModule(),
+      ],
       declarations: [CourseListComponent, HostCourseListComponent],
+      providers: [StoreService, TranslateService],
     }).compileComponents();
   }));
 

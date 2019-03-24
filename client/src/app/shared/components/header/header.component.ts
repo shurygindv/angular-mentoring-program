@@ -1,18 +1,15 @@
 import {Component, OnInit, OnDestroy} from '@angular/core';
 import {Router} from '@angular/router';
-import {Subject, Subscription} from 'rxjs';
-import {takeUntil} from 'rxjs/operators';
+import {Subscription} from 'rxjs';
 
-import {AuthService} from '../../../core/services/auth/auth.service';
-import {UserFullInfo} from '../../../core/services/auth/auth.interface';
-import {Store} from '@ngrx/store';
-import {RootStoreState} from 'src/app/root-store';
-import {RootStoreModule} from 'src/app/root-store/root-store.module';
-import {AuthStoreSelectors} from 'src/app/root-store/auth-store';
+import {AuthStoreSelectors} from '../../../root-store/auth-store';
 import {
   LogoutAction,
   FetchUserInfoAction,
 } from '../../../root-store/auth-store/actions';
+import {StoreService} from '../../../core/services/store/store.service';
+
+const COURSES_URL_PART = '/courses';
 
 @Component({
   selector: 'app-header',
@@ -22,26 +19,26 @@ import {
 export class HeaderComponent implements OnInit, OnDestroy {
   private router: Router;
   private userInfoSubscription: Subscription;
-  private store$: Store<RootStoreState.State>;
+  private storeService: StoreService;
 
   public isAuthenticated: boolean;
   public userName: string;
 
-  constructor(store$: Store<RootStoreState.State>, router: Router) {
-    this.store$ = store$;
+  constructor(storeService: StoreService, router: Router) {
+    this.storeService = storeService;
     this.router = router;
   }
 
   public canAddCourse(): boolean {
-    return this.router.url === '/courses';
+    return this.router.url === COURSES_URL_PART;
   }
 
   public fetchUserInfo(): void {
-    this.store$.dispatch(new FetchUserInfoAction());
+    this.storeService.dispatch(new FetchUserInfoAction(undefined));
   }
 
   public updateAuthFlag(): void {
-    this.store$
+    this.storeService
       .select(AuthStoreSelectors.selectAuthFlag)
       .subscribe((isAuth: boolean) => {
         this.isAuthenticated = isAuth;
@@ -53,10 +50,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   private subscribeOnUserInfo(): void {
-    this.userInfoSubscription = this.store$
+    this.userInfoSubscription = this.storeService
       .select(AuthStoreSelectors.selectUserInfo)
       .subscribe((info: any) => {
-        if (!info) {
+        if (!info) { // todo map(filter())
           return;
         }
 
@@ -76,6 +73,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   public logout(): void {
-    this.store$.dispatch(new LogoutAction());
+    this.storeService.dispatch(new LogoutAction());
   }
 }

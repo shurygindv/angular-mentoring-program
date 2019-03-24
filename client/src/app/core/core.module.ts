@@ -9,6 +9,7 @@ import {ApiService} from './services/api.service';
 import {LoaderService} from './services/loader/loader.service';
 import {AuthorService} from './services/author/author.service';
 import {StoreService} from './services/store/store.service';
+import {TranslateService} from './services/translate/translate-service';
 
 @NgModule({
   declarations: [],
@@ -20,7 +21,8 @@ import {StoreService} from './services/store/store.service';
     AuthService,
     LoaderService,
     AuthorService,
+    TranslateService,
   ],
-  exports: [DialogModule],
+  exports: [DialogModule, HttpClientModule],
 })
 export class CoreModule {}

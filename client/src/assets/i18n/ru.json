@@ -1,0 +1,22 @@
+{
+    "WELCOME": "Привет, {{name}}",
+    "NO_COURSES": "no data, feel free to add new course",
+    "COUNT": "Количество",
+    "COURSE_UPDATE": "Добавить/редактировать курс",
+    "INVALID_FIELD": "Некорректное поле",
+    "CANCEL": "Отмена",
+    "DONE": "Готово",
+    "TOP_RATED": "Высоко оценено?",
+    "REMOVE": "Удалить",
+    "EDIT": "Редактировать",
+    "NEXT_COURSE_ITEMS": "Показать следующие 10 элементов",
+    "AUTHOR_LIST": "Авторы",
+    "DURATION": "Продолжительность",
+    "LENGTH": "Длина",
+    "LOGOUT": "Выйти",
+    "ADD_ME": "Добавь меня",
+    "LOGIN": "Войти",
+    "ENTER_YOUR_EMAIL": "Будьте добры, введите мыло",
+    "ENTER_YOUR_PASSWORD": "Введите пароль",
+    "TYPE_TEXT": "Начните писать"
+}

@@ -66,9 +66,9 @@ interface UserInfoDetailsPayload {
 
 export class FetchUserInfoAction implements Action {
   public readonly type = ActionTypes.START_FETCH_USER_INFO;
-  public readonly payload?: UserInfoPayload;
+  public readonly payload: UserInfoPayload;
 
-  constructor(payload?: UserInfoPayload) {
+  constructor(payload: UserInfoPayload) {
     this.payload = payload;
   }
 }
@@ -99,7 +99,7 @@ export class LogoutAction implements Action {
 }
 
 export class LogoutSuccessAction implements Action {
-  public readonly type = ActionTypes.LOGOUT;
+  public readonly type = ActionTypes.LOGOUT_SUCCES;
 }
 
 export type Actions =

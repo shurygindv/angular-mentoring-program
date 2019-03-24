@@ -34,8 +34,9 @@ export const authReducer = (state = initialState, action: Actions) => {
         isFetching: false,
       };
     }
+    case ActionTypes.LOGOUT_SUCCES:
     case ActionTypes.LOGOUT: {
-      return initialState;
+      return {...initialState};
     }
     default: {
       return state;
