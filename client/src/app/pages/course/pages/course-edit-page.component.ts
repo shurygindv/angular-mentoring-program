@@ -12,7 +12,7 @@ import {
 } from '../../../root-store/course-store/actions';
 import {Author} from 'src/app/core/models/author.interface';
 import {Subscription} from 'rxjs';
-import { StoreService } from 'src/app/core/services/store/store.service';
+import {StoreService} from 'src/app/core/services/store/store.service';
 
 const createStrictFormControl = <T>(value: T, validators?: ValidatorFn[]) =>
   new FormControl(value, [Validators.required].concat(validators || []));

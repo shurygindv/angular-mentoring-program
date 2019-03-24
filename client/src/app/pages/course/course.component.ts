@@ -17,7 +17,7 @@ import {
   DeleteCourseByIdAction,
   FetchCoursesAction,
 } from '../../root-store/course-store/actions';
-import { StoreService } from '../../core/services/store/store.service';
+import {StoreService} from '../../core/services/store/store.service';
 
 const mapCourseToDialogData = (
   course: Course,

@@ -5,7 +5,7 @@ import {MenuProfileComponent} from './menu-profile.component';
 import {ButtonComponent} from '../button/button.component';
 
 import {importTranslateModule} from '../../../app.module';
-import { CoreModule } from '../../../core/core.module';
+import {CoreModule} from '../../../core/core.module';
 
 describe('MenuProfileComponent', () => {
   let component: MenuProfileComponent;
@@ -13,15 +13,8 @@ describe('MenuProfileComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [
-        CoreModule,
-        importTranslateModule()
-      ],
-      declarations: [
-        MenuProfileComponent,
-        IconComponent,
-        ButtonComponent,
-      ],
+      imports: [CoreModule, importTranslateModule()],
+      declarations: [MenuProfileComponent, IconComponent, ButtonComponent],
     }).compileComponents();
   }));
 

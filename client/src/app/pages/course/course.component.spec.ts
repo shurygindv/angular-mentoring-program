@@ -19,7 +19,7 @@ import {CourseService} from 'src/app/core/services/course/course.service';
 import {CoreModule} from 'src/app/core/core.module';
 import {TranslateService} from 'src/app/core/services/translate/translate-service';
 import {StoreService} from 'src/app/core/services/store/store.service';
-import { importTranslateModule } from 'src/app/app.module';
+import {importTranslateModule} from 'src/app/app.module';
 
 describe('CourseComponent', () => {
   let component: CourseComponent;
@@ -37,7 +37,7 @@ describe('CourseComponent', () => {
         HttpClientModule,
         AppRoutingModule,
         RootStoreModule,
-        importTranslateModule()
+        importTranslateModule(),
       ],
       providers: [
         ApiService,

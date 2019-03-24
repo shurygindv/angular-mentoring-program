@@ -7,7 +7,7 @@ import {
   LogoutAction,
   FetchUserInfoAction,
 } from '../../../root-store/auth-store/actions';
-import { StoreService } from '../../../core/services/store/store.service';
+import {StoreService} from '../../../core/services/store/store.service';
 
 const COURSES_URL_PART = '/courses';
 

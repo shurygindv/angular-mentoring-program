@@ -31,11 +31,11 @@ export class SwitcherComponent implements OnChanges {
     this.activeKey = '';
   }
 
-  public ngOnChanges (): void {
+  public ngOnChanges(): void {
     this.changeActiveKey(this.getFirstKey());
   }
 
-  private getFirstKey (): string {
+  private getFirstKey(): string {
     const [first] = this.items;
 
     return first.key;

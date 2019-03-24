@@ -12,7 +12,7 @@ import {Subscription} from 'rxjs';
 import {AuthorStoreSelectors} from '../../../../root-store/author-store';
 import {Author} from '../../../../core/models/author.interface';
 import {FetchAuthorsAction} from '../../../../root-store/author-store/actions';
-import { StoreService } from 'src/app/core/services/store/store.service';
+import {StoreService} from 'src/app/core/services/store/store.service';
 
 @Component({
   selector: 'app-course-author-control',

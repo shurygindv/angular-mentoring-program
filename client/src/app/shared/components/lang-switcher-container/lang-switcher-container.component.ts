@@ -27,7 +27,10 @@ const mapLangToSwitcher = (langKeys: string[]): SwitcherItem[] =>
 @Component({
   selector: 'app-lang-switcher-container',
   template: `
-    <app-switcher [items]="langItems" (change)="onChange($event)"></app-switcher>
+    <app-switcher
+      [items]="langItems"
+      (change)="onChange($event)"
+    ></app-switcher>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
