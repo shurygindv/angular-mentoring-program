@@ -5,17 +5,20 @@
       >learn</app-text
     >
   </a>
-
+  
+  <app-lang-switcher-container></app-lang-switcher-container>
   <ng-container *ngIf="isAuthenticated && canAddCourse()">
     <section>
       <a routerLink="/courses/new">
-        <app-button [view]="'circle'" [uppercased]="true"> Add me </app-button>
+        <app-button [view]="'circle'" [uppercased]="true">
+          {{'ADD_ME' | translate}}
+        </app-button>
       </a>
     </section>
 
     <section class="page-header__aside">
       <app-text [padded]="'xs'" [uppercased]="true" [color]="'white'">
-        Hello, {{ userName }}
+        {{ 'WELCOME' | translate:{name: userName} }}
       </app-text>
       <app-menu-profile (logout)="logout($event)"></app-menu-profile>
     </section>

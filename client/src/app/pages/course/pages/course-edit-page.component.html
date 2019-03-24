@@ -11,7 +11,9 @@
 
       <mat-form-field class="course-edit-page-form__control">
         <input matInput placeholder="name" formControlName="name" required />
-        <mat-error *ngIf="formControls.name.invalid"> Invalid field </mat-error>
+        <mat-error *ngIf="formControls.name.invalid">
+            {{ 'INVALID_FIELD' | translate }}
+        </mat-error>
       </mat-form-field>
 
       <mat-form-field class="course-edit-page-form__control">
@@ -22,7 +24,7 @@
           required
         />
         <mat-error *ngIf="formControls.description.invalid">
-          Invalid field
+            {{ 'INVALID_FIELD' | translate }}
         </mat-error>
       </mat-form-field>
 
@@ -61,11 +63,15 @@
       </section>
 
       <div class="course-edit-page-form__control">
-        <mat-checkbox formControlName="isTopRated"> Top rated </mat-checkbox>
+        <mat-checkbox formControlName="isTopRated">
+            {{ 'TOP_RATED' | translate }}
+        </mat-checkbox>
       </div>
 
       <div class="course-edit-page__resolvers">
-        <a mat-button routerLink="/courses">Cancel</a>
+        <a mat-button routerLink="/courses">
+          {{ 'CANCEL' | translate }}
+        </a>
 
         <button
           mat-raised-button
@@ -73,7 +79,7 @@
           type="submit"
           [disabled]="courseGroupForm.invalid"
         >
-          Done
+        {{ 'DONE' | translate }}
         </button>
       </div>
     </form>

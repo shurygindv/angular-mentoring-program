@@ -1,0 +1,14 @@
+<section class="switcher switcher--white">
+  <section>
+    <ul class="switcher-list switcher-list--anim">
+      <li
+        class="switcher-list__item"
+        [ngClass]="{'switcher-list__item--selected': switcher.key === activeKey}"
+        *ngFor="let switcher of items"
+        (click)="onClick(switcher)"
+      >
+        {{ switcher.name }}
+      </li>
+    </ul>
+  </section>
+</section>

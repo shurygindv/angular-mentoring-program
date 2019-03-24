@@ -1,8 +1,10 @@
-import {CommonModule} from '@angular/common';
 import {NgModule} from '@angular/core';
-import {ReactiveFormsModule, FormsModule} from '@angular/forms';
+import {CommonModule} from '@angular/common';
 import {RouterModule} from '@angular/router';
+import {ReactiveFormsModule, FormsModule} from '@angular/forms';
+import {TranslateModule} from '@ngx-translate/core';
 
+// components
 import {BodyComponent} from './components/body/body.component';
 import {BreadCrumbsComponent} from './components/bread-crumbs/bread-crumbs.component';
 import {ButtonComponent} from './components/button/button.component';
@@ -13,10 +15,16 @@ import {IconComponent} from './components/icon/icon.component';
 import {MenuProfileComponent} from './components/menu-profile/menu-profile.component';
 import {SearchBarComponent} from './components/search-bar/search-bar.component';
 import {TextComponent} from './components/text/text.component';
-import {DateStatusDirective} from './date-status.directive';
 import {LoaderOverlayComponent} from './components/loader-overlay/loader-overlay.component';
-import {DurationNormalizerPipe} from './duration-normalizer.pipe';
 import {PageNotFoundComponent} from './pages/page-not-found/page-not-found.component';
+import {SwitcherComponent} from './components/switcher/switcher.component';
+import {LangSwitcherComponent} from './components/lang-switcher-container/lang-switcher-container.component';
+
+// directives
+import {DateStatusDirective} from './date-status.directive';
+
+// pipes
+import {DurationNormalizerPipe} from './duration-normalizer.pipe';
 
 @NgModule({
   declarations: [
@@ -37,8 +45,16 @@ import {PageNotFoundComponent} from './pages/page-not-found/page-not-found.compo
     LoaderOverlayComponent,
     // pages
     PageNotFoundComponent,
+    SwitcherComponent,
+    LangSwitcherComponent,
   ],
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    RouterModule,
+    TranslateModule,
+  ],
   exports: [
     HeaderComponent,
     BodyComponent,
@@ -53,6 +69,9 @@ import {PageNotFoundComponent} from './pages/page-not-found/page-not-found.compo
 
     DateStatusDirective,
     DurationNormalizerPipe,
+
+    // modules
+    TranslateModule,
     ReactiveFormsModule,
     FormsModule,
 

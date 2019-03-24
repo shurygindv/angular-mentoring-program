@@ -2,6 +2,7 @@ import {initialState} from './state';
 import {ActionTypes, Actions} from './actions';
 
 export const authReducer = (state = initialState, action: Actions) => {
+  console.log(action);
   switch (action.type) {
     case ActionTypes.START_FETCH_USER_INFO:
     case ActionTypes.START_ATTEMPT_LOGIN: {
@@ -34,8 +35,9 @@ export const authReducer = (state = initialState, action: Actions) => {
         isFetching: false,
       };
     }
+    case ActionTypes.LOGOUT_SUCCES:
     case ActionTypes.LOGOUT: {
-      return initialState;
+      return {...initialState};
     }
     default: {
       return state;

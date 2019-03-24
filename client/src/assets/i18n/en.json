@@ -1,0 +1,22 @@
+{
+    "WELCOME": "Hello, {{name}}",
+    "NO_COURSES": "no data, feel free to add new course",
+    "COUNT": "Count",
+    "COURSE_UPDATE": "Add/Edit course",
+    "INVALID_FIELD": "Invalid field",
+    "CANCEL": "Cancel",
+    "DONE": "Done",
+    "TOP_RATED": "Is Top Rated?",
+    "REMOVE": "Remove",
+    "EDIT": "Edit",
+    "NEXT_COURSE_ITEMS": "Next (current items replace on next 10)...",
+    "AUTHOR_LIST": "Author list",
+    "DURATION": "Duration",
+    "LENGTH": "Length",
+    "LOGOUT": "Logout",
+    "ADD_ME": "Add me",
+    "LOGIN": "Login",
+    "ENTER_YOUR_EMAIL": "Enter your email...",
+    "ENTER_YOUR_PASSWORD": "Enter your password...",
+    "TYPE_TEXT": "type here"
+}

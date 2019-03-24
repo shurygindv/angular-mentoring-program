@@ -1,0 +1,24 @@
+.switcher {
+  display: inline-block;
+  position: relative;
+  
+  cursor: pointer;
+
+  &--white {
+    background: white;
+    color: black;
+  }
+
+  &-list {
+    &__item {
+      display: inline-block;
+      margin: 0 5px;
+      padding: 5px 15px;
+
+      &--selected {
+        background: black;
+        color: white;
+      }
+    }
+  }
+}

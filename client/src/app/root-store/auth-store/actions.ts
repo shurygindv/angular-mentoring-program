@@ -99,7 +99,7 @@ export class LogoutAction implements Action {
 }
 
 export class LogoutSuccessAction implements Action {
-  public readonly type = ActionTypes.LOGOUT;
+  public readonly type = ActionTypes.LOGOUT_SUCCES;
 }
 
 export type Actions =
