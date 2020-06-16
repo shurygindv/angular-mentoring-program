@@ -1,12 +1,3 @@
-# angular-mentoring-program
+# Angular mentoring
 
-# NOT USED MODULES YET
-
-APP-TITLE
-APP-ICON
-APP-TEXT
-APP-BUTTON
-APP-BREADCRUMBS
-APP-FORM
-
-
+See `Git` branches for details
